@@ -1,0 +1,164 @@
+* {
+    padding: 0;
+	margin:0 ;
+}
+
+body,html{
+	font-family: Tahoma;
+}
+
+header{
+    text-align: center;
+}
+
+.title {
+    margin: 20px 0;
+}
+
+.cards-container{
+	flex: 0 0 75%;
+    max-width: 75%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #efefef;
+  width: 960px;
+  margin: 0 auto;
+}
+
+.card{
+	flex: 0 0 33.33%;
+    max-width: 33.33%;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	font-size: 72px;
+	color: #fff;
+	border: none;
+}
+
+.card:before {
+    content:'';
+    padding-top:100%;
+}
+.buttons{
+    flex: 0 0 25%;
+    max-width: 25%;
+    margin-top: 15px;
+    text-align: center
+}
+
+.button{
+	padding: 12px;
+    margin: 10px;
+    background-color: #72C3DC;
+    box-shadow: 0px 3px 3px 1px #2b8ead;
+    border-radius: 5px;
+    width: 70%;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+	color:#fff;
+}
+
+.button:active{
+    box-shadow: 0px 1px 2px 1px #2b8ead;    
+}
+
+footer{
+    text-align: center;
+    padding: 20px 0;
+}
+
+.card_1, .card_8{
+	background-color: #6f98a8;
+}
+
+.card_2, .card_4{
+	background-color: #2b8ead;
+}
+
+.card_3, .card_5, .card_9{
+	background-color: #2f454e;
+}
+
+.card_6, .card_7{
+	background-color: #bfbfbf;
+}
+
+@media only screen and (max-width: 960px) {
+	.wrapper {
+		width: 100%;
+		flex-direction: column-reverse;
+		background-color: #fff;
+		flex-wrap: nowrap;
+    }
+    
+	header{
+		background-color: #333333;
+		color:#fff;
+        padding: 5px 0;
+    }
+    
+	.cards-container {
+		    flex: 0 0 90%;
+			max-width: 90%;
+			align-items: center;
+			margin: 0 5%;
+    }
+    
+	.card {
+		flex: 0 0 100%;
+		border-left: 20px solid;
+		max-width: calc(100% - 20px);
+		font-size: 20px;
+		color: #000;
+		padding: 10px 0;
+		margin-bottom: 5px;
+		font-weight: normal;
+		background-color: #efefef;		
+    }
+    
+    .card_1, .card_8{
+		border-color: #6f98a8;
+    }
+    
+	.card_2, .card_4{
+		border-color: #2b8ead;
+    }
+    
+	.card_3, .card_5, .card_9{
+		border-color: #2f454e;
+    }
+    
+	.card_6, .card_7{
+		border-color: #bfbfbf;
+	}
+    
+	.card:before {
+		padding-top:0;
+    }
+    
+	.buttons {
+		flex: 0 0 100%;
+		max-width: 100%;
+		margin: 12px 0;
+    }
+    
+	.button {
+		padding: 15px;
+		margin: 5px;
+		width: 26%;
+    }
+}
