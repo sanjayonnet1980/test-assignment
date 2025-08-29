@@ -24,12 +24,13 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
   rowsPerPage = 6,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / rowsPerPage);
+  const totalPages =data && Math.ceil(data.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentRows = data.slice(startIndex, startIndex + rowsPerPage);
+  const currentRows =data && data.slice(startIndex, startIndex + rowsPerPage);
 
   const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const handleNext = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   const formatter = new Intl.DateTimeFormat("en-IN", {
     timeZone: "Asia/Kolkata",
@@ -42,15 +43,33 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
 
   if (!isOpen) return null;
 
+  const totalAmount = data.reduce((sum, row) => sum + row.amount, 0);
+
   return (
     <div style={styles.backdrop}>
       <div style={styles.card}>
         <div style={styles.header}>
-          <h2 style={{ margin: 0 }}>Transaction Details</h2>
-          <button onClick={onClose} style={styles.closeButton}>×</button>
+          <h2 style={{ margin: 0, color: "green" }}>
+            Credit Card Inv. Transaction Details
+          </h2>
+          <button onClick={onClose} style={styles.closeButton}>
+            ×
+          </button>
         </div>
 
         <div style={{ padding: "1rem", position: "relative" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "right",
+              marginBottom: "0.75rem",
+              fontWeight: 700,
+              color: "#053f90ff",
+              fontSize: "1.20rem",
+            }}
+          >
+            Total Amount: ₹{totalAmount.toLocaleString("en-IN")}
+          </div>
           <table style={styles.table}>
             <thead style={styles.thead}>
               <tr>
@@ -63,14 +82,18 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
               </tr>
             </thead>
             <tbody style={styles.tbody}>
-              {currentRows.map((row, index) => (
+              {currentRows && currentRows.map((row, index) => (
                 <tr key={startIndex + index} style={styles.tr}>
                   <td style={styles.td}>{startIndex + index + 1}</td>
                   <td style={styles.td}>{row.name}</td>
-                  <td style={styles.td}>₹{row.amount.toLocaleString("en-IN")}</td>
-                  <td style={styles.td}>{formatter.format(new Date(row.date))}</td>
+                  <td style={styles.td}>
+                    ₹{row.amount.toLocaleString("en-IN")}
+                  </td>
+                  <td style={styles.td}>
+                    {formatter.format(new Date(row.date))}
+                  </td>
                   <td style={styles.td}>{row.vendor}</td>
-                  <td style={styles.td}>{row.cardno}</td>
+                  <td style={styles.cardno}>{row.cardno}</td>
                 </tr>
               ))}
             </tbody>
@@ -84,9 +107,15 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
         </div>
 
         <div style={styles.pagination}>
-          <button onClick={handlePrev} disabled={currentPage === 1}>◀ Prev</button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <button onClick={handleNext} disabled={currentPage === totalPages}>Next ▶</button>
+          <button onClick={handlePrev} disabled={currentPage === 1}>
+            ◀ Prev
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button onClick={handleNext} disabled={currentPage === totalPages}>
+            Next ▶
+          </button>
         </div>
       </div>
     </div>
@@ -110,7 +139,7 @@ const styles = {
     backgroundColor: "#fff",
     borderRadius: "8px",
     width: "90%",
-    maxWidth: "800px",
+    maxWidth: "900px",
     boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
     overflow: "hidden",
   },
@@ -139,7 +168,7 @@ const styles = {
   table: {
     width: "100%",
     borderCollapse: "collapse" as const,
-    fontSize: "0.95rem",
+    fontSize: "1.55rem",
     backgroundColor: "#fff",
     border: "1px solid #d1d5db",
   },
@@ -162,7 +191,13 @@ const styles = {
   td: {
     padding: "0.75rem",
     color: "#4b5563",
-    fontSize: "0.85rem",
+    fontSize: "1rem",
+  },
+  cardno: {
+    padding: "0.75rem",
+    color: "#ee1b54ff",
+    fontSize: "1rem",
+    fontWeight: 'bold'
   },
   pagination: {
     padding: "1rem",
