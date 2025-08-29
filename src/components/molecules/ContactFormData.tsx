@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../atoms/Button";
 import { toast } from "react-toastify";
+import Loader from "../atoms/Loader";
 
 interface ContactFormPopupProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
     phone: "",
     relationship: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -35,46 +37,41 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
     if (name === "phone" && !/^\d*$/.test(value)) return;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // const url = "https://script.google.com/macros/s/AKfycbzogs9-slL_2fV3nHdV2RHND6iUmKObeVXYEbVcuDJ6tebUBR_nH11c94JRgL5WhFm3pg/exec";
-    const url =
-      "https://script.google.com/macros/s/AKfycbxYKAImgaMWVmpUXZ82oRty_z4WPWWjwrRgrJtkOXfvx0UJ2GUwzq1PXqG9nBChHWdzTg/exec";
-    let formattedData = new URLSearchParams({
-      name: formData.name.toString(),
-      phone: formData.phone.toString(),
-      address: formData.address.toString(),
-      relationship: formData.relationship.toString(),
-    });
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: formattedData.toString(),
-    })
-      .then((res) => res.text())
-      .then(() => {
-        toast.success("Form submitted successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      })
+    setIsLoading(true);
 
-      .catch((err) => console.log(err));
-    onSubmit(formData);
-    setFormData({
-      name: "",
-      address: "",
-      phone: "",
-      relationship: "",
+    const url =
+      "https://script.google.com/macros/s/AKfycbzaTEzFaEcHbqfivxNBVcp8_IwrEAkKZ9jGTVBatbAyI_BmtlalXOxWwqZHULZyKFm0/exec";
+    const formattedData = new URLSearchParams({
+      name: formData.name,
+      phone: formData.phone,
+      address: formData.address,
+      relationship: formData.relationship,
     });
-    onClose();
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formattedData.toString(),
+      });
+      const result = await res.text();
+      const parsed = JSON.parse(result);
+      toast.success(parsed.message, {
+        position: "top-right",
+        autoClose: 5000,
+      });
+
+      onSubmit(formData);
+      setFormData({ name: "", address: "", phone: "", relationship: "" });
+      onClose();
+    } catch (err) {
+      console.error(err);
+      toast.error("Submission failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -86,9 +83,6 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
   return (
     <div style={styles.overlay}>
       <div style={styles.popup}>
-        <button style={styles.closeIcon} onClick={onClose}>
-          ×
-        </button>
         <h2 style={styles.heading}>Add Family Members Contact Details</h2>
         <form onSubmit={handleSubmit}>
           <label style={styles.label}>Name</label>
@@ -135,15 +129,18 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
               label={"Cancel"}
               onClick={handleCancelClick}
               classname="cancelForm-button"
+              disabled={false}
             />
             <Button
               label={"Submit"}
               onClick={handleSubmitClick}
               classname="submitForm-button"
+              disabled={isLoading}
             />
           </div>
         </form>
       </div>
+      {isLoading && <Loader overlay color="#10b981" size={48} />}
     </div>
   );
 };
@@ -169,16 +166,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     position: "relative",
     boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
     fontFamily: "sans-serif",
-  },
-  closeIcon: {
-    position: "absolute",
-    top: "12px",
-    right: "12px",
-    fontSize: "1.5rem",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    color: "red",
   },
   heading: {
     marginBottom: "16px",
