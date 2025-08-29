@@ -1,7 +1,10 @@
+
 export async function fetchPost(url, params) {
   try {
     const stringifiedParams = Object.entries(params).reduce((acc, [key, value]) => {
-      acc[key] = String(value);
+      if (value !== undefined && value !== null) {
+        acc[key] = String(value);
+      }
       return acc;
     }, {});
 
@@ -18,7 +21,12 @@ export async function fetchPost(url, params) {
       return null;
     }
 
-    return await response.json();
+    const contentType = response.headers.get('Content-Type') || '';
+    if (contentType.includes('application/json')) {
+      return await response.json();
+    } else {
+      return await response.text();
+    }
   } catch (error) {
     console.error('Fetch POST error:', error);
     return null;

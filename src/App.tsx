@@ -15,25 +15,25 @@ const App = () => {
       <Card
         title="Credit Card Details"
         content="Need to be add credit card investment amount into the form...."
-        buttonLabel={["Investment Details"]}
+        buttonLabel={["Add Credit Card Inv.", "View CreditCard Inv."]}
         message="creditcard"
       />
       <Card
-        title="SIP Investment"
+        title="Mutual Fund"
         content="SIP (Systematic Investment Plan) comments in the context of a financial dashboard or investment summary."
         buttonLabel={["SIP Details"]}
         message="sip"
       />
       <Card
-        title="Stock Investment"
+        title="Stock Details"
         content="Month wise need to be track for amount investment for Stock"
         buttonLabel={["Investment Stock Details"]}
         message="stock"
       />
       <Card
-        title="Salary Investment"
-        content="Month wise need to be track for amount investment which we got from salary"
-        buttonLabel={["Investment Salary Details"]}
+        title="Salary Domain"
+        content="Month wise need to be track for amount investment & salary"
+        buttonLabel={["Salary Credit","Add Inv. Salary Details", "View Salary Details", "View Inv. Details"]}
         message="salary"
       />
     </div>

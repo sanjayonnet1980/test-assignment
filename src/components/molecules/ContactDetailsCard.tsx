@@ -5,7 +5,11 @@ import TabbedFormPopup from "./TabbedFormPopup";
 import SIPCardForm from "./SIPCardForm";
 import ViewContact from "./ViewContact";
 import { fetchFromScript } from "../../utils/fetchFromScript";
-import { toast } from "react-toastify";
+import { PopupCardForm } from "./PopupSalaryCardForm";
+import { fetchFromSalary } from "../../utils/fetchFromSalary";
+import ViewSalary from "./ViewSalary";
+import ViewCreditInv from "./ViewCreditInv";
+import { fetchFromCreditCardInv } from "../../utils/fetchFromCreditCardInv";
 
 interface CardProps {
   title: string;
@@ -26,8 +30,12 @@ const Card: React.FC<CardProps> = ({
   const [clickedSIP, setClickedSIP] = useState(false);
   const [clickedStock, setClickedStock] = useState(false);
   const [clickedSalary, setClickedSalary] = useState(false);
+  const [viewSalary, setViewSalary] = useState(false);
+  const [viewCreditCard, setViewCreditCard] = useState(false);
   const [clickView, setClickView] = useState(false);
   const [data, setData] = useState([]);
+  const [salarydata, setSalaryData] = useState([]);
+  const [CreditCardInvData, setCreditCardInvData] = useState([]);
   const [isLoading, setisLoading] = useState<boolean>(true);
 
   const handleClick = (text: string) => {
@@ -45,10 +53,39 @@ const Card: React.FC<CardProps> = ({
         .finally(() => {
           setisLoading(false); // Stop loading
         });
-    } else if (message === "creditcard") setClickedCredit(true);
-    else if (message === "sip") setClickedSIP(true);
+    } else if (message === "creditcard" && text === "Add Credit Card Inv.")
+      setClickedCredit(true);
+    else if (message === "creditcard" && text === "View CreditCard Inv.") {
+      setViewCreditCard(true);
+      setisLoading(true);
+      fetchFromCreditCardInv()
+        .then((result) => {
+          setCreditCardInvData(result);
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        })
+        .finally(() => {
+          setisLoading(false); // Stop loading
+        });
+    } else if (message === "sip") setClickedSIP(true);
     else if (message === "stock") setClickedStock(true);
-    else if (message === "salary") setClickedSalary(true);
+    else if (message === "salary" && text === "Add Inv. Salary Details")
+      setClickedSalary(true);
+    else if (message === "salary" && text === "View Inv. Details") {
+      setViewSalary(true);
+      setisLoading(true);
+      fetchFromSalary()
+        .then((result) => {
+          setSalaryData(result);
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        })
+        .finally(() => {
+          setisLoading(false); // Stop loading
+        });
+    }
   };
 
   const refreshData = async () => {
@@ -108,6 +145,22 @@ const Card: React.FC<CardProps> = ({
         isLoading={isLoading}
         refreshData={refreshData}
       />
+      <ViewSalary
+        data={salarydata}
+        isOpen={viewSalary}
+        onClose={() => setViewSalary(false)}
+        isLoading={isLoading}
+      />
+      <ViewCreditInv
+        data={CreditCardInvData}
+        isOpen={viewCreditCard}
+        onClose={() => setViewCreditCard(false)}
+        isLoading={isLoading}
+      />
+      <PopupCardForm
+        isOpen={clickedSalary}
+        onClose={() => setClickedSalary(false)}
+      />
       <SIPCardForm isOpen={clickedSIP} onClose={() => setClickedSIP(false)} />
     </div>
   );
@@ -118,7 +171,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "2px solid #b90303ff",
     borderRadius: "8px",
     padding: "20px",
-    height: "250px",
+    height: "320px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",

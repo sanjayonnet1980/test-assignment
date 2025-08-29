@@ -18,16 +18,15 @@ const EntryForm: React.FC<EntryFormProps> = ({ buttonLabel, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    if (!name || !amount || !date || vendor) return;
+    if (!name || !amount || !date || !vendor) return;
     const url =
-      "https://script.google.com/macros/s/AKfycbzCq0XU1MM5JO0BBC2bXnwXxotN_sL-H5-rTGUUrPzP1H_AHBUcYZnboBCtdwaYCdxV/exec";
+      "https://script.google.com/macros/s/AKfycbzrzAVNl5YL6aUI9UUIjRd4p3KdnTXoPIhYafGFaepQE73YZDsU9uKzV8OAvxXFM8d1/exec";
     const formattedData = new URLSearchParams({
       name: name.toString(),
       amount: amount.toFixed(2),
       date: date.toString(),
       vendor: vendor.toString(),
-      cardno: buttonLabel ? buttonLabel.slice(-4).toString() : '',
-      msg: 'creditcard'
+      cardno: buttonLabel ? buttonLabel.slice(-4).toString() : "",
     });
 
     try {
@@ -42,6 +41,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ buttonLabel, onClose }) => {
         position: "top-right",
         autoClose: 5000,
       });
+      setVendor("");
       setName("");
       setAmount("");
       setDate("");
@@ -80,23 +80,22 @@ const EntryForm: React.FC<EntryFormProps> = ({ buttonLabel, onClose }) => {
           required
         />
       </label>
-
-      <label style={styles.label}>
-        Date:
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          style={styles.input}
-          required
-        />
-      </label>
       <label style={styles.label}>
         Investment Place:
         <input
           type="text"
           value={vendor}
           onChange={(e) => setVendor(e.target.value)}
+          style={styles.input}
+          required
+        />
+      </label>
+      <label style={styles.label}>
+        Date:
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
           style={styles.input}
           required
         />

@@ -27,10 +27,20 @@
 }
 
 .close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+  background-color: #fff;
+  border: 2px solid red;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: red;
   cursor: pointer;
+  padding: 0;
+  line-height: 1;
 }
 
 .popup-table {
@@ -39,7 +49,8 @@
   margin-top: 1rem;
 }
 
-.popup-table th, .popup-table td {
+.popup-table th,
+.popup-table td {
   border: 1px solid #ddd;
   padding: 0.5rem;
   text-align: left;
@@ -63,7 +74,7 @@
 .editable-input:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .icon-button {

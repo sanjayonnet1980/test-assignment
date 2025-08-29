@@ -83,9 +83,6 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
   return (
     <div style={styles.overlay}>
       <div style={styles.popup}>
-        <button style={styles.closeIcon} onClick={onClose}>
-          ×
-        </button>
         <h2 style={styles.heading}>Add Family Members Contact Details</h2>
         <form onSubmit={handleSubmit}>
           <label style={styles.label}>Name</label>
@@ -169,16 +166,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     position: "relative",
     boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
     fontFamily: "sans-serif",
-  },
-  closeIcon: {
-    position: "absolute",
-    top: "12px",
-    right: "12px",
-    fontSize: "1.5rem",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    color: "red",
   },
   heading: {
     marginBottom: "16px",
