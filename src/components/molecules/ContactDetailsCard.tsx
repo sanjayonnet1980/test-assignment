@@ -3,18 +3,21 @@ import Button from "../atoms/Button";
 import ContactForm from "./ContactFormData";
 import TabbedFormPopup from "./TabbedFormPopup";
 import SIPCardForm from "./SIPCardForm";
+import ViewContact from "./ViewContact";
+import { fetchFromScript } from "../../utils/fetchFromScript";
+import { toast } from "react-toastify";
 
 interface CardProps {
   title: string;
   content: string;
-  buttonLabel?: string;
+  buttonLabel?: string[];
   message?: string;
 }
 
 const Card: React.FC<CardProps> = ({
   title,
   content,
-  buttonLabel = "Click Me",
+  buttonLabel,
   message,
 }) => {
   const [clicked, setClicked] = useState(false);
@@ -23,13 +26,43 @@ const Card: React.FC<CardProps> = ({
   const [clickedSIP, setClickedSIP] = useState(false);
   const [clickedStock, setClickedStock] = useState(false);
   const [clickedSalary, setClickedSalary] = useState(false);
+  const [clickView, setClickView] = useState(false);
+  const [data, setData] = useState([]);
+  const [isLoading, setisLoading] = useState<boolean>(true);
 
-  const handleClick = () => {
-    if (message === "contact") setClicked(true);
-    else if (message === "creditcard") setClickedCredit(true);
+  const handleClick = (text: string) => {
+    if (message === "contact" && text === "Add Contact") setClicked(true);
+    if (message === "contact" && text === "View Contact") {
+      setClickView(true);
+      setisLoading(true);
+      fetchFromScript()
+        .then((result) => {
+          setData(result);
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        })
+        .finally(() => {
+          setisLoading(false); // Stop loading
+        });
+    } else if (message === "creditcard") setClickedCredit(true);
     else if (message === "sip") setClickedSIP(true);
     else if (message === "stock") setClickedStock(true);
     else if (message === "salary") setClickedSalary(true);
+  };
+
+  const refreshData = async () => {
+    setisLoading(true);
+    fetchFromScript()
+      .then((result) => {
+        setData(result);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      })
+      .finally(() => {
+        setisLoading(false); // Stop loading
+      });
   };
 
   return (
@@ -48,27 +81,34 @@ const Card: React.FC<CardProps> = ({
       <div style={styles.header}>{title}</div>
       <div style={styles.body}>{content}</div>
       <div style={styles.cardFooter}>
-        <Button
-          label={buttonLabel}
-          onClick={handleClick}
-          classname="gradient-button"
-          disabled={false}
-        />
+        {buttonLabel?.map((label: string, index: number) => (
+          <Button
+            label={label}
+            key={index}
+            onClick={() => handleClick(label)}
+            classname="gradient-button"
+            disabled={false}
+          />
+        ))}
       </div>
 
       <ContactForm
         isOpen={clicked}
         onClose={() => setClicked(false)}
-        onSubmit={handleClick}
+        onSubmit={() => handleClick}
       />
       <TabbedFormPopup
         isOpen={clickedCredit}
         onClose={() => setClickedCredit(false)}
       />
-      <SIPCardForm
-        isOpen={clickedSIP}
-        onClose={() => setClickedSIP(false)}
+      <ViewContact
+        data={data}
+        isOpen={clickView}
+        onClose={() => setClickView(false)}
+        isLoading={isLoading}
+        refreshData={refreshData}
       />
+      <SIPCardForm isOpen={clickedSIP} onClose={() => setClickedSIP(false)} />
     </div>
   );
 };

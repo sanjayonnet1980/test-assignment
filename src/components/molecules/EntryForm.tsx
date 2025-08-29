@@ -20,7 +20,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ buttonLabel, onClose }) => {
     setIsLoading(true);
     if (!name || !amount || !date || vendor) return;
     const url =
-      "https://script.google.com/macros/s/AKfycbysDbPvMTF1uiZgKa1005waTretTqOOE1j06kMxRyAZMnFEweaT_8nFm0gnpnEYED9E/exec";
+      "https://script.google.com/macros/s/AKfycbzCq0XU1MM5JO0BBC2bXnwXxotN_sL-H5-rTGUUrPzP1H_AHBUcYZnboBCtdwaYCdxV/exec";
     const formattedData = new URLSearchParams({
       name: name.toString(),
       amount: amount.toFixed(2),
@@ -37,6 +37,7 @@ const EntryForm: React.FC<EntryFormProps> = ({ buttonLabel, onClose }) => {
         body: formattedData.toString(),
       });
       await res.text();
+
       toast.success("submitted successfully!", {
         position: "top-right",
         autoClose: 5000,

@@ -42,7 +42,7 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
     setIsLoading(true);
 
     const url =
-      "https://script.google.com/macros/s/AKfycbysDbPvMTF1uiZgKa1005waTretTqOOE1j06kMxRyAZMnFEweaT_8nFm0gnpnEYED9E/exec";
+      "https://script.google.com/macros/s/AKfycbzaTEzFaEcHbqfivxNBVcp8_IwrEAkKZ9jGTVBatbAyI_BmtlalXOxWwqZHULZyKFm0/exec";
     const formattedData = new URLSearchParams({
       name: formData.name,
       phone: formData.phone,
@@ -56,9 +56,9 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formattedData.toString(),
       });
-      await res.text();
-
-      toast.success("Form submitted successfully!", {
+      const result = await res.text();
+      const parsed = JSON.parse(result);
+      toast.success(parsed.message, {
         position: "top-right",
         autoClose: 5000,
       });

@@ -23,6 +23,7 @@ code {
   transition: all 0.3s ease;
   box-sizing: border-box;
   background: linear-gradient(to right, #bc723c, #e02ab2);
+  margin-bottom: 8px;
 }
 
 .gradient-button:hover {
