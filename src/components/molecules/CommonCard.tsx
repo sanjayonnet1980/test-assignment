@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../atoms/Button";
 import ContactForm from "./ContactFormData";
 import TabbedFormPopup from "./TabbedFormPopup";
@@ -7,9 +7,11 @@ import ViewContact from "./ViewContact";
 import { fetchFromScript } from "../../utils/fetchFromScript";
 import { PopupCardForm } from "./PopupSalaryCardForm";
 import { fetchFromSalary } from "../../utils/fetchFromSalary";
-import ViewSalary from "./ViewSalary";
+import ViewSalary from "./ViewInvmentSalaryDetails";
 import ViewCreditInv from "./ViewCreditInv";
 import { fetchFromCreditCardInv } from "../../utils/fetchFromCreditCardInv";
+import { useCardState } from "./useCardState";
+import SalaryCreditPopupCard from "./SalaryCreditPopupCard";
 
 interface CardProps {
   title: string;
@@ -24,19 +26,36 @@ const Card: React.FC<CardProps> = ({
   buttonLabel,
   message,
 }) => {
-  const [clicked, setClicked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [clickedCredit, setClickedCredit] = useState(false);
-  const [clickedSIP, setClickedSIP] = useState(false);
-  const [clickedStock, setClickedStock] = useState(false);
-  const [clickedSalary, setClickedSalary] = useState(false);
-  const [viewSalary, setViewSalary] = useState(false);
-  const [viewCreditCard, setViewCreditCard] = useState(false);
-  const [clickView, setClickView] = useState(false);
-  const [data, setData] = useState([]);
-  const [salarydata, setSalaryData] = useState([]);
-  const [CreditCardInvData, setCreditCardInvData] = useState([]);
-  const [isLoading, setisLoading] = useState<boolean>(true);
+  const {
+    clicked,
+    setClicked,
+    data,
+    setData,
+    isLoading,
+    setisLoading,
+    refreshData,
+    isHovered,
+    setIsHovered,
+    clickedCredit,
+    setClickedCredit,
+    clickedSIP,
+    setClickedSIP,
+    setClickedStock,
+    clickedSalary,
+    setClickedSalary,
+    viewSalary,
+    setViewSalary,
+    viewCreditCard,
+    setViewCreditCard,
+    clickView,
+    setClickView,
+    salarydata,
+    setSalaryData,
+    CreditCardInvData,
+    setCreditCardInvData,
+    isSalaryCredit,
+    setIsSalaryCredit,
+  } = useCardState();
 
   const handleClick = (text: string) => {
     if (message === "contact" && text === "Add Contact") setClicked(true);
@@ -72,7 +91,9 @@ const Card: React.FC<CardProps> = ({
     else if (message === "stock") setClickedStock(true);
     else if (message === "salary" && text === "Add Inv. Salary Details")
       setClickedSalary(true);
-    else if (message === "salary" && text === "View Inv. Details") {
+    else if (message === "salary" && text === "Salary Credit") {
+      setIsSalaryCredit(true);
+    } else if (message === "salary" && text === "View Inv. Details") {
       setViewSalary(true);
       setisLoading(true);
       fetchFromSalary()
@@ -86,20 +107,6 @@ const Card: React.FC<CardProps> = ({
           setisLoading(false); // Stop loading
         });
     }
-  };
-
-  const refreshData = async () => {
-    setisLoading(true);
-    fetchFromScript()
-      .then((result) => {
-        setData(result);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      })
-      .finally(() => {
-        setisLoading(false); // Stop loading
-      });
   };
 
   return (
@@ -160,6 +167,10 @@ const Card: React.FC<CardProps> = ({
       <PopupCardForm
         isOpen={clickedSalary}
         onClose={() => setClickedSalary(false)}
+      />
+      <SalaryCreditPopupCard
+        isOpen={isSalaryCredit}
+        onClose={() => setIsSalaryCredit(false)}
       />
       <SIPCardForm isOpen={clickedSIP} onClose={() => setClickedSIP(false)} />
     </div>

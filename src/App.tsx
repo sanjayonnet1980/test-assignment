@@ -1,6 +1,6 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import Card from "./components/molecules/ContactDetailsCard";
+import Card from "./components/molecules/CommonCard";
 
 const App = () => {
   return (

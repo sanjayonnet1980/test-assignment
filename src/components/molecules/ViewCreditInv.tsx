@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { cardInvestAmount } from "../../utils/cardwiseInvestAmount";
 
 type TransactionRow = {
   name: string;
@@ -6,6 +7,7 @@ type TransactionRow = {
   date: string;
   vendor: string;
   cardno: string;
+  mode: string;
 };
 
 type TransactionPopupCardProps = {
@@ -16,17 +18,22 @@ type TransactionPopupCardProps = {
   rowsPerPage?: number;
 };
 
+type RowType = {
+  mode: string;
+  amount: number;
+};
+
 const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
   data,
   isOpen,
   onClose,
   isLoading,
-  rowsPerPage = 6,
+  rowsPerPage = 12,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages =data && Math.ceil(data.length / rowsPerPage);
+  const totalPages = data && Math.ceil(data.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentRows =data && data.slice(startIndex, startIndex + rowsPerPage);
+  const currentRows = data && data.slice(startIndex, startIndex + rowsPerPage);
 
   const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const handleNext = () =>
@@ -43,8 +50,19 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
 
   if (!isOpen) return null;
 
-  const totalAmount = data.reduce((sum, row) => sum + row.amount, 0);
+  // const totalAmount = data.reduce((sum, row) => sum + row.amount, 0);
+  const isInvest = (row: RowType) => row.mode === "Invest";
+  const isCashback = (row: RowType) => row.mode === "cashback";
+  const totalInvestAmount = data.reduce(
+    (sum, row) => (isInvest(row) ? sum + row.amount : sum),
+    0
+  );
 
+  const totalCashbackAmount = data.reduce(
+    (sum, row) => (isCashback(row) ? sum + row.amount : sum),
+    0
+  );
+  
   return (
     <div style={styles.backdrop}>
       <div style={styles.card}>
@@ -68,7 +86,11 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
               fontSize: "1.20rem",
             }}
           >
-            Total Amount: ₹{totalAmount.toLocaleString("en-IN")}
+            Total Investment of (4188) : ₹{" "}
+            {data && cardInvestAmount(data, 4188)} | Total Investment of (5549)
+            : ₹ {data && cardInvestAmount(data, 5549)} | Total Investment Amount
+            for Bill : ₹
+            {(totalInvestAmount - totalCashbackAmount).toLocaleString("en-IN")}
           </div>
           <table style={styles.table}>
             <thead style={styles.thead}>
@@ -78,27 +100,61 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
                 <th style={styles.th}>Amount</th>
                 <th style={styles.th}>Date</th>
                 <th style={styles.th}>Vendor</th>
-                <th style={styles.th}>Card No</th>
+                <th style={styles.th}>Last 4 Char Card No.</th>
+                <th style={styles.th}>Inv. Mode</th>
               </tr>
             </thead>
             <tbody style={styles.tbody}>
-              {currentRows && currentRows.map((row, index) => (
-                <tr key={startIndex + index} style={styles.tr}>
-                  <td style={styles.td}>{startIndex + index + 1}</td>
-                  <td style={styles.td}>{row.name}</td>
-                  <td style={styles.td}>
-                    ₹{row.amount.toLocaleString("en-IN")}
-                  </td>
-                  <td style={styles.td}>
-                    {formatter.format(new Date(row.date))}
-                  </td>
-                  <td style={styles.td}>{row.vendor}</td>
-                  <td style={styles.cardno}>{row.cardno}</td>
-                </tr>
-              ))}
+              {currentRows &&
+                currentRows.map((row, index) => (
+                  <tr key={startIndex + index} style={styles.tr}>
+                    <td style={styles.td}>{startIndex + index + 1}</td>
+                    <td style={styles.td}>{row.name}</td>
+                    <td
+                      style={{
+                        ...styles.td,
+                        ...(row.mode === "cashback"
+                          ? styles.modeCashback
+                          : row.mode === "invest"
+                          ? styles.modeInvest
+                          : {}),
+                      }}
+                    >
+                      ₹{row.amount.toLocaleString("en-IN")}
+                    </td>
+                    <td style={styles.td}>
+                      {formatter.format(new Date(row.date))}
+                    </td>
+                    <td style={styles.td}>{row.vendor}</td>
+                    <td style={styles.cardno}>XXXX XXXX XXXX {row.cardno}</td>
+                    <td
+                      style={{
+                        ...styles.td,
+                        ...(row.mode === "cashback"
+                          ? styles.modeCashback
+                          : row.mode === "invest"
+                          ? styles.modeInvest
+                          : {}),
+                      }}
+                    >
+                      {row.mode}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
-
+          {currentRows.length < 1 && (
+            <div
+              style={{
+                fontWeight: "700",
+                fontSize: "20px",
+                color: "red",
+                marginTop: "20px",
+              }}
+            >
+              No Data found please add contact details..
+            </div>
+          )}
           {isLoading && (
             <div style={styles.loaderOverlay}>
               <div style={styles.loader} />
@@ -139,9 +195,16 @@ const styles = {
     backgroundColor: "#fff",
     borderRadius: "8px",
     width: "90%",
-    maxWidth: "900px",
+    maxWidth: "80%",
     boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
     overflow: "hidden",
+  },
+  modeCashback: {
+    color: "green",
+    fontWeight: 500,
+  },
+  modeInvest: {
+    color: "#1e40af",
   },
   header: {
     display: "flex",
@@ -181,6 +244,7 @@ const styles = {
     fontWeight: 600,
     color: "#374151",
     fontSize: "0.85rem",
+    border: "1px solid #62748eff",
   },
   tbody: {
     backgroundColor: "#fff",
@@ -192,12 +256,14 @@ const styles = {
     padding: "0.75rem",
     color: "#4b5563",
     fontSize: "1rem",
+    border: "1px solid #62748eff",
   },
   cardno: {
     padding: "0.75rem",
     color: "#ee1b54ff",
     fontSize: "1rem",
-    fontWeight: 'bold'
+    fontWeight: "bold",
+    border: "1px solid #62748eff",
   },
   pagination: {
     padding: "1rem",

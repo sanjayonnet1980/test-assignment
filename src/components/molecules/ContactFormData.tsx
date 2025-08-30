@@ -84,61 +84,63 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({
     <div style={styles.overlay}>
       <div style={styles.popup}>
         <h2 style={styles.heading}>Add Family Members Contact Details</h2>
-        <form onSubmit={handleSubmit}>
-          <label style={styles.label}>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-
-          <label style={styles.label}>Address</label>
-          <textarea
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            style={styles.textarea}
-            required
-          />
-
-          <label style={styles.label}>Phone Number</label>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-
-          <label style={styles.label}>Relationship</label>
-          <input
-            type="text"
-            name="relationship"
-            value={formData.relationship}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-
-          <div style={styles.buttonGroup}>
-            <Button
-              label={"Cancel"}
-              onClick={handleCancelClick}
-              classname="cancelForm-button"
-              disabled={false}
+        <div style={styles.container}>
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <label style={styles.label}>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              style={styles.input}
+              required
             />
-            <Button
-              label={"Submit"}
-              onClick={handleSubmitClick}
-              classname="submitForm-button"
-              disabled={isLoading}
+
+            <label style={styles.label}>Address</label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              style={styles.textarea}
+              required
             />
-          </div>
-        </form>
+
+            <label style={styles.label}>Phone Number</label>
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+
+            <label style={styles.label}>Relationship</label>
+            <input
+              type="text"
+              name="relationship"
+              value={formData.relationship}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+
+            <div style={styles.buttonGroup}>
+              <Button
+                label={"Cancel"}
+                onClick={handleCancelClick}
+                classname="cancelForm-button"
+                disabled={false}
+              />
+              <Button
+                label={"Submit"}
+                onClick={handleSubmitClick}
+                classname="submitForm-button"
+                disabled={isLoading}
+              />
+            </div>
+          </form>
+        </div>
       </div>
       {isLoading && <Loader overlay color="#10b981" size={48} />}
     </div>
@@ -157,6 +159,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000,
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%", // or fixed height like "500px"
+    padding: "40px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    backgroundColor: "#f9f9f9",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+  },
+  form: {
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
   },
   popup: {
     backgroundColor: "#fff",

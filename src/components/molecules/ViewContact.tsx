@@ -218,6 +218,18 @@ const ViewContact: React.FC<PopupCardProps> = ({
                 </tr>
               ))}
           </tbody>
+          {paginatedData.length < 1 && (
+            <div
+              style={{
+                fontWeight: "700",
+                fontSize: "20px",
+                color: "red",
+                marginTop: "20px",
+              }}
+            >
+              No Data found please add contact details..
+            </div>
+          )}
         </table>
 
         <footer className="pagination-controls">

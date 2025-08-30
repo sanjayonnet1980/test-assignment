@@ -16,7 +16,7 @@ type PaginatedTableProps = {
   isLoading: boolean;
 };
 
-const ViewSalary: React.FC<PaginatedTableProps> = ({
+const ViewInvmentSalaryDetails: React.FC<PaginatedTableProps> = ({
   data,
   isOpen,
   onClose,
@@ -218,4 +218,4 @@ const styles = {
   },
 };
 
-export default ViewSalary;
+export default ViewInvmentSalaryDetails;
