@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EntryForm from "./EntryForm";
+import EntryForm from "./CreditCardEntryForm";
 
 type Tab = "Card 4188" | "Card 5549" | "Card 7577";
 
@@ -98,8 +98,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 9,
     padding: "20px 40px 0px 20px",
     borderRadius: "8px",
-    width: "430px",
-    height: "410px",
+    width: "450px",
+    height: "540px",
     position: "relative",
     boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
     fontFamily: "sans-serif",

@@ -1,6 +1,6 @@
 
 export async function fetchFromCreditCardInv() {
-  const scriptUrl = 'https://script.google.com/macros/s/AKfycbxsmd82M_YmA3EE-69-0UdTt0JypEbXjue7pT-5Ub9UAYYQaYs1R_zcLru70vGJ_yhB/exec'
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbzrLLDnuAt9J4pVtZa9jOvDit3B-1ifRwea3yw8Eks0UENJzkmhUvya9BoG0TLw3Ag/exec'
 
   try {
     const response = await fetch(scriptUrl, {
