@@ -10,7 +10,11 @@ type Props = {
   refreshData: () => void;
 };
 
-const ContactTable: React.FC<Props> = ({ data, scriptUrl, refreshData }) => {
+const ContactTable: React.FC<Props> = ({
+  data,
+  scriptUrl,
+  refreshData,
+}) => {
   const { editIndex, editData, startEdit, cancelEdit, updateField } =
     useEditContact();
 
@@ -74,7 +78,9 @@ const ContactTable: React.FC<Props> = ({ data, scriptUrl, refreshData }) => {
                   </button>
                   <button
                     className="icon-button"
-                    onClick={() => deleteContact(contact.srno, refreshData)}
+                    onClick={() =>
+                      deleteContact(contact.srno, refreshData)
+                    }
                   >
                     <Trash2 size={20} color="#dc3545" />
                   </button>

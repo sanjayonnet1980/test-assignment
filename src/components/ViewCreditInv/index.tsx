@@ -27,21 +27,46 @@ const ViewCreditInv: React.FC<TransactionPopupCardProps> = ({
     minute: "2-digit",
   });
 
-  const totalInvestAmount = data.reduce((sum, row) => row.mode === "Invest" ? sum + row.amount : sum, 0);
-  const totalCashbackAmount = data.reduce((sum, row) => row.mode === "cashback" ? sum + row.amount : sum, 0);
+  const totalInvestAmount = data.reduce(
+    (sum, row) => (row.mode === "Invest" ? sum + row.amount : sum),
+    0
+  );
+  const totalCashbackAmount = data.reduce(
+    (sum, row) => (row.mode === "cashback" ? sum + row.amount : sum),
+    0
+  );
 
   if (!isOpen) return null;
 
   return (
     <div style={styles.backdrop}>
       <div style={styles.card}>
-        <Header title="Credit Card Inv. Transaction Details" onClose={onClose} />
+        <Header
+          title="Credit Card Inv. Transaction Details"
+          onClose={onClose}
+        />
         <div style={{ padding: "1rem", position: "relative" }}>
-          <Summary data={data} totalInvest={totalInvestAmount} totalCashback={totalCashbackAmount} />
-          <TransactionTable rows={currentRows} startIndex={startIndex} formatter={formatter} />
+          <Summary
+            data={data}
+            totalInvest={totalInvestAmount}
+            totalCashback={totalCashbackAmount}
+          />
+          <TransactionTable
+            rows={currentRows}
+            startIndex={startIndex}
+            formatter={formatter}
+          />
           {currentRows.length < 1 && (
-            <div style={{ fontWeight: "700", fontSize: "20px", color: "red", marginTop: "20px" }}>
-              No Data found. Please add contact details.
+            <div
+              style={{
+                fontWeight: "700",
+                fontSize: "20px",
+                color: "red",
+                marginTop: "20px",
+                marginLeft: "10px",
+              }}
+            >
+              No Data found. Please add details.
             </div>
           )}
           {isLoading && (

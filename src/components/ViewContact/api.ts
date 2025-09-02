@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export const deleteContact = async (srno: number, refreshData: () => void) => {
   const body = new URLSearchParams({ mode: "delete", srno: srno.toString() });
-
+  refreshData();
   try {
     const res = await fetch(
       "https://script.google.com/macros/s/AKfycbxzPnzTm6LYRDvl4cS6SLxHyziOrCOuwxhJ--RLywwaJMAtf1J5XfuRA3PL5vzBuJY/exec",

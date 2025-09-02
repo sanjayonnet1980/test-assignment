@@ -11,6 +11,7 @@ export async function fetchFromSalaryMnth() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
+    debugger
     console.log('Response from Google Script:', data);
     return data;
   } catch (error) {

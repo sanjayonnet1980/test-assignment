@@ -9,18 +9,20 @@ export const useCardState = () => {
   const [clickedSIP, setClickedSIP] = useState<boolean>(false);
   const [clickedStock, setClickedStock] = useState<boolean>(false);
   const [clickedSalary, setClickedSalary] = useState<boolean>(false);
-  const [viewSalary, setViewSalary] = useState<boolean>(false);
+  const [viewInvSalary, setViewInvSalary] = useState<boolean>(false);
   const [viewCreditCard, setViewCreditCard] = useState<boolean>(false);
   const [clickView, setClickView] = useState<boolean>(false);
   const [data, setData] = useState([]);
+  const [salaryInvdata, setSalaryInvData] = useState([]);
   const [salarydata, setSalaryData] = useState([]);
   const [CreditCardInvData, setCreditCardInvData] = useState([]);
   const [isLoading, setisLoading] = useState<boolean>(true);
   const [isSalaryCredit, setIsSalaryCredit] = useState<boolean>(false);
   const [isViewSalary, setIsViewSalary] = useState<boolean>(false);
   const [isViewSIP, setIsViewSIP] = useState<boolean>(false);
-  const [viewSalaryData, setViewSalaryData] = useState([]);
   const [sipList, setSipList] = useState<SIPEntry[]>([]);
+
+
   const refreshData = async () => {
     setisLoading(true);
     try {
@@ -51,25 +53,25 @@ export const useCardState = () => {
     setClickedStock,
     clickedSalary,
     setClickedSalary,
-    viewSalary,
-    setViewSalary,
+    viewInvSalary,
+    setViewInvSalary,
     viewCreditCard,
     setViewCreditCard,
     clickView,
     setClickView,
-    salarydata,
-    setSalaryData,
+    salaryInvdata,
+    setSalaryInvData,
     CreditCardInvData,
     setCreditCardInvData,
     isSalaryCredit,
     setIsSalaryCredit,
     isViewSalary,
     setIsViewSalary,
-    viewSalaryData,
-    setViewSalaryData,
-    isViewSIP, 
+    isViewSIP,
     setIsViewSIP,
-    sipList, 
+    sipList,
     setSipList,
+    salarydata,
+    setSalaryData,
   };
 };
