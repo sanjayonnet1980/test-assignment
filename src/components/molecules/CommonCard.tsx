@@ -3,7 +3,7 @@ import Button from "../atoms/Button";
 import ContactForm from "./ContactFormData";
 import TabbedFormPopup from "./TabbedFormPopup";
 import SIPCardForm from "./SIPCardForm";
-import ViewContact from "./ViewContact";
+import ViewContact from "../ViewContact";
 import { fetchFromScript } from "../../utils/fetchFromScript";
 import { PopupCardForm } from "./PopupSalaryCardForm";
 import { fetchFromSalary } from "../../utils/fetchFromSalary";
