@@ -1,22 +1,67 @@
 import React, { useState } from "react";
+import { fetchPostSIP } from "../../utils/fetchPostSIP";
+import { toast } from "react-toastify";
+import Loader from "../atoms/Loader";
 
 interface CardFormProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SIPCardForm: React.FC<CardFormProps> = ({
-  isOpen,
-  onClose,
-}) => {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState<number | "">("");
+export interface formProps {
+  sipName: string;
+  amount: number;
+  folioNumber: string;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+const SIPCardForm: React.FC<CardFormProps> = ({ isOpen, onClose }) => {
+  const [form, setForm] = useState<formProps>({
+    sipName: "",
+    amount: 0,
+    folioNumber: "",
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<{ folioNumber?: string }>({});
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || amount === "") return;
-    setName("");
-    setAmount("");
+    setIsLoading(true);
+    setErrors({}); // reset errors
+
+    const { sipName, amount, folioNumber } = form;
+    if (!sipName || amount <= 0 || folioNumber.toString().length < 8) {
+      toast.error("Please enter valid SIP details", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    const result = await fetchPostSIP(form);
+    if (result) {
+      toast.success("Data Added Successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+      });
+      setForm({ sipName: "", amount: 0, folioNumber: "" });
+      setIsLoading(false);
+    }
+    onClose();
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]:
+        name === "amount" || name === "folioNumber" ? Number(value) : value,
+    }));
+    if(name==="folioNumber" && value.length >= 8){
+       setErrors({}); // reset errors
+    }else if(name==="folioNumber" && value.length < 8){
+      setErrors({ folioNumber: "Folio Number must be at least 8 digits" });
+    }
   };
 
   if (!isOpen) return null;
@@ -32,21 +77,36 @@ const SIPCardForm: React.FC<CardFormProps> = ({
             <label style={styles.label}>Name</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="sipName"
+              value={form.sipName}
+              onChange={handleOnChange}
               style={styles.input}
-              required
             />
           </div>
-
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>Folio Number</label>
+            <input
+              type="number"
+              name="folioNumber"
+              value={form.folioNumber}
+              onChange={handleOnChange}
+              style={{
+                ...styles.input,
+                borderColor: errors.folioNumber ? "red" : "#aaa",
+              }}
+              required
+            />
+            {errors.folioNumber && (
+              <span style={styles.errorText}>{errors.folioNumber}</span>
+            )}
+          </div>
           <div style={styles.fieldGroup}>
             <label style={styles.label}>Amount</label>
             <input
               type="number"
-              value={amount}
-              onChange={(e) =>
-                setAmount(e.target.value === "" ? "" : Number(e.target.value))
-              }
+              name="amount"
+              value={form.amount}
+              onChange={handleOnChange}
               style={styles.input}
               required
             />
@@ -57,6 +117,7 @@ const SIPCardForm: React.FC<CardFormProps> = ({
               Submit SIP Details
             </button>
           </div>
+          {isLoading && <Loader overlay color="#10b981" size={48} />}
         </form>
       </div>
     </div>
@@ -99,7 +160,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "20px 40px 0px 20px",
     borderRadius: "8px",
     width: "330px",
-    height: "280px",
+    height: "380px",
     position: "relative",
     boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
     fontFamily: "sans-serif",
@@ -132,7 +193,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1rem",
   },
   footer: {
-    marginTop: "auto",
+    marginTop: "50px",
   },
   button: {
     width: "100%",
@@ -142,6 +203,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "none",
     borderRadius: "6px",
     cursor: "pointer",
+  },
+  errorText: {
+    color: "red",
+    fontSize: "0.85rem",
+    marginTop: "4px",
   },
 };
 

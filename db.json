@@ -1,0 +1,16 @@
+{
+  "mutualfund": [
+    {
+      "id": "caa1",
+      "sipName": "test",
+      "amount": 5436565434,
+      "folioNumber": 545453400
+    },
+    {
+      "id": "0e39",
+      "sipName": "test",
+      "amount": 98967,
+      "folioNumber": 65464644
+    }
+  ]
+}
