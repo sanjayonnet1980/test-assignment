@@ -8,7 +8,7 @@ import { fetchFromScript } from "../../utils/fetchFromScript";
 import { PopupCardForm } from "./PopupSalaryCardForm";
 import { fetchFromSalary } from "../../utils/fetchFromSalary";
 import ViewSalary from "../ViewInvestmentSalaryDetails";
-import ViewCreditInv from "./ViewCreditInv";
+import ViewCreditInv from "../ViewCreditInv";
 import { fetchFromCreditCardInv } from "../../utils/fetchFromCreditCardInv";
 import { useCardState } from "./useCardState";
 import SalaryCreditPopupCard from "./SalaryCreditPopupCard";
