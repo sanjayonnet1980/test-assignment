@@ -84,11 +84,9 @@ const ViewContact: React.FC<PopupCardProps> = ({
         });
       } else {
         console.error(`❌ Delete failed: ${result.message}`);
-        alert(result.message);
       }
     } catch (error) {
       console.error("⚠️ Network error during delete:", error);
-      alert("Something went wrong while deleting.");
     }
   };
 

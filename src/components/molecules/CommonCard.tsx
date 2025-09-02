@@ -7,11 +7,15 @@ import ViewContact from "./ViewContact";
 import { fetchFromScript } from "../../utils/fetchFromScript";
 import { PopupCardForm } from "./PopupSalaryCardForm";
 import { fetchFromSalary } from "../../utils/fetchFromSalary";
-import ViewSalary from "./ViewInvmentSalaryDetails";
+import ViewSalary from "../ViewInvestmentSalaryDetails";
 import ViewCreditInv from "./ViewCreditInv";
 import { fetchFromCreditCardInv } from "../../utils/fetchFromCreditCardInv";
 import { useCardState } from "./useCardState";
 import SalaryCreditPopupCard from "./SalaryCreditPopupCard";
+import ViewMontlySalary from "./ViewMontlySalary";
+import { fetchFromSalaryMnth } from "../../utils/fetchFromMnthSalary";
+import ViewSIPManager from "./ViewSIPManager";
+import { fetchMutualFundData } from "../../services/mutualFundService";
 
 interface CardProps {
   title: string;
@@ -55,6 +59,14 @@ const Card: React.FC<CardProps> = ({
     setCreditCardInvData,
     isSalaryCredit,
     setIsSalaryCredit,
+    isViewSalary,
+    setIsViewSalary,
+    viewSalaryData,
+    setViewSalaryData,
+    isViewSIP,
+    setIsViewSIP,
+    sipList,
+    setSipList,
   } = useCardState();
 
   const handleClick = (text: string) => {
@@ -87,12 +99,30 @@ const Card: React.FC<CardProps> = ({
         .finally(() => {
           setisLoading(false); // Stop loading
         });
-    } else if (message === "sip") setClickedSIP(true);
-    else if (message === "stock") setClickedStock(true);
+    } else if (message === "sip" && text === "Add SIP") {
+      setClickedSIP(true);
+      setisLoading(true);
+    } else if (message === "sip" && text === "View SIP Details") {
+      fetchMutualFundData().then((data) => setSipList(data));
+      setIsViewSIP(true);
+    } else if (message === "stock") setClickedStock(true);
     else if (message === "salary" && text === "Add Inv. Salary Details")
       setClickedSalary(true);
     else if (message === "salary" && text === "Salary Credit") {
       setIsSalaryCredit(true);
+    } else if (message === "salary" && text === "View Salary Details") {
+      setIsViewSalary(true);
+      setisLoading(true);
+      fetchFromSalaryMnth()
+        .then((result) => {
+          setViewSalaryData(result);
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        })
+        .finally(() => {
+          setisLoading(false); // Stop loading
+        });
     } else if (message === "salary" && text === "View Inv. Details") {
       setViewSalary(true);
       setisLoading(true);
@@ -151,6 +181,17 @@ const Card: React.FC<CardProps> = ({
         onClose={() => setClickView(false)}
         isLoading={isLoading}
         refreshData={refreshData}
+      />
+      <ViewSIPManager
+        isOpen={isViewSIP}
+        sipList={sipList}
+        onClose={() => setIsViewSIP(false)}
+      />
+      <ViewMontlySalary
+        isOpen={isViewSalary}
+        data={viewSalaryData}
+        onClose={() => setIsViewSalary(false)}
+        isLoading={isLoading}
       />
       <ViewSalary
         data={salarydata}

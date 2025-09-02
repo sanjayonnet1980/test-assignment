@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { fetchFromScript } from "../../utils/fetchFromScript";
+import { SIPEntry } from "./SIPPopupCard";
 
 export const useCardState = () => {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -16,7 +17,10 @@ export const useCardState = () => {
   const [CreditCardInvData, setCreditCardInvData] = useState([]);
   const [isLoading, setisLoading] = useState<boolean>(true);
   const [isSalaryCredit, setIsSalaryCredit] = useState<boolean>(false);
-
+  const [isViewSalary, setIsViewSalary] = useState<boolean>(false);
+  const [isViewSIP, setIsViewSIP] = useState<boolean>(false);
+  const [viewSalaryData, setViewSalaryData] = useState([]);
+  const [sipList, setSipList] = useState<SIPEntry[]>([]);
   const refreshData = async () => {
     setisLoading(true);
     try {
@@ -57,7 +61,15 @@ export const useCardState = () => {
     setSalaryData,
     CreditCardInvData,
     setCreditCardInvData,
-    isSalaryCredit, 
+    isSalaryCredit,
     setIsSalaryCredit,
+    isViewSalary,
+    setIsViewSalary,
+    viewSalaryData,
+    setViewSalaryData,
+    isViewSIP, 
+    setIsViewSIP,
+    sipList, 
+    setSipList,
   };
 };

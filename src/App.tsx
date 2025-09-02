@@ -21,7 +21,7 @@ const App = () => {
       <Card
         title="Mutual Fund"
         content="SIP (Systematic Investment Plan) comments in the context of a financial dashboard or investment summary."
-        buttonLabel={["SIP Details"]}
+        buttonLabel={["Add SIP","View SIP Details"]}
         message="sip"
       />
       <Card
