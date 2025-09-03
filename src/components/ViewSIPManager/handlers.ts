@@ -1,6 +1,6 @@
 
 import { updateMutualFundEntry, deleteMutualFundEntry } from "../../services/mutualFundService";
-import { SIPEntry } from "../molecules/SIPPopupCard";
+import { SIPEntry } from "../organisms/SIPPopupCard/type";
 
 export const handleEditEntry = async (entry: SIPEntry, reload: () => void) => {
   const updatedEntry: SIPEntry = {
@@ -12,7 +12,7 @@ export const handleEditEntry = async (entry: SIPEntry, reload: () => void) => {
 
   try {
     await updateMutualFundEntry(updatedEntry);
-    await reload();
+    reload();
   } catch (error) {
     console.error("Failed to update entry:", error);
   }
@@ -25,7 +25,7 @@ export const handleDeleteEntry = async (
 ) => {
   try {
     await deleteMutualFundEntry(id);
-    await reload();
+    reload();
   } catch (error) {
     console.error("Failed to delete entry:", error);
   } finally {
