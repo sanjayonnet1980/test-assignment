@@ -3,7 +3,8 @@ import DeleteConfirmCard from "../atoms/DeleteConfirmCard";
 import { useSIPManager } from "./useSIPManager";
 import { handleEditEntry, handleDeleteEntry } from "./handlers";
 import { SIPManagerProps } from "./types";
-import SIPPopupCard, { SIPEntry } from "../molecules/SIPPopupCard";
+import SIPPopupCard from "../organisms/SIPPopupCard/SIPPopupCard";
+import { SIPEntry } from "../organisms/SIPPopupCard/type";
 
 const ViewSIPManager: React.FC<SIPManagerProps> = ({ isOpen, onClose, sipList }) => {
   const { sipListData, isLoading, loadData } = useSIPManager(sipList);
@@ -42,6 +43,7 @@ const ViewSIPManager: React.FC<SIPManagerProps> = ({ isOpen, onClose, sipList })
         onEdit={handleEdit}
         onDelete={handleDelete}
         isLoading={isLoading}
+        loadData={loadData}
       />
       <DeleteConfirmCard
         isOpen={confirmOpen}

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { fetchFromScript } from "../../utils/fetchFromScript";
-import { SIPEntry } from "./SIPPopupCard";
-
+import { SIPEntry } from "../organisms/SIPPopupCard/type";
 export const useCardState = () => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -20,7 +19,7 @@ export const useCardState = () => {
   const [isSalaryCredit, setIsSalaryCredit] = useState<boolean>(false);
   const [isViewSalary, setIsViewSalary] = useState<boolean>(false);
   const [isViewSIP, setIsViewSIP] = useState<boolean>(false);
-  const [sipList, setSipList] = useState<SIPEntry[]>([]);
+  const [sipList, setSipList] = useState<SIPEntry []>([]);
 
 
   const refreshData = async () => {

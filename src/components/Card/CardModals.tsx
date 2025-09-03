@@ -1,10 +1,10 @@
 import React from "react";
-import TabbedFormPopup from "../molecules/TabbedFormPopup";
+import TabbedFormPopup from "../templates/TabbedFormPopup/TabbedFormPopup";
 import ViewContact from "../ViewContact";
 import ViewSIPManager from "../ViewSIPManager";
 import ViewCreditInv from "../ViewCreditInv";
 import { PopupCardForm } from "../molecules/PopupSalaryCardForm";
-import SalaryCreditPopupCard from "../molecules/SalaryCreditPopupCard";
+import SalaryCreditPopupCard from "../molecules/SalaryCreditPopupCard/SalaryCreditPopupCard";
 import SIPCardForm from "../molecules/SIPCardForm";
 import ViewInvSalary from "../ViewInvestmentSalaryDetails";
 import ViewMonthlySalary from "../ViewMonthlySalary";

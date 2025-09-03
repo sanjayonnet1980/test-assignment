@@ -1,6 +1,6 @@
 // services/mutualFundService.ts
 import axios from "axios";
-import { SIPEntry } from "../components/molecules/SIPPopupCard";
+import { SIPEntry } from "../components/organisms/SIPPopupCard/type";
 
 const BASE_URL = "http://localhost:3001/mutualfund";
 

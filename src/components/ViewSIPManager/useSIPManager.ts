@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { fetchMutualFundData } from "../../services/mutualFundService";
-import { SIPEntry } from "../molecules/SIPPopupCard";
+import { SIPEntry } from "../organisms/SIPPopupCard/type";
 
 export const useSIPManager = (initialList: SIPEntry[]) => {
   const [sipListData, setSipListData] = useState<SIPEntry[]>(initialList);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const loadData = useCallback(async () => {
+  const loadData = async () => {
     setIsLoading(true);
     try {
       const data = await fetchMutualFundData();
@@ -16,11 +16,7 @@ export const useSIPManager = (initialList: SIPEntry[]) => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
+  };
 
   return { sipListData, isLoading, loadData };
 };
