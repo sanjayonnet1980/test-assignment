@@ -101,7 +101,7 @@ const SalaryCreditPopupCard: React.FC<CreditPopupCardProps> = ({
     <div className={styles.overlay}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <h2>Salary Credit Entry</h2>
+          <h2 className={styles.header}>Salary Credit Entry</h2>
           <button onClick={cancelButton} className={styles.closeButton}>
             ✕
           </button>
