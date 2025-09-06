@@ -1,0 +1,19 @@
+// App.scss
+$primary-color: #28a745;
+
+.app-container {
+  background-color: $primary-color;
+  box-shadow: 0 4px 12px rgba(0, 128, 0, 0.4);
+
+  h1 {
+    color: white;
+    font-size: 2rem;
+  }
+}
+
+.shadow-box {
+  background-color: #028e4b; /* Bootstrap green */
+  box-shadow: 0 4px 8px rgba(0, 128, 0, 0.4); /* Soft green shadow */
+  border-radius: 1px;
+  margin-bottom: 40px;
+}

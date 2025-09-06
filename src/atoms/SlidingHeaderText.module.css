@@ -1,0 +1,33 @@
+.cardHeader {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  justify-content: center;
+}
+
+.slider {
+  white-space: nowrap;
+  display: inline-block;
+  animation: slide-left linear infinite;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider span {
+  display: inline-block;
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.sliderWrapper {
+  width: 100%;
+  position: relative;
+}

@@ -1,16 +1,8 @@
 {
-  "mutualfund": [
-    {
-      "id": "caa1",
-      "sipName": "test",
-      "amount": 5436565434,
-      "folioNumber": 545453400
-    },
-    {
-      "id": "4641",
-      "sipName": "test",
-      "amount": 75,
-      "folioNumber": 65464534
-    }
-  ]
+  "contact": [
+  ],
+  "creditCard": [],
+  "mutualFund": [],
+  "stock": [],
+  "salaryDetails": []
 }
