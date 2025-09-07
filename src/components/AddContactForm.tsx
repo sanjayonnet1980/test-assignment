@@ -4,11 +4,14 @@ import { addContact } from "../features/contact/contactSlice";
 import { Omit } from "utility-types";
 import { Contact } from "../types/contactTypes";
 import SlidingHeaderText from "../atoms/SlidingText";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 
 type ContactFormData = Omit<Contact, "id">;
 
 const AddContactForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({
     name: "",
     address: "",
@@ -24,6 +27,15 @@ const AddContactForm = () => {
     relation: "",
   });
 
+  const [suggestions] = useState<string[]>([
+    "Friend",
+    "Colleague",
+    "Family",
+    "Investor",
+    "Mentor",
+    "Partner",
+    "Client",
+  ]);
   const validateForm = () => {
     const newErrors = {
       name:
@@ -45,35 +57,42 @@ const AddContactForm = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = e.target;
-  const trimmedValue = value.trim();
-  const sanitizedValue = name === "phone" ? value.replace(/\D/g, "") : value;
+    const { name, value } = e.target;
+    const trimmedValue = value.trim();
+    const sanitizedValue = name === "phone" ? value.replace(/\D/g, "") : value;
 
-  // Update form data
-  setFormData((prev) => ({ ...prev, [name]: sanitizedValue }));
+    // Update form data
+    setFormData((prev) => ({ ...prev, [name]: sanitizedValue }));
 
-  // Validate only the field being typed
-  let errorMsg = "";
-  switch (name) {
-    case "name":
-      errorMsg = trimmedValue.length >= 2 ? "" : "Name must be at least 2 characters.";
-      break;
-    case "address":
-      errorMsg = trimmedValue.length >= 5 ? "" : "Address must be at least 5 characters.";
-      break;
-    case "phone":
-      errorMsg = /^\d{10}$/.test(sanitizedValue)
-        ? ""
-        : "Phone must be exactly 10 digits.";
-      break;
-    case "relation":
-      errorMsg = trimmedValue.length >= 3 ? "" : "Relation must be at least 3 characters.";
-      break;
-  }
+    // Validate only the field being typed
+    let errorMsg = "";
+    switch (name) {
+      case "name":
+        errorMsg =
+          trimmedValue.length >= 2 ? "" : "Name must be at least 2 characters.";
+        break;
+      case "address":
+        errorMsg =
+          trimmedValue.length >= 5
+            ? ""
+            : "Address must be at least 5 characters.";
+        break;
+      case "phone":
+        errorMsg = /^\d{10}$/.test(sanitizedValue)
+          ? ""
+          : "Phone must be exactly 10 digits.";
+        break;
+      case "relation":
+        errorMsg =
+          trimmedValue.length >= 3
+            ? ""
+            : "Relation must be at least 3 characters.";
+        break;
+    }
 
-  // Update only the error for the current field
-  setErrors((prev) => ({ ...prev, [name]: errorMsg }));
-};
+    // Update only the error for the current field
+    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,9 +123,29 @@ const AddContactForm = () => {
           <SlidingHeaderText text="🚀 Welcome to the Investment Dashboard — Real-time updates ahead!" />
         </div>
         <div className="card-body">
+          <div
+            style={{
+              position: "relative",
+              textAlign: "center",
+              marginBottom: "1rem",
+              paddingTop: "0.5rem",
+            }}
+          >
+            <h2 style={{ margin: 0 }}>📇 Add Contact Information</h2>
+            <button
+              style={{
+                position: "absolute",
+                top: "0.5rem",
+                right: "1rem",
+              }}
+              className="btn btn-outline-secondary"
+              onClick={() => navigate("/")}
+              title="Back to Dashboard"
+            >
+              <ArrowLeftCircle size={24} />
+            </button>
+          </div>
           <form onSubmit={handleSubmit} className="contact-form">
-            <h3 className="form-title">Add Contact for Information</h3>
-
             <div className="form-group">
               <label htmlFor="name">Name:</label>
               <input
@@ -166,7 +205,14 @@ const AddContactForm = () => {
                 onChange={handleChange}
                 placeholder="e.g. Friend, Colleague"
                 className="form-input"
+                list="relation-options"
               />
+              <datalist id="relation-options">
+                {suggestions.map((item, idx) => (
+                  <option key={idx} value={item} />
+                ))}
+              </datalist>
+
               {errors.relation && (
                 <span className="error-text">{errors.relation}</span>
               )}

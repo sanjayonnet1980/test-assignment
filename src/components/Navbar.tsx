@@ -32,31 +32,7 @@ const Navbar = () => {
 
       <div className="collapse navbar-collapse" id="navbarContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
-            <Link
-              className="nav-link text-light fw-bold fst-italic me-1"
-              to="/"
-            >
-              <i className="bi bi-person-lines-fill me-1"></i> Add Contact Details
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link text-light fw-bold fst-italic me-1"
-              to="/"
-            >
-              <i className="bi bi-person-lines-fill me-1"></i> View Contact Details
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link text-light fw-bold fst-italic me-1"
-              to="/creditcard"
-            >
-              <i className="bi bi-credit-card-2-front-fill me-1"></i> Credit
-              Card
-            </Link>
-          </li>
+          
         </ul>
 
         <form className="d-flex" onSubmit={handleSearch}>

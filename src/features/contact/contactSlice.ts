@@ -46,7 +46,7 @@ export const updateContact = createAsyncThunk(
 //Delete contact details async method
 export const deleteContact = createAsyncThunk(
   "contact/delete",
-  async (id: number) => {
+  async (id: string) => {
     await axiosInstance.delete(`/contact/${id}`);
     return id;
   }
@@ -81,7 +81,7 @@ const contactSlice = createSlice({
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.contactDetails = state.contactDetails.filter(
-          (p) => p.id !== action.payload
+          (p) => p.id.toString() !== action.payload
         );
       });
   },
