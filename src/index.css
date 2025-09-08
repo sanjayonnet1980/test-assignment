@@ -234,7 +234,8 @@ button:disabled {
   padding: 1.5rem 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  pointer-events: auto;
+  z-index: 1050;
   text-align: center;
   max-width: 400px;
   width: 90%;
@@ -291,4 +292,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="date"] {
   appearance: none;
   -moz-appearance: none;
+}
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .rupee-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #555;
+}
+
+.input-with-icon input {
+  padding-left: 24px;
 }

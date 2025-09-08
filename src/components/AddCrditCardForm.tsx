@@ -55,15 +55,33 @@ const AddCreditCardForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const numericRegex = /^(\d+(\.\d*)?|\.\d*)?$/;
 
     // Sanitize numeric fields
     const sanitizedValue =
-      name === "cardNumber" || name === "amount"
-        ? value.replace(/\D/g, "")
-        : value;
+      name === "cardNumber" ? value.replace(/\D/g, "") : value;
+      
+    if (name === "amount") {
+      if (numericRegex.test(value)) {
+        const floatValue = value === "" ? "" : parseFloat(value);
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value === "" ? "" : floatValue.toString(),
+        }));
 
-    // Update form data
-    setFormData((prev) => ({ ...prev, [name]: sanitizedValue }));
+        // Clear error if valid
+        if (errors.amount) {
+          setErrors((prev) => ({ ...prev, amount: "" }));
+        }
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          amount: "Please enter a valid number",
+        }));
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: sanitizedValue }));
+    }
 
     // Validate the current field
     let errorMsg = "";
@@ -156,7 +174,7 @@ const AddCreditCardForm = () => {
                 placeholder="Enter 4 digit card number"
                 className="form-input"
                 list="relation-options"
-                pattern="\d{10}"
+                pattern="\d{4}"
                 maxLength={4}
                 inputMode="numeric"
               />
@@ -173,15 +191,14 @@ const AddCreditCardForm = () => {
             <div className="form-group">
               <label htmlFor="address">Amount:</label>
               <input
-                type="text"
+                type="number"
+                step="any"
                 name="amount"
                 id="amount"
                 value={formData.amount}
                 onChange={handleChange}
                 placeholder="Enter amount"
                 className="form-input"
-                pattern="\d{10}"
-                inputMode="numeric"
               />
               {errors.amount && (
                 <span className="error-text">{errors.amount}</span>
@@ -200,6 +217,7 @@ const AddCreditCardForm = () => {
                 placeholder="Enter Date"
                 className="form-input"
                 style={{ paddingRight: "2.5rem" }} // space for icon
+                onClick={handleIconClick}
               />
               <CalendarDate
                 size={30}
@@ -211,7 +229,7 @@ const AddCreditCardForm = () => {
                   transform: "translateY(-50%)",
                   cursor: "pointer",
                   color: "green",
-                  fontWeight: '700'
+                  fontWeight: "700",
                 }}
               />
 

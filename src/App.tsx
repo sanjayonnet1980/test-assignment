@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ViewContactPage from "./components/ViewContactPage";
 import AddContactForm from "./components/AddContactForm";
 import AddCreditCardForm from "./components/AddCrditCardForm";
+import ViewCreditCardPage from "./components/ViewCreditCardPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/addcontact" element={<AddContactForm />} />
         <Route path="/viewcontact" element={<ViewContactPage />} />
         <Route path="/addcreditcard" element={<AddCreditCardForm />} />
+        <Route path="/viewcreditcard" element={<ViewCreditCardPage />} />
       </Routes>
     </Router>
   );

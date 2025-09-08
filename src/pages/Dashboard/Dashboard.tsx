@@ -39,6 +39,17 @@ const Dashboard = () => (
               </Link>
             </button>
           </li>
+          <li className="nav-item">
+            <button className="btn btn-outline-success w-50 mt-4">
+              <Link
+                className="nav-link success fw-bold fst-italic me-1"
+                to="/viewcreditcard"
+              >
+                <i className="bi bi-credit-card-2-front-fill me-1"></i> View
+                Credit Card Information
+              </Link>
+            </button>
+          </li>
         </ul>
       </div>
     </nav>

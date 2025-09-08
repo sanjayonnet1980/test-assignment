@@ -1,27 +1,6 @@
 {
   "contact": [
     {
-      "id": "145e",
-      "name": "Sanjay Sah",
-      "address": "Signifa Sapphire, 1st floor, flat no 116, 7th cross road,  belthur colony, kadugudi",
-      "phone": "8471093455",
-      "relation": "self"
-    },
-    {
-      "id": "2cae",
-      "name": "Sanjay Sah",
-      "address": "Signifa Sapphire, 1st floor, flat no 116, 7th cross road,  belthur colony, kadugudi",
-      "phone": "8471093455",
-      "relation": "self"
-    },
-    {
-      "id": "0ec8",
-      "name": "Sanjay Sah",
-      "address": "Signifa Sapphire, 1st floor, flat no 116, 7th cross road,  belthur colony, kadugudi",
-      "phone": "8471093455",
-      "relation": "self"
-    },
-    {
       "id": "9068",
       "name": "Sanjay Sah",
       "address": "Signifa Sapphire, 1st floor, flat no 116, 7th cross road,  belthur colony, kadugudi",
@@ -29,7 +8,15 @@
       "relation": "self"
     }
   ],
-  "creditCard": [],
+  "creditCard": [
+    {
+      "id": "0f1a",
+      "cardNumber": "5549",
+      "amount": "12000",
+      "date": "2025-09-07",
+      "comments": "test"
+    }
+  ],
   "mutualFund": [],
   "stock": [],
   "salaryDetails": []

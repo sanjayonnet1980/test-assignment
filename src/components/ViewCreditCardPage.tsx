@@ -1,45 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import {
-  deleteContact,
-  fetchContacts,
-  updateContact,
-} from "../features/contact/contactSlice";
-import { PencilSquare, Trash, Check2, X } from "react-bootstrap-icons";
-import { ArrowLeftCircle } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+  deleteCreditCard,
+  fetchCreditCard,
+  updateCreditCard,
+} from "../features/creditCard/creditCardSlice";
 import SlidingHeaderText from "../atoms/SlidingText";
+import { useNavigate } from "react-router-dom";
+import {
+  ArrowLeftCircle,
+  Check2,
+  PencilSquare,
+  Trash,
+  X,
+} from "react-bootstrap-icons";
 import ConfirmButton from "../atoms/ConfirmationButton";
 import CancelButton from "../atoms/CancelButton";
 
 const ITEMS_PER_PAGE = 5;
 
-const ViewContactList: React.FC = () => {
+const ViewCreditCardPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { creditCard, loading, error } = useAppSelector(
+    (state) => state.creditCard
+  );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [blinkRowId, setBlinkRowId] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  const { contactDetails, loading, error } = useAppSelector(
-    (state) => state.contact
-  );
-
   const [currentPage, setCurrentPage] = useState(1);
   const [editId, setEditId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState({
-    name: "",
-    address: "",
-    phone: "",
-    relation: "",
+    cardNumber: "",
+    amount: "",
+    date: "",
+    comments: "",
   });
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchCreditCard());
   }, [dispatch]);
 
-  const totalPages = Math.ceil(contactDetails.length / ITEMS_PER_PAGE);
-  const paginatedData = contactDetails.slice(
+  const totalPages = Math.ceil(creditCard.length / ITEMS_PER_PAGE);
+  const paginatedData = creditCard.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -48,24 +51,39 @@ const ViewContactList: React.FC = () => {
     setCurrentPage(page);
   };
 
-  const handleEditClick = (contact: any) => {
-    setEditId(contact.id.toString());
+  const handleEditClick = (creditCard: any) => {
+    setEditId(creditCard.id.toString());
     setEditForm({
-      name: contact.name,
-      address: contact.address,
-      phone: contact.phone,
-      relation: contact.relation,
+      cardNumber: creditCard.cardNumber,
+      amount: creditCard.amount,
+      date: creditCard.date,
+      comments: creditCard.comments,
     });
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "amount") {
+      const floatRegex = /^(\d+(\.\d{0,2})?)?$/;
+      if (floatRegex.test(value)) {
+        setEditForm((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      }
+    } else {
+      setEditForm((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleEditSave = () => {
     if (!editId) return;
     dispatch(
-      updateContact({
+      updateCreditCard({
         id: editId,
         ...editForm,
       })
@@ -90,7 +108,7 @@ const ViewContactList: React.FC = () => {
 
   const confirmDelete = () => {
     if (deleteTargetId) {
-      dispatch(deleteContact(deleteTargetId));
+      dispatch(deleteCreditCard(deleteTargetId));
       setShowDeleteModal(false);
       setDeleteTargetId(null);
       setBlinkRowId(null);
@@ -103,9 +121,16 @@ const ViewContactList: React.FC = () => {
     setBlinkRowId(null);
   };
 
-  if (loading) return <div className="loader">Loading contacts...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = date.toLocaleString("en-US", { month: "short" });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
 
+  if (loading) return <div className="loader">Loading credit card...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
   return (
     <div className="page-container">
       <div className="card">
@@ -120,7 +145,7 @@ const ViewContactList: React.FC = () => {
             paddingTop: "0.5rem",
           }}
         >
-          <h2 style={{ margin: 0 }}>📇 Contact Directory</h2>
+          <h2 style={{ margin: 0 }}>📇 Credit Card Directory</h2>
           <button
             style={{
               position: "absolute",
@@ -134,33 +159,62 @@ const ViewContactList: React.FC = () => {
             <ArrowLeftCircle size={24} />
           </button>
         </div>
-
         <div className="card-body">
           <table className="contact-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Relation</th>
+                <th>Card Number</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Comments - Vendor</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {paginatedData.map((contact) => (
+              {paginatedData.map((creditcard) => (
                 <tr
-                  key={contact.id}
+                  key={creditcard.id}
                   className={
-                    blinkRowId === contact.id.toString() ? "blink-row" : ""
+                    blinkRowId === creditcard.id.toString() ? "blink-row" : ""
                   }
                 >
-                  {editId === contact.id.toString() ? (
+                  {editId === creditcard.id.toString() ? (
                     <>
                       <td>
                         <input
                           type="text"
-                          name="name"
-                          value={editForm.name}
+                          name="cardNumber"
+                          value={editForm.cardNumber}
+                          onChange={handleEditChange}
+                          className="form-control"
+                        />
+                      </td>
+                      <td>
+                        <div className="input-with-icon">
+                          <span className="rupee-icon">₹</span>
+                          <input
+                            type="text"
+                            name="amount"
+                            value={editForm.amount}
+                            onChange={handleEditChange}
+                            onBlur={() =>
+                              setEditForm((prev) => ({
+                                ...prev,
+                                amount: prev.amount
+                                  ? parseFloat(prev.amount).toFixed(2)
+                                  : "",
+                              }))
+                            }
+                            className="form-control"
+                          />
+                        </div>
+                      </td>
+
+                      <td>
+                        <input
+                          type="text"
+                          name="date"
+                          value={editForm.date}
                           onChange={handleEditChange}
                           className="form-control"
                         />
@@ -168,26 +222,8 @@ const ViewContactList: React.FC = () => {
                       <td>
                         <input
                           type="text"
-                          name="address"
-                          value={editForm.address}
-                          onChange={handleEditChange}
-                          className="form-control"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          name="phone"
-                          value={editForm.phone}
-                          onChange={handleEditChange}
-                          className="form-control"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          name="relation"
-                          value={editForm.relation}
+                          name="comments"
+                          value={editForm.comments}
                           onChange={handleEditChange}
                           className="form-control"
                         />
@@ -209,20 +245,20 @@ const ViewContactList: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <td>{contact.name}</td>
-                      <td>{contact.address}</td>
-                      <td>{contact.phone}</td>
-                      <td>{contact.relation}</td>
+                      <td>{`XXXX-XXXX-XXXX-${creditcard.cardNumber}`}</td>
+                      <td>₹ {parseFloat(creditcard.amount).toFixed(2)}</td>
+                      <td>{formatDate(creditcard.date)}</td>
+                      <td>{creditcard.comments}</td>
                       <td style={{ display: "flex", gap: "0.5rem" }}>
                         <button
                           className="btn btn-sm btn-outline-primary"
-                          onClick={() => handleEditClick(contact)}
+                          onClick={() => handleEditClick(creditcard)}
                         >
                           <PencilSquare />
                         </button>
                         <button
                           className="btn btn-sm btn-outline-danger"
-                          onClick={() => handleDelete(contact.id.toString())}
+                          onClick={() => handleDelete(creditcard.id.toString())}
                         >
                           <Trash />
                         </button>
@@ -233,7 +269,6 @@ const ViewContactList: React.FC = () => {
               ))}
             </tbody>
           </table>
-
           <div className="pagination mt-3">
             {Array.from({ length: totalPages }, (_, i) => {
               const pageNum = i + 1;
@@ -253,7 +288,7 @@ const ViewContactList: React.FC = () => {
             })}
             {showDeleteModal && (
               <div className="modal-box-centered">
-                <h5>Are you sure you want to delete this contact?</h5>
+                <h5>Are you sure you want to delete this Credit Details?</h5>
                 <div className="modal-actions">
                   <ConfirmButton onClick={confirmDelete} />
                   <CancelButton onClick={cancelDelete} />
@@ -268,4 +303,4 @@ const ViewContactList: React.FC = () => {
   );
 };
 
-export default ViewContactList;
+export default ViewCreditCardPage;
