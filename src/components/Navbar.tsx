@@ -36,16 +36,6 @@ const Navbar = () => {
         </ul>
 
         <form className="d-flex" onSubmit={handleSearch}>
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button className="btn btn-outline-light" type="submit">
-            Search
-          </button>
         </form>
       </div>
     </nav>

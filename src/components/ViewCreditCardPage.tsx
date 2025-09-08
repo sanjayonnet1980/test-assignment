@@ -25,6 +25,7 @@ const ViewCreditCardPage: React.FC = () => {
     (state) => state.creditCard
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [blinkRowId, setBlinkRowId] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -41,8 +42,14 @@ const ViewCreditCardPage: React.FC = () => {
     dispatch(fetchCreditCard());
   }, [dispatch]);
 
-  const totalPages = Math.ceil(creditCard.length / ITEMS_PER_PAGE);
-  const paginatedData = creditCard.slice(
+  const filteredData = creditCard.filter((creditCard) =>
+    Object.values(creditCard)
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -160,6 +167,23 @@ const ViewCreditCardPage: React.FC = () => {
           </button>
         </div>
         <div className="card-body">
+          <div className="search-bar mb-3 d-flex justify-content-end align-items-center">
+            <input
+              type="text"
+              className="form-control me-2"
+              placeholder="🔍 Search contacts..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ maxWidth: "300px" }}
+            />
+            <button
+              className="btn btn-outline-primary"
+              onClick={() => setSearchTerm("")}
+              title="Clear search"
+            >
+              Clear
+            </button>
+          </div>
           <table className="contact-table">
             <thead>
               <tr>

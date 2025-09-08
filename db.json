@@ -1,23 +1,17 @@
 {
-  "contact": [
-    {
-      "id": "9068",
-      "name": "Sanjay Sah",
-      "address": "Signifa Sapphire, 1st floor, flat no 116, 7th cross road,  belthur colony, kadugudi",
-      "phone": "8471093455",
-      "relation": "self"
-    }
-  ],
-  "creditCard": [
-    {
-      "id": "0f1a",
-      "cardNumber": "5549",
-      "amount": "12000",
-      "date": "2025-09-07",
-      "comments": "test"
-    }
-  ],
+  "contact": [],
+  "creditCard": [],
   "mutualFund": [],
   "stock": [],
-  "salaryDetails": []
+  "salaryDetails": [],
+  "monthlyInv": [
+    {
+      "id": "dacf",
+      "source": "Axis Bank",
+      "date": "2025-09-08",
+      "amount": "434",
+      "vendor": "flipkart",
+      "reason": "shopping"
+    }
+  ]
 }

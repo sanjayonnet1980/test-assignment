@@ -7,6 +7,8 @@ import ViewContactPage from "./components/ViewContactPage";
 import AddContactForm from "./components/AddContactForm";
 import AddCreditCardForm from "./components/AddCrditCardForm";
 import ViewCreditCardPage from "./components/ViewCreditCardPage";
+import AddMonthlyInv from "./components/AddMonthlyInvForm";
+import ViewMonthlyInv from "./components/ViewMonthlyInvPage";
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/viewcontact" element={<ViewContactPage />} />
         <Route path="/addcreditcard" element={<AddCreditCardForm />} />
         <Route path="/viewcreditcard" element={<ViewCreditCardPage />} />
+        <Route path="/addmnthinv" element={<AddMonthlyInv />} />
+        <Route path="/viewmnthinv" element={<ViewMonthlyInv />} />
       </Routes>
     </Router>
   );
