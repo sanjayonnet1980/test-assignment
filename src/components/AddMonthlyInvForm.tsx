@@ -175,7 +175,6 @@ const AddMonthlyInvForm = () => {
           </div>
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-group">
-              <label htmlFor="name">Paid From:</label>
               <input
                 type="text"
                 name="source"
@@ -186,6 +185,7 @@ const AddMonthlyInvForm = () => {
                 className="form-input"
                 list="relation-options"
               />
+              <label htmlFor="name" className="fw-bold text-muted">Paid From:</label>
               <datalist id="relation-options">
                 {suggestions.map((item, idx) => (
                   <option key={idx} value={item} />
@@ -197,7 +197,6 @@ const AddMonthlyInvForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="address">Amount:</label>
               <input
                 type="number"
                 step="any"
@@ -207,14 +206,15 @@ const AddMonthlyInvForm = () => {
                 onChange={handleChange}
                 placeholder="Enter amount"
                 className="form-input"
+                autoComplete="off"
               />
+              <label htmlFor="address" className="fw-bold text-muted">Amount:</label>
               {errors.amount && (
                 <span className="error-text">{errors.amount}</span>
               )}
             </div>
 
             <div className="form-group" style={{ position: "relative" }}>
-              <label htmlFor="date">Date:</label>
               <input
                 type="date"
                 name="date"
@@ -227,13 +227,14 @@ const AddMonthlyInvForm = () => {
                 style={{ paddingRight: "2.5rem" }} // space for icon
                 onClick={handleIconClick}
               />
+              <label htmlFor="date" className="fw-bold text-muted">Date:</label>
               <CalendarDate
                 size={30}
                 onClick={handleIconClick}
                 style={{
                   position: "absolute",
                   right: "0.75rem",
-                  top: "50%",
+                  top: "70%",
                   transform: "translateY(-50%)",
                   cursor: "pointer",
                   color: "green",
@@ -245,7 +246,6 @@ const AddMonthlyInvForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="relation">Paid To:</label>
               <input
                 type="text"
                 name="vendor"
@@ -254,14 +254,15 @@ const AddMonthlyInvForm = () => {
                 onChange={handleChange}
                 placeholder="Enter Comments where i place investment"
                 className="form-input"
+                autoComplete="off"
               />
+              <label htmlFor="relation" className="fw-bold text-muted">Paid To:</label>
               {errors.vendor && (
                 <span className="error-text">{errors.vendor}</span>
               )}
             </div>
 
             <div className="form-group">
-              <label htmlFor="relation">Purpose :</label>
               <input
                 type="text"
                 name="reason"
@@ -271,6 +272,7 @@ const AddMonthlyInvForm = () => {
                 placeholder="Enter reason"
                 className="form-input"
               />
+              <label htmlFor="relation" className="fw-bold text-muted">Purpose :</label>
               {errors.reason && (
                 <span className="error-text">{errors.reason}</span>
               )}

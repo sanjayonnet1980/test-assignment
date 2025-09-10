@@ -138,7 +138,7 @@ const ViewCreditCardPage: React.FC = () => {
           {error && <div className="error">Error: {error}</div>}
 
           {!loading && !error && (
-            <div className="border p-2">
+            <div className="border ">
               <CreditCardTable
                 data={paginatedData}
                 editId={editId}

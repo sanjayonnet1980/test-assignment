@@ -5,7 +5,7 @@ import "./App.scss";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ViewContactPage from "./components/ContactSectionPage/ViewContactPage";
 import AddContactForm from "./components/AddContactForm";
-import AddCreditCardForm from "./components/AddCrditCardForm";
+import AddCreditCardForm from "./components/CreditCardSectionPage/AddCrditCardForm";
 import ViewCreditCardPage from "./components/CreditCardSectionPage/ViewCreditCardPage";
 import AddMonthlyInv from "./components/AddMonthlyInvForm";
 import ViewMonthlyInv from "./components/MonthlySectionPage/ViewMonthlyInvPage";

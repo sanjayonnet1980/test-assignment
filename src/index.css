@@ -56,14 +56,6 @@ code {
   color: rgb(4, 28, 136);
 }
 
-.form-group {
-  display: grid;
-  grid-template-columns: 150px auto;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
 .form-control {
   display: block;
   width: 100%;
@@ -81,15 +73,6 @@ code {
   border-color: #55e299;
   outline: 0;
   box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
-}
-
-.form-group label {
-  font-size: 1rem;
-  font-weight: 700;
-  color: rgb(4, 28, 136);
-  text-align: left;
-  padding-left: 2rem;
-  white-space: nowrap;
 }
 
 .form-input {
@@ -503,3 +486,17 @@ input[type="date"] {
 .calendar-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
+.form-group {
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 1;
+  min-width: 120px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  color: #444;
+  text-align: left;
+}
+
