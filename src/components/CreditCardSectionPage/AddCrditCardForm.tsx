@@ -44,8 +44,18 @@ const AddCreditCardForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const validationResults = rows.map(validateRow);
     setErrors(validationResults);
+
+    // ✅ Check if any field has an error
+    const hasErrors = validationResults.some((rowErrors) =>
+      Object.values(rowErrors).some((msg) => msg !== "")
+    );
+
+    if (hasErrors) {
+      return; // ⛔ Stop submission if errors exist
+    }
 
     setLoading(true);
     try {
@@ -53,10 +63,12 @@ const AddCreditCardForm = () => {
         await dispatch(addCreditCard(row));
       }
       setRows([initialRow]);
+      setErrors([initialRow]); // ✅ Reset errors after successful submit
     } finally {
       setLoading(false);
     }
   };
+
   const { triggerDatePicker, setDateRef } = useDateRefTrigger();
 
   const handleRemoveRow = (index: number) => {
