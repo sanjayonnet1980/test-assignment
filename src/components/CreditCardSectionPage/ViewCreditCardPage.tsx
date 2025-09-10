@@ -11,6 +11,7 @@ import HeaderSection from "../../atoms/HeaderSection";
 import SearchBar from "../../atoms/SearchBar";
 import CreditCardTable from "./CreditCardTable";
 import PaginationControls from "../../atoms/PaginationControls";
+import { calculateCreditCardTotalsByCard } from "../../utils/creditCardTotal";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -126,21 +127,18 @@ const ViewCreditCardPage: React.FC = () => {
   if (loading) return <div className="loader">Loading credit card...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
+  const cardTotals = calculateCreditCardTotalsByCard(creditCard);
   return (
     <div className="page-container">
       <div className="card">
-        <HeaderSection
-          text={
-            "Credit Card Investment Directory"
-          }
-        />
-        <div className="card-body">
+        <HeaderSection text={"Credit Card Investment Directory"} />
+        <div className="card-body ">
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {loading && <div className="loader">Loading investments...</div>}
           {error && <div className="error">Error: {error}</div>}
 
           {!loading && !error && (
-            <>
+            <div className="border p-2">
               <CreditCardTable
                 data={paginatedData}
                 editId={editId}
@@ -157,7 +155,7 @@ const ViewCreditCardPage: React.FC = () => {
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
               />
-            </>
+            </div>
           )}
           {showDeleteModal && (
             <div className="modal-box-centered">
@@ -168,6 +166,16 @@ const ViewCreditCardPage: React.FC = () => {
               </div>
             </div>
           )}
+          <div className="card-footer text-muted border shadow-sm p-3">
+            {Object.entries(cardTotals).map(([cardNumber, totals]) => (
+              <div key={cardNumber} className="card-summary d-flex gap-3">
+                <p>Card: {cardNumber}</p>
+                <p>💰 Cashback: ₹{totals.cashbackTotal.toFixed(2)}</p>
+                <p>📈 Investment: ₹{totals.investmentTotal.toFixed(2)}</p>
+                <p>🧾 Billing: ₹{totals.billingTotal.toFixed(2)}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

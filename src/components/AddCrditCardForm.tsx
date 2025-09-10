@@ -1,150 +1,86 @@
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 import { useAppDispatch } from "../hooks";
-import { Omit } from "utility-types";
-import SlidingHeaderText from "../atoms/SlidingText";
-import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { CreditCard } from "../types/creditCardTypes";
 import { addCreditCard } from "../features/creditCard/creditCardSlice";
-import { CalendarDate } from "react-bootstrap-icons";
+import { CalendarDate, ArrowLeftCircle } from "react-bootstrap-icons";
+import SlidingHeaderText from "../atoms/SlidingText";
 
-type CreditCardFormData = Omit<CreditCard, "id">;
+const initialRow = {
+  cardNumber: "",
+  amount: "",
+  date: "",
+  comments: "",
+  mode: "",
+};
+
+type CreditCardRow = {
+  cardNumber: string;
+  amount: string;
+  date: string;
+  comments: string;
+  mode: string;
+};
 
 const AddCreditCardForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({
-    cardNumber: "",
-    amount: "",
-    date: "",
-    comments: "",
-    mode: '',
-  });
-  const dateRef = useRef<HTMLInputElement>(null);
-
-  const handleIconClick = () => {
-    // Trigger native date picker
-    dateRef.current?.showPicker?.() || dateRef.current?.focus();
-  };
+  const [rows, setRows] = useState([initialRow]);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState<Omit<CreditCardFormData, "id">>({
-    cardNumber: "",
-    amount: "",
-    date: "",
-    comments: "",
-    mode: '',
-  });
+  const dateRefs = useRef<HTMLInputElement[]>([]);
 
-  const [suggestions] = useState<string[]>(["4188", "5549", "7577"]);
-  const [suggestionsMode] = useState<string[]>(["cashback", "investment"]);
-  const validateForm = () => {
-    const newErrors = {
-      cardNumber:
-        formData.cardNumber.trim().length < 4
-          ? "cardNumber must be at least Last 4 characters."
-          : "",
-      amount:
-        Number(formData.amount.trim()) >= 0
-          ? "Amount must be at least 1 rupees."
-          : "",
-      date: formData.date.trim() === "" ? "required date." : "",
-      comments:
-        formData.comments.trim().length > 5
-          ? "comments must be at least 5 characters."
-          : "",
-          mode:
-        formData.mode.trim().length > 2
-          ? "comments must be at least 5 characters."
-          : "",
+  const handleChange = (
+    index: number,
+    field: keyof CreditCardRow,
+    value: string
+  ) => {
+    const updatedRows = [...rows];
+    updatedRows[index] = {
+      ...updatedRows[index],
+      [field]: field === "cardNumber" ? value.replace(/\D/g, "") : value,
     };
-    setErrors(newErrors);
+    setRows(updatedRows);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const numericRegex = /^(\d+(\.\d*)?|\.\d*)?$/;
-
-    // Sanitize numeric fields
-    const sanitizedValue =
-      name === "cardNumber" ? value.replace(/\D/g, "") : value;
-      
-    if (name === "amount") {
-      if (numericRegex.test(value)) {
-        const floatValue = value === "" ? "" : parseFloat(value);
-        setFormData((prev) => ({
-          ...prev,
-          [name]: value === "" ? "" : floatValue.toString(),
-        }));
-
-        // Clear error if valid
-        if (errors.amount) {
-          setErrors((prev) => ({ ...prev, amount: "" }));
-        }
-      } else {
-        setErrors((prev) => ({
-          ...prev,
-          amount: "Please enter a valid number",
-        }));
-      }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: sanitizedValue }));
-    }
-
-    // Validate the current field
-    let errorMsg = "";
-    switch (name) {
-      case "cardNumber":
-        errorMsg =
-          sanitizedValue.length >= 4
-            ? ""
-            : "Card number must be at least 4 digits.";
-        break;
-      case "amount":
-        errorMsg =
-          Number(sanitizedValue) > 0 ? "" : "Amount must be at least 1 rupee.";
-        break;
-      case "date":
-        errorMsg = sanitizedValue.trim() !== "" ? "" : "Date is required.";
-        break;
-      case "comments":
-        errorMsg =
-          sanitizedValue.trim().length >= 5
-            ? ""
-            : "Comments must be at least 5 characters.";
-        break;
-        case "mode":
-        errorMsg =
-          sanitizedValue.trim().length >= 2
-            ? ""
-            : "Comments must be at least 5 characters.";
-        break;
-    }
-
-    // Update error state
-    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
+  const handleAddRow = () => {
+    setRows([...rows, initialRow]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !formData.cardNumber ||
-      !formData.amount ||
-      !formData.date ||
-      !formData.comments
-    ) {
-      validateForm();
-      return;
-    }
-
-    setLoading(true); // Start loading
-
+    setLoading(true);
     try {
-      await dispatch(addCreditCard(formData as Omit<CreditCardFormData, "id">));
-      setFormData({ cardNumber: "", amount: "", date: "", comments: "", mode: "" });
+      for (const row of rows) {
+        await dispatch(addCreditCard(row));
+      }
+      setRows([initialRow]);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
+
+  const triggerDatePicker = (index: number) => {
+    const input = dateRefs.current[index];
+    if (input) {
+      if (typeof input.showPicker === "function") {
+        input.showPicker();
+      } else {
+        input.focus();
+      }
+    }
+  };
+
+  const setDateRef = (index: number) => (el: HTMLInputElement | null) => {
+    if (el !== null) {
+      dateRefs.current[index] = el;
+    }
+  };
+
+  const handleRemoveRow = (index: number) => {
+    setRows((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const [suggestions] = useState<string[]>(["4188", "5549", "7577"]);
+  const [suggestionsMode] = useState<string[]>(["cashback", "investment"]);
 
   return (
     <div className="page-container">
@@ -158,139 +94,152 @@ const AddCreditCardForm = () => {
               position: "relative",
               textAlign: "center",
               marginBottom: "1rem",
-              paddingTop: "0.5rem",
             }}
           >
             <h2 style={{ margin: 0 }}>📇 Add Credit Card Information</h2>
             <button
-              style={{
-                position: "absolute",
-                top: "0.5rem",
-                right: "1rem",
-              }}
               className="btn btn-outline-secondary"
+              style={{ position: "absolute", top: "0.5rem", right: "1rem" }}
               onClick={() => navigate("/")}
               title="Back to Dashboard"
             >
               <ArrowLeftCircle size={24} />
             </button>
           </div>
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="form-group">
-              <label htmlFor="name">Card Number:</label>
-              <input
-                type="text"
-                name="cardNumber"
-                id="cardNumber"
-                value={formData.cardNumber}
-                onChange={handleChange}
-                placeholder="Enter 4 digit card number"
-                className="form-input"
-                list="relation-options"
-                pattern="\d{4}"
-                maxLength={4}
-                inputMode="numeric"
-              />
-              <datalist id="relation-options">
-                {suggestions.map((item, idx) => (
-                  <option key={idx} value={item} />
-                ))}
-              </datalist>
-              {errors.cardNumber && (
-                <span className="error-text">{errors.cardNumber}</span>
-              )}
-            </div>
 
-            <div className="form-group">
-              <label htmlFor="address">Amount:</label>
-              <input
-                type="number"
-                step="any"
-                name="amount"
-                id="amount"
-                value={formData.amount}
-                onChange={handleChange}
-                placeholder="Enter amount"
-                className="form-input"
-              />
-              {errors.amount && (
-                <span className="error-text">{errors.amount}</span>
-              )}
-            </div>
-
-            <div className="form-group" style={{ position: "relative" }}>
-              <label htmlFor="date">Date:</label>
-              <input
-                type="date"
-                name="date"
-                ref={dateRef}
-                id="date"
-                value={formData.date}
-                onChange={handleChange}
-                placeholder="Enter Date"
-                className="form-input"
-                style={{ paddingRight: "2.5rem" }} // space for icon
-                onClick={handleIconClick}
-              />
-              <CalendarDate
-                size={30}
-                onClick={handleIconClick}
+          <form onSubmit={handleSubmit} className="mt-5 mr-5">
+            {rows.map((row, index) => (
+              <div
+                key={index}
+                className="form-row"
                 style={{
-                  position: "absolute",
-                  right: "0.75rem",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  cursor: "pointer",
-                  color: "green",
-                  fontWeight: "700",
+                  display: "flex",
+                  gap: "0.5rem",
+                  marginBottom: "1rem",
+                  alignItems: "center",
                 }}
-              />
+              >
+                <input
+                  type="text"
+                  name="cardNumber"
+                  value={row.cardNumber}
+                  onChange={(e) =>
+                    handleChange(index, "cardNumber", e.target.value)
+                  }
+                  placeholder="Card #"
+                  maxLength={4}
+                  inputMode="numeric"
+                  className="form-input"
+                  autoComplete="off"
+                  list="relation-cardnum"
+                />
+                <datalist id="relation-cardnum">
+                  {suggestions.map((item, idx) => (
+                    <option key={idx} value={item} />
+                  ))}
+                </datalist>
+                <input
+                  type="number"
+                  name="amount"
+                  value={row.amount}
+                  onChange={(e) =>
+                    handleChange(index, "amount", e.target.value)
+                  }
+                  placeholder="Amount"
+                  className="form-input"
+                  autoComplete="off"
+                />
+                <div
+                  className="calendar-wrapper"
+                  style={{ position: "relative", flex: 1 }}
+                >
+                  <input
+                    type="date"
+                    name="date"
+                    ref={setDateRef(index)}
+                    onClick={() => triggerDatePicker(index)}
+                    value={row.date}
+                    onChange={(e) =>
+                      handleChange(index, "date", e.target.value)
+                    }
+                    className="form-input"
+                    style={{
+                      paddingRight: "4.5rem",
+                      borderRadius: "4px",
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                  <CalendarDate
+                    size={20}
+                    onClick={() => triggerDatePicker(index)}
+                    style={{
+                      position: "absolute",
+                      right: "0.75rem",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      color: "#007bff",
+                    }}
+                  />
+                </div>
+                <input
+                  type="text"
+                  name="comments"
+                  value={row.comments}
+                  onChange={(e) =>
+                    handleChange(index, "comments", e.target.value)
+                  }
+                  placeholder="Comments"
+                  className="form-input"
+                  autoComplete="off"
+                />
+                <input
+                  type="text"
+                  name="mode"
+                  value={row.mode}
+                  onChange={(e) => handleChange(index, "mode", e.target.value)}
+                  placeholder="Mode"
+                  className="form-input"
+                  autoComplete="off"
+                  list="relation-mode"
+                />
+                <datalist id="relation-mode">
+                  {suggestionsMode.map((item, idx) => (
+                    <option key={idx} value={item} />
+                  ))}
+                </datalist>
+                {rows.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveRow(index)}
+                    className="btn btn-outline-danger"
+                    style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem" }}
+                    title="Remove this row"
+                  >
+                    ❌
+                  </button>
+                )}
+                {index === rows.length - 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleAddRow}
+                  >
+                    ➕
+                  </button>
+                )}
+              </div>
+            ))}
 
-              {errors.date && <span className="error-text">{errors.date}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="relation">Comments:</label>
-              <input
-                type="text"
-                name="comments"
-                id="comments"
-                value={formData.comments}
-                onChange={handleChange}
-                placeholder="Enter Comments where i place investment"
-                className="form-input"
-              />
-              {errors.comments && (
-                <span className="error-text">{errors.comments}</span>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="relation">Mode:</label>
-              <input
-                type="text"
-                name="mode"
-                id="mode"
-                value={formData.mode}
-                onChange={handleChange}
-                placeholder="Enter mode of payment"
-                className="form-input"
-                list="relation-mode"
-                autoComplete="off"
-              />
-              <datalist id="relation-mode">
-                {suggestionsMode.map((item, idx) => (
-                  <option key={idx} value={item} />
-                ))}
-              </datalist>
-              {errors.mode && (
-                <span className="error-text">{errors.mode}</span>
-              )}
-            </div>
-
-            <button type="submit" className="form-button" disabled={loading}>
-              {loading ? "Adding..." : "Add Contact"}
+            <button
+              type="submit"
+              className="form-button"
+              disabled={loading}
+              style={{ width: '100%'}}
+            >
+              {loading ? "Adding..." : "Add Credit Card Information"}
             </button>
+
             {loading && (
               <div className="loader-overlay">
                 <div className="loader-circle"></div>
@@ -298,7 +247,7 @@ const AddCreditCardForm = () => {
             )}
           </form>
         </div>
-        <div className="card-footer text-muted">2 days ago</div>
+        <div className="card-footer text-muted">Updated just now</div>
       </div>
     </div>
   );

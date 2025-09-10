@@ -493,3 +493,13 @@ input[type="date"] {
 .custom-suggestions li:hover {
   background-color: #f0f0f0;
 }
+.form-input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  flex: 1;
+}
+
+.calendar-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}

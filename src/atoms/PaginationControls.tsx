@@ -8,7 +8,7 @@ interface Props {
 
 const PaginationControls: React.FC<Props> = ({ currentPage, totalPages, onPageChange }) => {
   return (
-    <div className="pagination-controls mt-3 d-flex justify-content-end gap-2">
+    <div className="pagination-controls mt-3 d-flex justify-content-end gap-2 mb-2">
       {Array.from({ length: totalPages }, (_, i) => (
         <button
           key={i}
