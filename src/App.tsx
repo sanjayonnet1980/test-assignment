@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import "./App.scss";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ViewContactPage from "./components/ViewContactPage";
+import ViewContactPage from "./components/ContactSectionPage/ViewContactPage";
 import AddContactForm from "./components/AddContactForm";
 import AddCreditCardForm from "./components/AddCrditCardForm";
-import ViewCreditCardPage from "./components/ViewCreditCardPage";
+import ViewCreditCardPage from "./components/CreditCardSectionPage/ViewCreditCardPage";
 import AddMonthlyInv from "./components/AddMonthlyInvForm";
-import ViewMonthlyInv from "./components/ViewMonthlyInvPage";
+import ViewMonthlyInv from "./components/MonthlySectionPage/ViewMonthlyInvPage";
 
 const App = () => {
   return (

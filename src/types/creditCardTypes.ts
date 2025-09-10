@@ -4,4 +4,5 @@ export interface CreditCard {
   amount: string;
   date: string;
   comments: string;
+  mode: string;
 }

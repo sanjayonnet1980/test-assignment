@@ -18,6 +18,7 @@ const AddCreditCardForm = () => {
     amount: "",
     date: "",
     comments: "",
+    mode: '',
   });
   const dateRef = useRef<HTMLInputElement>(null);
 
@@ -31,9 +32,11 @@ const AddCreditCardForm = () => {
     amount: "",
     date: "",
     comments: "",
+    mode: '',
   });
 
   const [suggestions] = useState<string[]>(["4188", "5549", "7577"]);
+  const [suggestionsMode] = useState<string[]>(["cashback", "investment"]);
   const validateForm = () => {
     const newErrors = {
       cardNumber:
@@ -47,6 +50,10 @@ const AddCreditCardForm = () => {
       date: formData.date.trim() === "" ? "required date." : "",
       comments:
         formData.comments.trim().length > 5
+          ? "comments must be at least 5 characters."
+          : "",
+          mode:
+        formData.mode.trim().length > 2
           ? "comments must be at least 5 characters."
           : "",
     };
@@ -105,6 +112,12 @@ const AddCreditCardForm = () => {
             ? ""
             : "Comments must be at least 5 characters.";
         break;
+        case "mode":
+        errorMsg =
+          sanitizedValue.trim().length >= 2
+            ? ""
+            : "Comments must be at least 5 characters.";
+        break;
     }
 
     // Update error state
@@ -127,7 +140,7 @@ const AddCreditCardForm = () => {
 
     try {
       await dispatch(addCreditCard(formData as Omit<CreditCardFormData, "id">));
-      setFormData({ cardNumber: "", amount: "", date: "", comments: "" });
+      setFormData({ cardNumber: "", amount: "", date: "", comments: "", mode: "" });
     } finally {
       setLoading(false); // Stop loading
     }
@@ -249,6 +262,29 @@ const AddCreditCardForm = () => {
               />
               {errors.comments && (
                 <span className="error-text">{errors.comments}</span>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="relation">Mode:</label>
+              <input
+                type="text"
+                name="mode"
+                id="mode"
+                value={formData.mode}
+                onChange={handleChange}
+                placeholder="Enter mode of payment"
+                className="form-input"
+                list="relation-mode"
+                autoComplete="off"
+              />
+              <datalist id="relation-mode">
+                {suggestionsMode.map((item, idx) => (
+                  <option key={idx} value={item} />
+                ))}
+              </datalist>
+              {errors.mode && (
+                <span className="error-text">{errors.mode}</span>
               )}
             </div>
 

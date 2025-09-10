@@ -314,3 +314,182 @@ input[type="date"] {
   font-style: italic;
   color: #888;
 }
+
+.card-header {
+  padding: 1rem;
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.header-title {
+  padding: 1rem 1rem 0 10rem;
+  position: relative;
+}
+
+.header-title h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.header-title button {
+  margin-left: auto;
+}
+
+
+.page-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.header-title h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.back-button {
+  margin-left: auto;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.search-bar {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.contact-table th,
+.contact-table td {
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.rupee-icon {
+  margin-right: 0.25rem;
+  font-weight: bold;
+}
+
+.modal-box-centered {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.loader,
+.error {
+  text-align: center;
+  padding: 1rem;
+  font-weight: 500;
+}
+
+/* 🔁 Responsive Breakpoints */
+@media (max-width: 768px) {
+  .header-title {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-table th,
+  .contact-table td {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+
+  .modal-box-centered {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-title h2 {
+    font-size: 1.25rem;
+  }
+
+  .back-button {
+    position: static;
+    margin-top: 0.5rem;
+  }
+
+  .pagination-controls button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+.custom-suggestions {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  z-index: 10;
+  list-style: none;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.custom-suggestions li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.custom-suggestions li:hover {
+  background-color: #f0f0f0;
+}
