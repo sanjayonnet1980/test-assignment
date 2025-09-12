@@ -193,7 +193,7 @@ const ViewContactList: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="card-footer text-muted">2 days ago</div>
+        <div className="card-footer text-primary">Your contact details are securely stored · Need help? Reach out to support</div>
       </div>
     </div>
   );

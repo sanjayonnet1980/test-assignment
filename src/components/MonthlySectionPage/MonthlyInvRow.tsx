@@ -1,6 +1,7 @@
 import React from "react";
 import { PencilSquare, Trash, Check2, X } from "react-bootstrap-icons";
 import { formatToINRCurrency } from "../../utils/amountFormat";
+import { formatDateWithUnicodeOrdinal } from "../../utils/formatDateToIndianStyle";
 
 interface Props {
   investment: any;
@@ -25,19 +26,18 @@ const MonthlyInvRow: React.FC<Props> = ({
   onDeleteClick,
   blink,
 }) => {
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = date.toLocaleString("en-US", { month: "short" });
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
-  };
-
   return (
     <tr className={blink ? "blink-row" : ""}>
       {isEditing ? (
         <>
-          <td><input name="source" value={editForm.source} onChange={onEditChange} className="form-control" /></td>
+          <td>
+            <input
+              name="source"
+              value={editForm.source}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
           <td>
             <div className="input-with-icon">
               <span className="rupee-icon">₹</span>
@@ -57,24 +57,59 @@ const MonthlyInvRow: React.FC<Props> = ({
               />
             </div>
           </td>
-          <td><input name="date" value={editForm.date} onChange={onEditChange} className="form-control" /></td>
-          <td><input name="vendor" value={editForm.vendor} onChange={onEditChange} className="form-control" /></td>
-          <td><input name="reason" value={editForm.reason} onChange={onEditChange} className="form-control" /></td>
+          <td>
+            <input
+              name="date"
+              value={editForm.date}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
+          <td>
+            <input
+              name="vendor"
+              value={editForm.vendor}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
+          <td>
+            <input
+              name="reason"
+              value={editForm.reason}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
           <td style={{ display: "flex", gap: "0.5rem" }}>
-            <button className="btn btn-sm btn-success" onClick={onEditSave}><Check2 /></button>
-            <button className="btn btn-sm btn-secondary" onClick={onEditCancel}><X /></button>
+            <button className="btn btn-sm btn-success" onClick={onEditSave}>
+              <Check2 />
+            </button>
+            <button className="btn btn-sm btn-secondary" onClick={onEditCancel}>
+              <X />
+            </button>
           </td>
         </>
       ) : (
         <>
           <td>{investment.source}</td>
           <td>{formatToINRCurrency(investment.amount)}</td>
-          <td>{formatDate(investment.date)}</td>
+          <td>{formatDateWithUnicodeOrdinal(investment.date)}</td>
           <td>{investment.vendor}</td>
           <td>{investment.reason}</td>
           <td style={{ display: "flex", gap: "0.5rem" }}>
-            <button className="btn btn-sm btn-outline-primary" onClick={onEditClick}><PencilSquare /></button>
-            <button className="btn btn-sm btn-outline-danger" onClick={onDeleteClick}><Trash /></button>
+            <button
+              className="btn btn-sm btn-outline-primary"
+              onClick={onEditClick}
+            >
+              <PencilSquare />
+            </button>
+            <button
+              className="btn btn-sm btn-outline-danger"
+              onClick={onDeleteClick}
+            >
+              <Trash />
+            </button>
           </td>
         </>
       )}

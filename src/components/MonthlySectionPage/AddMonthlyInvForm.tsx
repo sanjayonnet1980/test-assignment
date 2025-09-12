@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../../hooks";
 import { Omit } from "utility-types";
-import SlidingHeaderText from "../atoms/SlidingText";
+import SlidingHeaderText from "../../atoms/SlidingText";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { CalendarDate } from "react-bootstrap-icons";
-import { monthlyInv } from "../types/mnthInv";
-import { addMnthInv } from "../features/MonthlyInv/monthlyInvSlice";
+import { monthlyInv } from "../../types/mnthInv";
+import { addMnthInv } from "../../features/MonthlyInv/monthlyInvSlice";
 
 type MonthlyInvFormData = Omit<monthlyInv, "id">;
 
@@ -175,6 +175,9 @@ const AddMonthlyInvForm = () => {
           </div>
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-group">
+              {errors.source && (
+                <span className="error-text">{errors.source}</span>
+              )}
               <input
                 type="text"
                 name="source"
@@ -191,12 +194,13 @@ const AddMonthlyInvForm = () => {
                   <option key={idx} value={item} />
                 ))}
               </datalist>
-              {errors.source && (
-                <span className="error-text">{errors.source}</span>
-              )}
+              
             </div>
 
             <div className="form-group">
+              {errors.amount && (
+                <span className="error-text">{errors.amount}</span>
+              )}
               <input
                 type="number"
                 step="any"
@@ -209,12 +213,11 @@ const AddMonthlyInvForm = () => {
                 autoComplete="off"
               />
               <label htmlFor="address" className="fw-bold text-muted">Amount:</label>
-              {errors.amount && (
-                <span className="error-text">{errors.amount}</span>
-              )}
+              
             </div>
 
             <div className="form-group" style={{ position: "relative" }}>
+            {errors.date && <span className="error-text">{errors.date}</span>}
               <input
                 type="date"
                 name="date"
@@ -242,10 +245,13 @@ const AddMonthlyInvForm = () => {
                 }}
               />
 
-              {errors.date && <span className="error-text">{errors.date}</span>}
+              
             </div>
 
             <div className="form-group">
+              {errors.vendor && (
+                <span className="error-text">{errors.vendor}</span>
+              )}
               <input
                 type="text"
                 name="vendor"
@@ -257,12 +263,13 @@ const AddMonthlyInvForm = () => {
                 autoComplete="off"
               />
               <label htmlFor="relation" className="fw-bold text-muted">Paid To:</label>
-              {errors.vendor && (
-                <span className="error-text">{errors.vendor}</span>
-              )}
+              
             </div>
 
             <div className="form-group">
+              {errors.reason && (
+                <span className="error-text">{errors.reason}</span>
+              )}
               <input
                 type="text"
                 name="reason"
@@ -273,9 +280,7 @@ const AddMonthlyInvForm = () => {
                 className="form-input"
               />
               <label htmlFor="relation" className="fw-bold text-muted">Purpose :</label>
-              {errors.reason && (
-                <span className="error-text">{errors.reason}</span>
-              )}
+              
             </div>
 
             <button type="submit" className="form-button" disabled={loading}>

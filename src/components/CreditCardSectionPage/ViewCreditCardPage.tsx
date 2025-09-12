@@ -13,7 +13,7 @@ import CreditCardTable from "./CreditCardTable";
 import PaginationControls from "../../atoms/PaginationControls";
 import { calculateCreditCardTotalsByCard } from "../../utils/creditCardTotal";
 import { formatToINRCurrency } from "../../utils/amountFormat";
-import { FileEarmarkArrowDown } from "react-bootstrap-icons";
+import { FileEarmarkArrowDown, ArrowRight } from "react-bootstrap-icons";
 import { handleDownloadPDF } from "../../utils/pdfExportCreditCard";
 
 const ITEMS_PER_PAGE = 5;
@@ -139,7 +139,7 @@ const ViewCreditCardPage: React.FC = () => {
     <div className="page-container">
       <div className="card border border border-warning">
         <HeaderSection text={"Credit Card Investment Directory"} />
-        <div className="card-body ">
+        <div className="card-body">
           <button
             className="btn btn-outline-primary"
             onClick={onDownloadClick}
@@ -152,7 +152,7 @@ const ViewCreditCardPage: React.FC = () => {
           {error && <div className="error">Error: {error}</div>}
 
           {!loading && !error && (
-            <div className="border ">
+            <div className="border">
               <CreditCardTable
                 data={paginatedData}
                 editId={editId}
@@ -186,12 +186,12 @@ const ViewCreditCardPage: React.FC = () => {
                 key={cardNumber}
                 className="card-summary d-flex gap-3 justify-content-center"
               >
-                <p className="text-primary fw-bold">Card: {cardNumber}</p>
+                <p className="text-primary fw-bold">Card: {cardNumber} {" "}<ArrowRight size={20} /></p>
                 <p className="text-primary fw-bold">
-                  💰 Cashback: {formatToINRCurrency(totals.cashbackTotal)}
+                 💰 Cashback: {formatToINRCurrency(totals.cashbackTotal)}{" "}<ArrowRight size={20} />
                 </p>
                 <p className="text-primary fw-bold">
-                  📈 Investment: {formatToINRCurrency(totals.investmentTotal)}
+                  📈 Investment: {formatToINRCurrency(totals.investmentTotal)}{" "}<ArrowRight size={20} />
                 </p>
                 <p className="text-primary fw-bold">
                   🧾 Billing: {formatToINRCurrency(totals.billingTotal)}

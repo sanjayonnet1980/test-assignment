@@ -7,7 +7,7 @@ import ViewContactPage from "./components/ContactSectionPage/ViewContactPage";
 import AddContactForm from "./components/ContactSectionPage/AddContactForm";
 import AddCreditCardForm from "./components/CreditCardSectionPage/AddCrditCardForm";
 import ViewCreditCardPage from "./components/CreditCardSectionPage/ViewCreditCardPage";
-import AddMonthlyInv from "./components/AddMonthlyInvForm";
+import AddMonthlyInv from "./components/MonthlySectionPage/AddMonthlyInvForm";
 import ViewMonthlyInv from "./components/MonthlySectionPage/ViewMonthlyInvPage";
 
 const App = () => {

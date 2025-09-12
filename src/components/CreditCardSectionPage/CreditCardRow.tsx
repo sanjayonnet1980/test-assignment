@@ -92,7 +92,7 @@ const CreditCardRow: React.FC<Props> = ({
         </>
       ) : (
         <>
-          <td>{investment.cardNumber}</td>
+          <td>{`XXXX-XXXX-XXXX-${investment.cardNumber}`}</td>
           <td>{formatToINRCurrency(investment.amount)}</td>
           <td>{formatDateWithUnicodeOrdinal(investment.date)}</td>
           <td>{investment.comments}</td>
