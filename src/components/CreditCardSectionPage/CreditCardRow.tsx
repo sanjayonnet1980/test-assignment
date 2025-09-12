@@ -1,5 +1,7 @@
-import React from 'react';
+import React from "react";
 import { PencilSquare, Trash, Check2, X } from "react-bootstrap-icons";
+import { formatToINRCurrency } from "../../utils/amountFormat";
+import { formatDateWithUnicodeOrdinal } from "../../utils/formatDateToIndianStyle";
 
 interface Props {
   investment: any;
@@ -13,7 +15,6 @@ interface Props {
   blink: boolean;
 }
 
-
 const CreditCardRow: React.FC<Props> = ({
   investment,
   isEditing,
@@ -25,62 +26,95 @@ const CreditCardRow: React.FC<Props> = ({
   onDeleteClick,
   blink,
 }) => {
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = date.toLocaleString("en-US", { month: "short" });
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
-  };
-
   return (
-      <tr className={blink ? "blink-row" : ""}>
-        {isEditing ? (
-          <>
-            <td><input name="cardNumber" value={editForm.cardNumber} onChange={onEditChange} className="form-control" /></td>
-            <td>
-              <div className="input-with-icon">
-                <span className="rupee-icon">₹</span>
-                <input
-                  name="amount"
-                  value={editForm.amount}
-                  onChange={onEditChange}
-                  onBlur={() =>
-                    onEditChange({
-                      target: {
-                        name: "amount",
-                        value: parseFloat(editForm.amount).toFixed(2),
-                      },
-                    } as any)
-                  }
-                  className="form-control"
-                />
-              </div>
-            </td>
-            <td><input name="date" value={editForm.date} onChange={onEditChange} className="form-control" /></td>
-            <td><input name="comments" value={editForm.comments} onChange={onEditChange} className="form-control" /></td>
-            <td><input name="mode" value={editForm.mode} onChange={onEditChange} className="form-control" /></td>
-            <td style={{ display: "flex", gap: "0.5rem" }}>
-              <button className="btn btn-sm btn-success" onClick={onEditSave}><Check2 /></button>
-              <button className="btn btn-sm btn-secondary" onClick={onEditCancel}><X /></button>
-            </td>
-          </>
-        ) : (
-          <>
-            <td>{investment.cardNumber}</td>
-            <td>₹ {parseFloat(investment.amount).toFixed(2)}</td>
-            <td>{formatDate(investment.date)}</td>
-            <td>{investment.comments}</td>
-            <td>{investment.mode}</td>
-            <td style={{ display: "flex", gap: "0.5rem" }}>
-              <button className="btn btn-sm btn-outline-primary" onClick={onEditClick}><PencilSquare /></button>
-              <button className="btn btn-sm btn-outline-danger" onClick={onDeleteClick}><Trash /></button>
-            </td>
-          </>
-        )}
-      </tr>
-    );
-}
+    <tr className={blink ? "blink-row" : ""}>
+      {isEditing ? (
+        <>
+          <td>
+            <input
+              name="cardNumber"
+              value={editForm.cardNumber}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
+          <td>
+            <div className="input-with-icon">
+              <span className="rupee-icon">₹</span>
+              <input
+                name="amount"
+                value={editForm.amount}
+                onChange={onEditChange}
+                onBlur={() =>
+                  onEditChange({
+                    target: {
+                      name: "amount",
+                      value: parseFloat(editForm.amount).toFixed(2),
+                    },
+                  } as any)
+                }
+                className="form-control"
+              />
+            </div>
+          </td>
+          <td>
+            <input
+              name="date"
+              value={editForm.date}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
+          <td>
+            <input
+              name="comments"
+              value={editForm.comments}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
+          <td>
+            <input
+              name="mode"
+              value={editForm.mode}
+              onChange={onEditChange}
+              className="form-control"
+            />
+          </td>
+          <td style={{ display: "flex", gap: "0.5rem" }}>
+            <button className="btn btn-sm btn-success" onClick={onEditSave}>
+              <Check2 />
+            </button>
+            <button className="btn btn-sm btn-secondary" onClick={onEditCancel}>
+              <X />
+            </button>
+          </td>
+        </>
+      ) : (
+        <>
+          <td>{investment.cardNumber}</td>
+          <td>{formatToINRCurrency(investment.amount)}</td>
+          <td>{formatDateWithUnicodeOrdinal(investment.date)}</td>
+          <td>{investment.comments}</td>
+          <td>{investment.mode}</td>
+          <td style={{ display: "flex", gap: "0.5rem" }}>
+            <button
+              className="btn btn-sm btn-outline-primary"
+              onClick={onEditClick}
+            >
+              <PencilSquare />
+            </button>
+            <button
+              className="btn btn-sm btn-outline-danger"
+              onClick={onDeleteClick}
+            >
+              <Trash />
+            </button>
+          </td>
+        </>
+      )}
+    </tr>
+  );
+};
 
-export default CreditCardRow
+export default CreditCardRow;

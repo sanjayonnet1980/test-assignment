@@ -12,6 +12,9 @@ import SearchBar from "../../atoms/SearchBar";
 import CreditCardTable from "./CreditCardTable";
 import PaginationControls from "../../atoms/PaginationControls";
 import { calculateCreditCardTotalsByCard } from "../../utils/creditCardTotal";
+import { formatToINRCurrency } from "../../utils/amountFormat";
+import { FileEarmarkArrowDown } from "react-bootstrap-icons";
+import { handleDownloadPDF } from "../../utils/pdfExportCreditCard";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -62,6 +65,10 @@ const ViewCreditCardPage: React.FC = () => {
       comments: creditCard.comments,
       mode: creditCard.mode,
     });
+  };
+
+  const onDownloadClick = () => {
+    handleDownloadPDF(filteredData);
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,9 +137,16 @@ const ViewCreditCardPage: React.FC = () => {
   const cardTotals = calculateCreditCardTotalsByCard(creditCard);
   return (
     <div className="page-container">
-      <div className="card">
+      <div className="card border border border-warning">
         <HeaderSection text={"Credit Card Investment Directory"} />
         <div className="card-body ">
+          <button
+            className="btn btn-outline-primary"
+            onClick={onDownloadClick}
+            title="Download Credit Card details into PDF"
+          >
+            <FileEarmarkArrowDown size={20} />
+          </button>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {loading && <div className="loader">Loading investments...</div>}
           {error && <div className="error">Error: {error}</div>}
@@ -166,13 +180,22 @@ const ViewCreditCardPage: React.FC = () => {
               </div>
             </div>
           )}
-          <div className="card-footer text-muted border shadow-sm p-3">
+          <div className="card-footer border shadow-sm p-3">
             {Object.entries(cardTotals).map(([cardNumber, totals]) => (
-              <div key={cardNumber} className="card-summary d-flex gap-3">
-                <p>Card: {cardNumber}</p>
-                <p>💰 Cashback: ₹{totals.cashbackTotal.toFixed(2)}</p>
-                <p>📈 Investment: ₹{totals.investmentTotal.toFixed(2)}</p>
-                <p>🧾 Billing: ₹{totals.billingTotal.toFixed(2)}</p>
+              <div
+                key={cardNumber}
+                className="card-summary d-flex gap-3 justify-content-center"
+              >
+                <p className="text-primary fw-bold">Card: {cardNumber}</p>
+                <p className="text-primary fw-bold">
+                  💰 Cashback: {formatToINRCurrency(totals.cashbackTotal)}
+                </p>
+                <p className="text-primary fw-bold">
+                  📈 Investment: {formatToINRCurrency(totals.investmentTotal)}
+                </p>
+                <p className="text-primary fw-bold">
+                  🧾 Billing: {formatToINRCurrency(totals.billingTotal)}
+                </p>
               </div>
             ))}
           </div>

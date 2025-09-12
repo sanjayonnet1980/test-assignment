@@ -11,6 +11,8 @@ import MonthlyInvTable from "./MonthlyInvTable";
 import PaginationControls from "../../atoms/PaginationControls";
 import ConfirmButton from "../../atoms/ConfirmationButton";
 import CancelButton from "../../atoms/CancelButton";
+import { formatToINRCurrency } from "../../utils/amountFormat";
+import { formatAmountToIndianWords } from "../../utils/amountFormateWord";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -37,11 +39,18 @@ const ViewMonthlyInvPage: React.FC = () => {
     dispatch(fetchMnthInv());
   }, [dispatch]);
 
-  const filteredData = monthlyInvestment.filter((inv) =>
-    Object.values(inv)
-      .join(" ")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+  const filteredData = monthlyInvestment
+    .filter((inv) =>
+      Object.values(inv)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const totalAmountCal = monthlyInvestment.reduce(
+    (sum, val) => sum + parseFloat(val.amount),
+    0
   );
 
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
@@ -107,8 +116,8 @@ const ViewMonthlyInvPage: React.FC = () => {
 
   return (
     <div className="page-container">
-      <div className="card">
-        <HeaderSection text={"Monthly Investment Directory"}/>
+      <div className="card border border border-warning">
+        <HeaderSection text={"Monthly Investment Directory"} />
         <div className="card-body">
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {loading && <div className="loader">Loading investments...</div>}
@@ -142,6 +151,14 @@ const ViewMonthlyInvPage: React.FC = () => {
               </div>
             </div>
           )}
+        </div>
+        <div className="card-footer text-muted">
+          <div className="fw-bold text-primary fs-5">{`Total Investment Amount : ${formatToINRCurrency(
+            totalAmountCal
+          )}`}</div>
+          <div className="fw-bold text-primary">{`Word Conversion : ${formatAmountToIndianWords(
+            totalAmountCal
+          )}`}</div>
         </div>
       </div>
     </div>

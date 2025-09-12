@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Dashboard = () => (
   <div className="page-container">
-    <nav className="card">
+    <nav className="card border border border-warning">
       <div className="card-body">
         <h1>Dashboard</h1>
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -74,6 +74,7 @@ const Dashboard = () => (
           </li>
         </ul>
       </div>
+      <div className="card-footer text-primary">Changes won’t be saved until you click ‘Confirm’ || Powered by Sanjay Sah@2025</div>
     </nav>
   </div>
 );

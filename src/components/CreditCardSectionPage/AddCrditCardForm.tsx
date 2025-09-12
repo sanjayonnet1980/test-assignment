@@ -81,7 +81,7 @@ const AddCreditCardForm = () => {
   const { suggestions, suggestionsMode } = useSuggestionMode();
   return (
     <div className="page-container">
-      <div className="card">
+      <div className="card border border border-warning">
         <div className="card-header">
           <SlidingHeaderText text="🚀 Welcome to the CreditCard Dashboard — Real-time updates ahead!" />
         </div>

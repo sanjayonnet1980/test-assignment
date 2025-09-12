@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
 
 const Navbar = () => {
-  const [search, setSearch] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Search:", search);
-    // You can route or filter based on search here
   };
 
   return (

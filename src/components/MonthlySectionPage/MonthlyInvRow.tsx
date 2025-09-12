@@ -1,5 +1,6 @@
 import React from "react";
 import { PencilSquare, Trash, Check2, X } from "react-bootstrap-icons";
+import { formatToINRCurrency } from "../../utils/amountFormat";
 
 interface Props {
   investment: any;
@@ -67,7 +68,7 @@ const MonthlyInvRow: React.FC<Props> = ({
       ) : (
         <>
           <td>{investment.source}</td>
-          <td>₹ {parseFloat(investment.amount).toFixed(2)}</td>
+          <td>{formatToINRCurrency(investment.amount)}</td>
           <td>{formatDate(investment.date)}</td>
           <td>{investment.vendor}</td>
           <td>{investment.reason}</td>
