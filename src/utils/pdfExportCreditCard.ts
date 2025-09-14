@@ -18,20 +18,9 @@ interface CreditCardEntry {
 export function handleDownloadPDF(data: CreditCardEntry[], filename = "CreditCardReport.pdf"): void {
   const doc = new jsPDF();
 
-  // Calculate total amount (only numeric values)
-  const totalAmount = data.reduce((sum, entry) => {
-    const value = typeof entry.amount === "number" ? entry.amount : parseFloat(entry.amount);
-    return sum + (isNaN(value) ? 0 : value);
-  }, 0);
-
-  const formattedTotal = formatToINRCurrency(totalAmount);
-
   // Header
   doc.setFontSize(16);
   doc.text("Credit Card Investment Report", 14, 20);
-
-  doc.setFontSize(12);
-  doc.text(`Total Amount: ${formattedTotal}`, 14, 28); // Display total just below title
 
   // Table data
   const tableBody = data.map((entry) => [

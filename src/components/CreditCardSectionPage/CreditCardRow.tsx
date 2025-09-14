@@ -13,6 +13,9 @@ interface Props {
   onEditCancel: () => void;
   onDeleteClick: () => void;
   blink: boolean;
+  selectedIds: string[];
+  onSelectRow: (id: string, isChecked: boolean) => void;
+  onSelectAll: (isChecked: boolean) => void;
 }
 
 const CreditCardRow: React.FC<Props> = ({
@@ -25,11 +28,19 @@ const CreditCardRow: React.FC<Props> = ({
   onEditCancel,
   onDeleteClick,
   blink,
+  selectedIds,
+  onSelectRow,
+  onSelectAll,
 }) => {
   return (
-    <tr className={blink ? "blink-row" : ""}>
+    <tr
+      className={`${blink === investment.id ? "blink-row" : ""} ${
+        selectedIds.includes(investment.id.toString()) ? "selected-row" : ""
+      }`}
+    >
       {isEditing ? (
         <>
+          <td></td>
           <td>
             <input
               name="cardNumber"
@@ -92,6 +103,16 @@ const CreditCardRow: React.FC<Props> = ({
         </>
       ) : (
         <>
+          <td>
+            <input
+              type="checkbox"
+              checked={selectedIds.includes(investment.id.toString())}
+              onChange={(e) =>
+                onSelectRow(investment.id.toString(), e.target.checked)
+              }
+            />
+          </td>
+
           <td>{`XXXX-XXXX-XXXX-${investment.cardNumber}`}</td>
           <td>{formatToINRCurrency(investment.amount)}</td>
           <td>{formatDateWithUnicodeOrdinal(investment.date)}</td>

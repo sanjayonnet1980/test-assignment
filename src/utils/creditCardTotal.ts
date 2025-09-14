@@ -9,12 +9,24 @@ export interface CardWiseTotals {
 }
 
 /**
- * Calculates total cashback, investment, and billing amounts grouped by card number.
+ * Calculates totals for transactions between 15th of previous month and 15th of current month.
  */
-export const calculateCreditCardTotalsByCard = (cards: CreditCard[]): CardWiseTotals => {
+export const calculateCreditCardTotalsByCard = (
+  cards: CreditCard[],
+  referenceDate: Date = new Date()
+): CardWiseTotals => {
   const totals: CardWiseTotals = {};
 
+  // Define date range: 15th of previous month to 15th of current month
+  const startDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth() - 1, 14);
+  const endDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 14);
+
   cards.forEach((card) => {
+    const cardDate = new Date(card.date); // assuming card.date is ISO string or Date
+
+    // Filter by date range
+    if (cardDate < startDate || cardDate >= endDate) return;
+
     const cardNum = card.cardNumber;
     const mode = card.mode.toLowerCase();
     const amount = parseFloat(card.amount);
@@ -33,7 +45,6 @@ export const calculateCreditCardTotalsByCard = (cards: CreditCard[]): CardWiseTo
       totals[cardNum].investmentTotal += amount;
     }
 
-    // Recalculate billing after each update
     totals[cardNum].billingTotal =
       totals[cardNum].investmentTotal - totals[cardNum].cashbackTotal;
   });

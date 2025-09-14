@@ -43,12 +43,15 @@ const ViewContactList: React.FC = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const filteredData = contactDetails.filter((contact) =>
-    Object.values(contact)
-      .join(" ")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
+  const filteredData = contactDetails
+    .filter((contact) =>
+      Object.values(contact)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const paginatedData = filteredData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -130,7 +133,7 @@ const ViewContactList: React.FC = () => {
               right: "1rem",
             }}
             className="btn btn-outline-secondary"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
             title="Back to Dashboard"
           >
             <ArrowLeftCircle size={24} />
@@ -193,7 +196,10 @@ const ViewContactList: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="card-footer text-primary">Your contact details are securely stored · Need help? Reach out to support</div>
+        <div className="card-footer text-primary">
+          Your contact details are securely stored · Need help? Reach out to
+          support
+        </div>
       </div>
     </div>
   );

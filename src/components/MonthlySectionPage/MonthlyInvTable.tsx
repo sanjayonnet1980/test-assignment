@@ -37,20 +37,31 @@ const MonthlyInvTable: React.FC<Props> = ({
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => (
-          <MonthlyInvRow
-            key={item.id}
-            investment={item}
-            isEditing={editId === item.id.toString()}
-            editForm={editForm}
-            onEditClick={() => onEditClick(item)}
-            onEditChange={onEditChange}
-            onEditSave={onEditSave}
-            onEditCancel={onEditCancel}
-            onDeleteClick={() => onDeleteClick(item.id.toString())}
-            blink={blinkRowId === item.id.toString()}
-          />
-        ))}
+        {data.length === 0 ? (
+          <tr>
+            <td
+              colSpan={6}
+              style={{ textAlign: "center", padding: "1rem", color: "#888" }}
+            >
+              No investment records available for this period.
+            </td>
+          </tr>
+        ) : (
+          data.map((item) => (
+            <MonthlyInvRow
+              key={item.id}
+              investment={item}
+              isEditing={editId === item.id.toString()}
+              editForm={editForm}
+              onEditClick={() => onEditClick(item)}
+              onEditChange={onEditChange}
+              onEditSave={onEditSave}
+              onEditCancel={onEditCancel}
+              onDeleteClick={() => onDeleteClick(item.id.toString())}
+              blink={blinkRowId === item.id.toString()}
+            />
+          ))
+        )}
       </tbody>
     </table>
   );

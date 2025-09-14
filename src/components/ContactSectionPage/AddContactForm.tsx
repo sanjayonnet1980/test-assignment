@@ -109,7 +109,7 @@ const AddContactForm = () => {
             <h2>📇 Add Contact Information</h2>
             <button
               className="btn btn-outline-secondary"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/dashboard")}
             >
               <ArrowLeftCircle size={24} />
             </button>

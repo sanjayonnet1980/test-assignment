@@ -4,10 +4,13 @@ const Dashboard = () => (
   <div className="page-container">
     <nav className="card border border border-warning">
       <div className="card-body">
-        <h1>Dashboard</h1>
+        <p className="fw-bold text-secondary text-uppercase">
+          Designed for clarity and speed, This dashboard empowers informed
+          decision-making.
+        </p>
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <button className="btn btn-outline-success w-50">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
               <Link
                 className="nav-link success fw-bold fst-italic me-1"
                 to="/addcontact"
@@ -18,7 +21,7 @@ const Dashboard = () => (
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn btn-outline-success w-50 mt-4">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
               <Link
                 className="nav-link success fw-bold fst-italic me-1"
                 to="/viewcontact"
@@ -29,7 +32,18 @@ const Dashboard = () => (
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn btn-outline-success w-50 mt-4">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
+              <Link
+                className="nav-link success fw-bold fst-italic me-1"
+                to="/viewcsvcontact"
+              >
+                <i className="bi bi-person-lines-fill me-1"></i>Upload File &
+                View Contact Details
+              </Link>
+            </button>
+          </li>
+          <li className="nav-item">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
               <Link
                 className="nav-link success fw-bold fst-italic me-1"
                 to="/addcreditcard"
@@ -40,7 +54,7 @@ const Dashboard = () => (
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn btn-outline-success w-50 mt-4">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
               <Link
                 className="nav-link success fw-bold fst-italic me-1"
                 to="/viewcreditcard"
@@ -51,7 +65,7 @@ const Dashboard = () => (
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn btn-outline-success w-50 mt-4">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
               <Link
                 className="nav-link success fw-bold fst-italic me-1"
                 to="/addmnthinv"
@@ -62,7 +76,7 @@ const Dashboard = () => (
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn btn-outline-success w-50 mt-4">
+            <button className="btn fancy-border w-50 mt-4 animated-button">
               <Link
                 className="nav-link success fw-bold fst-italic me-1"
                 to="/viewmnthinv"
@@ -74,7 +88,10 @@ const Dashboard = () => (
           </li>
         </ul>
       </div>
-      <div className="card-footer text-primary">Changes won’t be saved until you click ‘Confirm’ || Powered by Sanjay Sah@2025</div>
+      <div className="card-footer text-primary">
+        Changes won’t be saved until you click ‘Confirm’ || Powered by Sanjay
+        Sah@2025
+      </div>
     </nav>
   </div>
 );

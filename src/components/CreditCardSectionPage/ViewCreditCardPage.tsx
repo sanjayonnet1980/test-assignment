@@ -15,6 +15,7 @@ import { calculateCreditCardTotalsByCard } from "../../utils/creditCardTotal";
 import { formatToINRCurrency } from "../../utils/amountFormat";
 import { FileEarmarkArrowDown, ArrowRight } from "react-bootstrap-icons";
 import { handleDownloadPDF } from "../../utils/pdfExportCreditCard";
+import { Trash } from "react-bootstrap-icons";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -30,6 +31,7 @@ const ViewCreditCardPage: React.FC = () => {
   const [blinkRowId, setBlinkRowId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [editId, setEditId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editForm, setEditForm] = useState({
     cardNumber: "",
     amount: "",
@@ -101,6 +103,21 @@ const ViewCreditCardPage: React.FC = () => {
     setEditId(null);
   };
 
+  const handleSelectAll = (isChecked: boolean) => {
+    if (isChecked) {
+      const allIds = paginatedData.map((item) => item.id.toString());
+      setSelectedIds(allIds);
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleRowSelect = (id: string, isChecked: boolean) => {
+    setSelectedIds((prev) =>
+      isChecked ? [...prev, id] : prev.filter((selectedId) => selectedId !== id)
+    );
+  };
+
   const handleEditCancel = () => {
     setEditId(null);
   };
@@ -134,6 +151,20 @@ const ViewCreditCardPage: React.FC = () => {
   if (loading) return <div className="loader">Loading credit card...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
+  const confirmSelectCheckDelete = () => {
+    if (deleteTargetId) {
+      // Single delete
+      dispatch(deleteCreditCard(deleteTargetId));
+    } else if (selectedIds.length > 0) {
+      // Bulk delete
+      selectedIds.forEach((id) => dispatch(deleteCreditCard(id)));
+    }
+
+    setDeleteTargetId(null);
+    setSelectedIds([]);
+    setBlinkRowId(null);
+  };
+
   const cardTotals = calculateCreditCardTotalsByCard(creditCard);
   return (
     <div className="page-container">
@@ -143,13 +174,21 @@ const ViewCreditCardPage: React.FC = () => {
           <button
             className="btn btn-outline-primary"
             onClick={onDownloadClick}
-            title="Download Credit Card details into PDF"
+            title="Download Credit Card details"
           >
             <FileEarmarkArrowDown size={20} />
           </button>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {loading && <div className="loader">Loading investments...</div>}
           {error && <div className="error">Error: {error}</div>}
+          {selectedIds.length > 0 && <button
+            className="btn btn-outline-danger  d-flex justify-content-end"
+            onClick={() => confirmSelectCheckDelete}
+            disabled={selectedIds.length === 0}
+            title="Delete selected credit card entries"
+          >
+            <Trash size={20} />
+          </button>}
 
           {!loading && !error && (
             <div className="border">
@@ -163,6 +202,9 @@ const ViewCreditCardPage: React.FC = () => {
                 onEditSave={handleEditSave}
                 onEditCancel={handleEditCancel}
                 onDeleteClick={handleDeleteClick}
+                selectedIds={selectedIds}
+                onSelectRow={handleRowSelect}
+                onSelectAll={handleSelectAll}
               />
               <PaginationControls
                 currentPage={currentPage}
@@ -186,12 +228,16 @@ const ViewCreditCardPage: React.FC = () => {
                 key={cardNumber}
                 className="card-summary d-flex gap-3 justify-content-center"
               >
-                <p className="text-primary fw-bold">Card: {cardNumber} {" "}<ArrowRight size={20} /></p>
                 <p className="text-primary fw-bold">
-                 💰 Cashback: {formatToINRCurrency(totals.cashbackTotal)}{" "}<ArrowRight size={20} />
+                  Card: {cardNumber} <ArrowRight size={20} />
                 </p>
                 <p className="text-primary fw-bold">
-                  📈 Investment: {formatToINRCurrency(totals.investmentTotal)}{" "}<ArrowRight size={20} />
+                  💰 Cashback: {formatToINRCurrency(totals.cashbackTotal)}{" "}
+                  <ArrowRight size={20} />
+                </p>
+                <p className="text-primary fw-bold">
+                  📈 Investment: {formatToINRCurrency(totals.investmentTotal)}{" "}
+                  <ArrowRight size={20} />
                 </p>
                 <p className="text-primary fw-bold">
                   🧾 Billing: {formatToINRCurrency(totals.billingTotal)}

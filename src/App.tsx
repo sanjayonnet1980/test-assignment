@@ -9,19 +9,32 @@ import AddCreditCardForm from "./components/CreditCardSectionPage/AddCrditCardFo
 import ViewCreditCardPage from "./components/CreditCardSectionPage/ViewCreditCardPage";
 import AddMonthlyInv from "./components/MonthlySectionPage/AddMonthlyInvForm";
 import ViewMonthlyInv from "./components/MonthlySectionPage/ViewMonthlyInvPage";
+import ExcelUploader from "./components/UploadExcelSheet";
+import LoginPage from "./components/Login/LoginPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/addcontact" element={<AddContactForm />} />
-        <Route path="/viewcontact" element={<ViewContactPage />} />
-        <Route path="/addcreditcard" element={<AddCreditCardForm />} />
-        <Route path="/viewcreditcard" element={<ViewCreditCardPage />} />
-        <Route path="/addmnthinv" element={<AddMonthlyInv />} />
-        <Route path="/viewmnthinv" element={<ViewMonthlyInv />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/addcontact" element={<ProtectedRoute><AddContactForm /></ProtectedRoute>} />
+        <Route path="/viewcontact" element={<ProtectedRoute><ViewContactPage /></ProtectedRoute>} />
+        <Route path="/viewcsvcontact" element={<ProtectedRoute><ExcelUploader /></ProtectedRoute>} />
+        <Route path="/addcreditcard" element={<ProtectedRoute><AddCreditCardForm /></ProtectedRoute>} />
+        <Route path="/viewcreditcard" element={<ProtectedRoute><ViewCreditCardPage /></ProtectedRoute>} />
+        <Route path="/addmnthinv" element={<ProtectedRoute><AddMonthlyInv /></ProtectedRoute>} />
+        <Route path="/viewmnthinv" element={<ProtectedRoute><ViewMonthlyInv /></ProtectedRoute>} />
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </Router>
   );
