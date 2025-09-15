@@ -3,6 +3,9 @@ import contactSlice from "../features/contact/contactSlice";
 import creditCardSlice from "../features/creditCard/creditCardSlice";
 import montlyInvSlice from '../features/MonthlyInv/monthlyInvSlice'
 import authReducer from '../features/auth/authSlice';
+import wheatReducer from '../features/WheatItems/wheatSlice'
+import riceReducer from '../features/WheatItems/riceSlice'
+import viewReducer from '../features/WheatItems/buyWheatSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +13,9 @@ export const store = configureStore({
     creditCard: creditCardSlice,
     monthlyInv: montlyInvSlice,
     auth: authReducer,
+    buyWheat: wheatReducer,
+    buyRice: riceReducer,
+    viewWheat: viewReducer
   },
 });
 

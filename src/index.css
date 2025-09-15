@@ -5,10 +5,12 @@ body {
   padding: 0;
   font-family: "Roboto", sans-serif;
   background-color: #ebcaef;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   color: white;
   text-align: center;
 }
-
 
 /* 📱 Mobile-friendly layout */
 @media (max-width: 480px) {
@@ -37,7 +39,6 @@ body {
 .form-button:hover {
   background: linear-gradient(to right, #870551, #1a066d);
 }
-
 
 .loader-overlay {
   position: absolute;
@@ -386,7 +387,6 @@ input[type="date"] {
 .custom-suggestions li:hover {
   background-color: #f0f0f0;
 }
-
 
 .calendar-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
