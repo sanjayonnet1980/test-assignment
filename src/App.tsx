@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./atoms/Navbar";
 import "./App.scss";
 import ViewContactPage from "./components/ContactSectionPage/ViewContactPage";
@@ -16,25 +16,22 @@ import PersonalDashboard from "./pages/Dashboard/PersonalDashboard";
 import Main from "./pages/Dashboard/Main";
 import BuyWheatForm from "./components/WheatItems/BuyWheatForm";
 import BuyRiceForm from "./components/WheatItems/BuyRiceForm";
-import { BuyWheatTable } from "./components/WheatItems/ViewBuyWheat";
 import SellProductTable from "./components/Products/SellProductTable";
 
 const App = () => {
+  const location = useLocation();
+  const hideNavbarRoutes = ["/"]; // Add other public routes if needed
+
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/business" element={<ProtectedRoute><BusinessDashboard /></ProtectedRoute>} />
         <Route path="/personal" element={<ProtectedRoute><PersonalDashboard /></ProtectedRoute>} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Main />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/dashboard" element={<ProtectedRoute><Main /></ProtectedRoute>} />
         <Route path="/addcontact" element={<ProtectedRoute><AddContactForm /></ProtectedRoute>} />
         <Route path="/viewcontact" element={<ProtectedRoute><ViewContactPage /></ProtectedRoute>} />
         <Route path="/viewcsvcontact" element={<ProtectedRoute><ExcelUploader /></ProtectedRoute>} />
@@ -44,12 +41,12 @@ const App = () => {
         <Route path="/viewmnthinv" element={<ProtectedRoute><ViewMonthlyInv /></ProtectedRoute>} />
         <Route path="/wheat" element={<ProtectedRoute><BuyWheatForm /></ProtectedRoute>} />
         <Route path="/rice" element={<ProtectedRoute><BuyRiceForm /></ProtectedRoute>} />
-        <Route path="/viewwheat" element={<ProtectedRoute><BuyWheatTable /></ProtectedRoute>} />
         <Route path="/dailysellitems" element={<ProtectedRoute><SellProductTable /></ProtectedRoute>} />
         <Route path="*" element={<LoginPage />} />
       </Routes>
-    </Router>
+    </>
   );
 };
+
 
 export default App;

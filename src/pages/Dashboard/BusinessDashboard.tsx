@@ -40,7 +40,7 @@ const BusinessDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/rice"
                 >
-                  <i className="bi bi-bag-fill me-1"></i>Add Buying Rice Items
+                  <i className="bi bi-bag-fill me-1"></i>Add & View Buying Rice Items
                 </Link>
               </button>
             </li>
@@ -50,7 +50,7 @@ const BusinessDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/wheat"
                 >
-                  <i className="bi bi-bag-fill me-1"></i> Add Buying Wheats
+                  <i className="bi bi-bag-fill me-1"></i> Add & View Buying Wheats
                   Items
                 </Link>
               </button>
@@ -59,7 +59,7 @@ const BusinessDashboard = () => {
               <button className="btn fancy-border w-50 mt-4 animated-button">
                 <Link
                   className="nav-link success fw-bold fst-italic me-1"
-                  to="/viewwheat"
+                  to="/viewstock"
                 >
                   <i className="bi bi-bag-fill me-1"></i> View Stock
                   Items

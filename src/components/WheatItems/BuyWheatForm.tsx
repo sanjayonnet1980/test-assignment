@@ -5,15 +5,15 @@ import {
   resetStatus,
 } from "../../features/WheatItems/wheatSlice";
 import WheatRow from "./WheatRow";
-import AddRemoveButtons from "./AddRemoveButtons";
 import SlidingHeaderText from "../../atoms/SlidingText";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import { BuyWheatTable } from "./ViewBuyWheat";
 
 const BuyWheatForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const { loading, error, success } = useAppSelector((state) => state.buyWheat);
-
+  const [refreshTable, setRefreshTable] = useState(false);
   const navigate = useNavigate();
   const [rows, setRows] = useState([
     { buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" },
@@ -39,9 +39,10 @@ const BuyWheatForm: React.FC = () => {
     setRows(rows.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    rows.forEach((row) => {
+
+    const promises = rows.map((row) =>
       dispatch(
         addWheatPurchase({
           buyerName: row.buyerName,
@@ -49,9 +50,15 @@ const BuyWheatForm: React.FC = () => {
           pricePerKg: Number(row.pricePerKg),
           purchaseDate: row.purchaseDate,
         })
-      );
-    });
-    setRows([{ buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" }])
+      )
+    );
+
+    await Promise.all(promises); // ✅ Wait for all submissions
+
+    setRefreshTable((prev) => !prev);
+    setRows([
+      { buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" },
+    ]);
   };
 
   useEffect(() => {
@@ -84,7 +91,7 @@ const BuyWheatForm: React.FC = () => {
                 right: "1rem",
               }}
               className="btn btn-outline-secondary"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/business")}
               title="Back to Dashboard"
             >
               <ArrowLeftCircle size={24} />
@@ -99,11 +106,10 @@ const BuyWheatForm: React.FC = () => {
                 onChange={handleRowChange}
                 onRemove={removeRow}
                 canRemove={rows.length > 1}
+                onAdd={addRow}
+                addMore={rows.length - 1 === index}
               />
             ))}
-
-            <AddRemoveButtons onAdd={addRow} />
-
             <button
               type="submit"
               className="form-button w-100"
@@ -120,7 +126,9 @@ const BuyWheatForm: React.FC = () => {
             {error && <div className="alert alert-danger mt-3">{error}</div>}
           </form>
         </div>
+        <BuyWheatTable refreshTrigger={refreshTable} />
       </div>
+      
     </div>
   );
 };

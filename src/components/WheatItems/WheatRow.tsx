@@ -1,5 +1,6 @@
 import React from "react";
 import { TrashFill } from "react-bootstrap-icons";
+import AddRemoveButtons from "./AddRemoveButtons";
 
 interface WheatRowProps {
   index: number;
@@ -12,9 +13,11 @@ interface WheatRowProps {
   onChange: (index: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (index: number) => void;
   canRemove: boolean;
+  onAdd: ()=>void;
+  addMore: boolean;
 }
 
-const WheatRow: React.FC<WheatRowProps> = ({ index, data, onChange, onRemove, canRemove }) => {
+const WheatRow: React.FC<WheatRowProps> = ({ index, data, onChange, onRemove, canRemove, onAdd, addMore }) => {
   return (
     <div className="d-flex align-items-center gap-3 mb-2">
     <div className="form-group">
@@ -64,7 +67,7 @@ const WheatRow: React.FC<WheatRowProps> = ({ index, data, onChange, onRemove, ca
       />
       <label htmlFor="name" className="fw-bold text-muted">Date:</label>
       </div>
-      <div className="mt-4">
+      <div className="mt-2">
         {canRemove && (
         <button
           type="button"
@@ -76,6 +79,7 @@ const WheatRow: React.FC<WheatRowProps> = ({ index, data, onChange, onRemove, ca
         </button>
       )}
       </div>
+      {addMore && <AddRemoveButtons  onAdd={onAdd}/>}
     </div>
   );
 };

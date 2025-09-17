@@ -8,6 +8,8 @@ import './global.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter } from "react-router-dom";
+
 
 
 const root = ReactDOM.createRoot(
@@ -16,7 +18,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+    <App />
+  </BrowserRouter>
+
     </React.StrictMode>
   </Provider>
 );

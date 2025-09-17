@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { logout } from "../features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { MoonFill, SunFill } from "react-bootstrap-icons";
+import { useState } from "react";
 
 const Navbar = () => {
   const handleSearch = (e: React.FormEvent) => {
@@ -10,6 +12,12 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkTheme((prev) => !prev);
+    document.body.style.backgroundColor = !isDarkTheme ? "#7ad6e4ff" : "#f9f8faff";
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -23,6 +31,13 @@ const Navbar = () => {
           style={{ fontSize: "2rem", fontWeight: "bold", color: "white" }}
         ></i>
       </Link>
+      <button
+        className="btn btn-outline-light"
+        onClick={toggleTheme}
+        title="Toggle Theme"
+      >
+        {isDarkTheme ? <SunFill size={18} /> : <MoonFill size={18} />} Themes
+      </button>
 
       <button
         className="navbar-toggler"

@@ -6,6 +6,7 @@ import authReducer from '../features/auth/authSlice';
 import wheatReducer from '../features/WheatItems/wheatSlice'
 import riceReducer from '../features/WheatItems/riceSlice'
 import viewReducer from '../features/WheatItems/buyWheatSlice';
+import viewRiceReducer from '../features/WheatItems/buyRiceSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     auth: authReducer,
     buyWheat: wheatReducer,
     buyRice: riceReducer,
-    viewWheat: viewReducer
+    viewWheat: viewReducer,
+    viewRice: viewRiceReducer
   },
 });
 

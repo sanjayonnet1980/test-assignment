@@ -9,13 +9,15 @@ import {
   fetchDailyProducts,
 } from "../../features/WheatItems/sellDailyProductLSlice";
 import SellProductRowCustomer from "./SellProductRowCustomer";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 
 const SellProductTable: React.FC = () => {
   const [entries, setEntries] = useState<SellEntry[]>([]);
   const [customerEntries, setCustomerEntries] = useState<SellEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   // ✅ Fetch entries on mount
@@ -78,11 +80,19 @@ const SellProductTable: React.FC = () => {
         }}
       >
         <h2>Daily Product Sales</h2>
+
         <button
           className="btn btn-outline-success"
           onClick={() => setCustomerEntries([])}
         >
           Find Each Customer
+        </button>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={() => navigate("/business")}
+          title="Back to Dashboard"
+        >
+          <ArrowLeftCircle size={24} />
         </button>
       </div>
 

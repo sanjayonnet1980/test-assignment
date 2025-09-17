@@ -7,9 +7,9 @@ interface AddRemoveButtonsProps {
 
 const AddRemoveButtons: React.FC<AddRemoveButtonsProps> = ({ onAdd }) => {
   return (
-    <div className="text-end mb-3">
+    <div className="text-end mt-2">
       <button type="button" className="btn btn-outline-primary" onClick={onAdd}>
-        <PlusCircle className="me-1" /> Add More
+        <PlusCircle size={20}/> Add More
       </button>
     </div>
   );

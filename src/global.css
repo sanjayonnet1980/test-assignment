@@ -157,3 +157,9 @@ tr.selected-row {
   gap: 1rem;
   align-items: center;
 }
+
+.input-lg {
+  height: 48px;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+}

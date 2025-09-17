@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  resetStatus,
-} from "../../features/WheatItems/wheatSlice";
-import AddRemoveButtons from "./AddRemoveButtons";
+import { resetStatus } from "../../features/WheatItems/wheatSlice";
 import SlidingHeaderText from "../../atoms/SlidingText";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { addRicePurchase } from "../../features/WheatItems/riceSlice";
 import RiceRow from "./RiceRow";
+import { BuyRiceTable } from "./ViewBuyRice";
 
 const BuyRiceForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const { loading, error, success } = useAppSelector((state) => state.buyRice);
+  const [refreshTable, setRefreshTable] = useState(false);
 
   const navigate = useNavigate();
   const [rows, setRows] = useState([
@@ -39,9 +38,10 @@ const BuyRiceForm: React.FC = () => {
     setRows(rows.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    rows.forEach((row) => {
+
+    const promises = rows.map((row) =>
       dispatch(
         addRicePurchase({
           buyerName: row.buyerName,
@@ -49,9 +49,15 @@ const BuyRiceForm: React.FC = () => {
           pricePerKg: Number(row.pricePerKg),
           purchaseDate: row.purchaseDate,
         })
-      );
-    });
-    setRows([{ buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" }])
+      )
+    );
+
+    await Promise.all(promises); // ✅ Wait for all submissions
+
+    setRefreshTable((prev) => !prev);
+    setRows([
+      { buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" },
+    ]);
   };
 
   useEffect(() => {
@@ -84,7 +90,7 @@ const BuyRiceForm: React.FC = () => {
                 right: "1rem",
               }}
               className="btn btn-outline-secondary"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/business")}
               title="Back to Dashboard"
             >
               <ArrowLeftCircle size={24} />
@@ -99,11 +105,10 @@ const BuyRiceForm: React.FC = () => {
                 onChange={handleRowChange}
                 onRemove={removeRow}
                 canRemove={rows.length > 1}
+                onAdd={addRow}
+                addMore = {rows.length-1 === index}
               />
             ))}
-
-            <AddRemoveButtons onAdd={addRow} />
-
             <button
               type="submit"
               className="form-button w-100"
@@ -120,6 +125,7 @@ const BuyRiceForm: React.FC = () => {
             {error && <div className="alert alert-danger mt-3">{error}</div>}
           </form>
         </div>
+        <BuyRiceTable refreshTrigger={refreshTable} />
       </div>
     </div>
   );

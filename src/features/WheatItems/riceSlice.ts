@@ -25,7 +25,7 @@ export const addRicePurchase = createAsyncThunk(
   "rice/addPurchase",
   async (data: RicePurchase, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/buywheat", data);
+      const response = await axiosInstance.post("/buyrice", data);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Failed to add purchase");

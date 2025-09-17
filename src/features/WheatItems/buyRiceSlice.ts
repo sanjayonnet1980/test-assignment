@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axiosInstance';
 
-export interface BuyWheatEntry {
+export interface BuyRiceEntry {
   id: string;
   buyerName: string;
   quantityKg: number;
@@ -9,35 +9,47 @@ export interface BuyWheatEntry {
   purchaseDate: string;
 }
 
-interface BuyWheatState {
-  entries: BuyWheatEntry[];
+interface BuyRiceState {
+  entries: BuyRiceEntry[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: BuyWheatState = {
+const initialState: BuyRiceState = {
   entries: [],
   loading: false,
   error: null,
 };
 
-export const fetchBuyWheat = createAsyncThunk(
-  'buyWheat/fetchAll',
+export const addRicePurchase = createAsyncThunk(
+  "rice/addPurchase",
+  async (data: BuyRiceEntry, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/buyrice", data);
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Failed to add purchase");
+    }
+  }
+);
+
+export const fetchBuyRice = createAsyncThunk(
+  'buyRice/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get('/buywheat');
-      return response.data as BuyWheatEntry[];
+      const response = await axiosInstance.get('/buyrice');
+      return response.data as BuyRiceEntry[];
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch data');
     }
   }
 );
 
-export const deleteBuyWheat = createAsyncThunk(
-  'buyWheat/delete',
+export const deleteBuyRice = createAsyncThunk(
+  'buyRice/delete',
   async (id: string, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/buywheat/${id}`);
+      await axiosInstance.delete(`/buyrice/${id}`);
       return id;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to delete entry');
@@ -45,51 +57,52 @@ export const deleteBuyWheat = createAsyncThunk(
   }
 );
 
-export const updateBuyWheat = createAsyncThunk(
+export const updateBuyRice = createAsyncThunk(
   'buyWheat/update',
-  async (updatedEntry: BuyWheatEntry, { rejectWithValue }) => {
+  async (updatedEntry: BuyRiceEntry, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/buywheat/${updatedEntry.id}`, updatedEntry);
-      return response.data as BuyWheatEntry;
+      return response.data as BuyRiceEntry;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to update entry');
     }
   }
 );
 
-const buyWheatSlice = createSlice({
+const buyRiceSlice = createSlice({
   name: 'buyWheat',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       // Fetch
-      .addCase(fetchBuyWheat.pending, (state) => {
+      .addCase(fetchBuyRice.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchBuyWheat.fulfilled, (state, action: PayloadAction<BuyWheatEntry[]>) => {
+      .addCase(fetchBuyRice.fulfilled, (state, action: PayloadAction<BuyRiceEntry[]>) => {
         state.entries = action.payload;
         state.loading = false;
       })
-      .addCase(fetchBuyWheat.rejected, (state, action) => {
+      .addCase(fetchBuyRice.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
 
       // Delete
-      .addCase(deleteBuyWheat.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(deleteBuyRice.fulfilled, (state, action: PayloadAction<string>) => {
         state.entries = state.entries.filter((entry) => entry.id !== action.payload);
       })
 
       // Update
-      .addCase(updateBuyWheat.fulfilled, (state, action: PayloadAction<BuyWheatEntry>) => {
+      .addCase(updateBuyRice.fulfilled, (state, action: PayloadAction<BuyRiceEntry>) => {
         const index = state.entries.findIndex((e) => e.id === action.payload.id);
         if (index !== -1) {
           state.entries[index] = action.payload;
         }
-      });
+      })
+      
   },
 });
 
-export default buyWheatSlice.reducer;
+export default buyRiceSlice.reducer;

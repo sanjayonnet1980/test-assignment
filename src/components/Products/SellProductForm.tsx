@@ -105,7 +105,7 @@ const SellProductForm: React.FC<Props> = ({ onAdd }) => {
 
       <div className="text-end mt-4">
         <button type="submit" className="btn btn-outline-primary">
-          <PlusCircle className="me-1" /> Add More
+          <PlusCircle className="me-1" /> Customer Data
         </button>
       </div>
     </form>
