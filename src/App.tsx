@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      {!shouldHideNavbar && <Navbar />}
+      {!shouldHideNavbar && <ProtectedRoute><Navbar /></ProtectedRoute>}
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/business" element={<ProtectedRoute><BusinessDashboard /></ProtectedRoute>} />

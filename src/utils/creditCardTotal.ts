@@ -17,15 +17,7 @@ export const calculateCreditCardTotalsByCard = (
 ): CardWiseTotals => {
   const totals: CardWiseTotals = {};
 
-  // Define date range: 15th of previous month to 15th of current month
-  const startDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth() - 1, 14);
-  const endDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 14);
-
   cards.forEach((card) => {
-    const cardDate = new Date(card.date); // assuming card.date is ISO string or Date
-
-    // Filter by date range
-    if (cardDate < startDate || cardDate >= endDate) return;
 
     const cardNum = card.cardNumber;
     const mode = card.mode.toLowerCase();
@@ -48,6 +40,6 @@ export const calculateCreditCardTotalsByCard = (
     totals[cardNum].billingTotal =
       totals[cardNum].investmentTotal - totals[cardNum].cashbackTotal;
   });
-
+ 
   return totals;
 };

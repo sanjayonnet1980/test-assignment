@@ -166,6 +166,8 @@ const ViewCreditCardPage: React.FC = () => {
   };
 
   const cardTotals = calculateCreditCardTotalsByCard(creditCard);
+let t = Object.entries(cardTotals)
+  console.log(t)
   return (
     <div className="page-container">
       <div className="card border border border-warning">
@@ -240,7 +242,7 @@ const ViewCreditCardPage: React.FC = () => {
                   <ArrowRight size={20} />
                 </p>
                 <p className="text-primary fw-bold">
-                  🧾 Billing: {formatToINRCurrency(totals.billingTotal)}
+                  🧾 Billable Amount: {formatToINRCurrency(totals.billingTotal)}
                 </p>
               </div>
             ))}

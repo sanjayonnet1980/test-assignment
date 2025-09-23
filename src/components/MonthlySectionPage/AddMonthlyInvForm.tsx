@@ -167,7 +167,7 @@ const AddMonthlyInvForm = () => {
                 right: "1rem",
               }}
               className="btn btn-outline-secondary"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/personal")}
               title="Back to Dashboard"
             >
               <ArrowLeftCircle size={24} />

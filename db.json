@@ -1,6 +1,31 @@
 {
-  "dailySellProducts": [],
-  "buywheat": [],
+  "dailySellProducts": [
+    {
+      "id": "7db3652d-718a-49ef-8dbf-1dedbe60f2e4",
+      "product": "flour",
+      "quantityKg": 12,
+      "pricePerKg": 11,
+      "date": "2025-09-18",
+      "time": "10:57"
+    },
+    {
+      "id": "88b4d312-be44-4166-9253-729d22744ad2",
+      "product": "rice",
+      "quantityKg": 42,
+      "pricePerKg": 24,
+      "date": "2025-09-18",
+      "time": "10:57"
+    }
+  ],
+  "buywheat": [
+    {
+      "id": "7958",
+      "buyerName": "test",
+      "quantityKg": 200,
+      "pricePerKg": 12,
+      "purchaseDate": "2025-09-16"
+    }
+  ],
   "buyrice": [],
   "users": [
     {
@@ -15,7 +40,72 @@
     }
   ],
   "contact": [],
-  "creditCard": [],
+  "creditCard": [
+    {
+      "id": "6f4e",
+      "cardNumber": "5549",
+      "amount": "4633",
+      "date": "2025-09-22",
+      "comments": "FlipKart Grocery Item Buy",
+      "mode": "investment"
+    },
+    {
+      "id": "146a",
+      "cardNumber": "5549",
+      "amount": "1976",
+      "date": "2025-09-22",
+      "comments": "LIC Sunaina Devi",
+      "mode": "investment"
+    },
+    {
+      "id": "dbb6",
+      "cardNumber": "5549",
+      "amount": "117",
+      "date": "2025-09-21",
+      "comments": "A1 Fresh Shopping",
+      "mode": "investment"
+    },
+    {
+      "id": "b3c9",
+      "cardNumber": "5549",
+      "amount": "6.19",
+      "date": "2025-09-20",
+      "comments": "Fuel Cashback",
+      "mode": "cashback"
+    },
+    {
+      "id": "42ae",
+      "cardNumber": "5549",
+      "amount": "626.20",
+      "date": "2025-09-19",
+      "comments": "Fuel - Bike Pertrol Filling",
+      "mode": "investment"
+    },
+    {
+      "id": "fbb3",
+      "cardNumber": "5549",
+      "amount": "2722.64",
+      "date": "2025-09-19",
+      "comments": "EMI Principal - 2",
+      "mode": "investment"
+    },
+    {
+      "id": "df54",
+      "cardNumber": "5549",
+      "amount": "304.34",
+      "date": "2025-09-19",
+      "comments": "EMI Interest - 2",
+      "mode": "investment"
+    },
+    {
+      "id": "197d",
+      "cardNumber": "5549",
+      "amount": "54.78",
+      "date": "2025-09-19",
+      "comments": "GST",
+      "mode": "investment"
+    }
+  ],
   "mutualFund": [],
   "stock": [],
   "salaryDetails": [],

@@ -96,7 +96,7 @@ const LoginPage: React.FC = () => {
           src="/images/loginImage.jpg"
           alt="loginScreen"
           className="login-image"
-          width={745}
+          width={750}
           height={780}
         />
       </div>
@@ -172,7 +172,7 @@ const LoginPage: React.FC = () => {
               Remember Me
             </label>
 
-            <a href="/forgot-password">Forgot Password?</a>
+            <a href="/">Forgot Password?</a>
           </div>
 
           {error && <div className="text-danger mb-3">{error}</div>}
@@ -191,9 +191,9 @@ const LoginPage: React.FC = () => {
           <div className="social-login">
             <span>or</span>
             <div className="icons">
-              <Google />
-              <Facebook />
-              <Twitter />
+              <Google size={20} />
+              <Facebook size={20} />
+              <Twitter size={20} />
             </div>
           </div>
         </form>

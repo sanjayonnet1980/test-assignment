@@ -19,7 +19,7 @@ const HeaderSection: React.FC<headerProps> = ({text}) => {
         <h2 className="mx-auto">📇 {text}</h2>
         <button
           className="btn btn-outline-secondary"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/personal")}
           title="Back to Dashboard"
         >
           <ArrowLeftCircle size={24} />

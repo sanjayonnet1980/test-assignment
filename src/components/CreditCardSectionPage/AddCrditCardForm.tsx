@@ -97,7 +97,7 @@ const AddCreditCardForm = () => {
             <button
               className="btn btn-outline-secondary"
               style={{ position: "absolute", top: "0.3rem", right: "0.2rem" }}
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/personal")}
               title="Back to Dashboard"
             >
               <ArrowLeftCircle size={24} />

@@ -163,3 +163,32 @@ tr.selected-row {
   font-size: 1rem;
   padding: 0.5rem 0.75rem;
 }
+
+.google-icon-overlay {
+  background: none !important;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.google-login-button {
+  background: transparent;
+  border: 1px solid green;
+  border-radius: 50px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #dd6f21;
+  padding: 10px;
+}
+
+.google-login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* or set a fixed height like 200px */
+  width: 100%;
+  margin-top: 20px; /* optional spacing */
+  gap: 10px;
+}
