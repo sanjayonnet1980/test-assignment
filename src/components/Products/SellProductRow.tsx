@@ -18,7 +18,8 @@ const SellProductRow: React.FC<Props> = ({ entry, onDelete }) => {
         <td>{total.toFixed(2)}</td>
         <td>{entry.date}</td>
         <td>{entry.time}</td>
-        <td>
+        <td>{entry.modeofpayment}</td>
+        <td className="p-2">
           <button
             className="btn btn-outline-danger"
             onClick={() => onDelete(entry.id)}

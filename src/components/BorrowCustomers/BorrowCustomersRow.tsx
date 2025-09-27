@@ -1,14 +1,16 @@
 import React from "react";
 import { TrashFill } from "react-bootstrap-icons";
-import AddRemoveButtons from "./AddRemoveButtons";
+import AddRemoveButtons from "../WheatItems/AddRemoveButtons";
 
-interface riceRowProps {
+interface borrowCustomersRowProps {
   index: number;
   data: {
-    buyerName: string;
+    customeName: string;
     quantityKg: string;
     pricePerKg: string;
     purchaseDate: string;
+    customerAddress: string;
+    mobileNumber: string;
   };
   onChange: (index: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (index: number) => void;
@@ -17,7 +19,7 @@ interface riceRowProps {
   onAdd: () => void;
 }
 
-const RiceRow: React.FC<riceRowProps> = ({
+const BorrowCustomersRow: React.FC<borrowCustomersRowProps> = ({
   index,
   data,
   onChange,
@@ -31,15 +33,14 @@ const RiceRow: React.FC<riceRowProps> = ({
       <div className="form-group">
         <input
           type="text"
-          name="buyerName"
-          placeholder="Buyer"
+          name="customeName"
+          placeholder="customeName"
           className="form-control"
-          value={data.buyerName}
+          value={data.customeName}
           onChange={(e) => onChange(index, e)}
-          required
         />
         <label htmlFor="name" className="fw-bold text-muted">
-          Buyer Name:
+          Customer Name:
         </label>
       </div>
       <div className="form-group">
@@ -50,7 +51,6 @@ const RiceRow: React.FC<riceRowProps> = ({
           className="form-control"
           value={data.quantityKg}
           onChange={(e) => onChange(index, e)}
-          required
         />
         <label htmlFor="name" className="fw-bold text-muted">
           Product Quantity:
@@ -64,7 +64,6 @@ const RiceRow: React.FC<riceRowProps> = ({
           className="form-control"
           value={data.pricePerKg}
           onChange={(e) => onChange(index, e)}
-          required
         />
         <label htmlFor="name" className="fw-bold text-muted">
           Product Price:
@@ -77,10 +76,47 @@ const RiceRow: React.FC<riceRowProps> = ({
           className="form-control"
           value={data.purchaseDate}
           onChange={(e) => onChange(index, e)}
-          required
         />
         <label htmlFor="name" className="fw-bold text-muted">
           Date:
+        </label>
+      </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="mobileNumber"
+          placeholder="Mobile Number"
+          className="form-control"
+          value={data.mobileNumber}
+          onChange={(e) => {
+            const onlyDigits = e.target.value.replace(/\D/g, "").slice(0, 10);
+            const input = {
+              target: {
+                name: "mobileNumber",
+                value: onlyDigits,
+              },
+            } as React.ChangeEvent<HTMLInputElement>;
+            onChange(index, input);
+          }}
+          maxLength={10}
+          inputMode="numeric"
+        />
+
+        <label htmlFor="name" className="fw-bold text-muted">
+          Mobile Number:
+        </label>
+      </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="customerAddress"
+          placeholder="customerAddress"
+          className="form-control"
+          value={data.customerAddress}
+          onChange={(e) => onChange(index, e)}
+        />
+        <label htmlFor="name" className="fw-bold text-muted">
+          Customer Address:
         </label>
       </div>
       <div className="mt-2">
@@ -100,4 +136,4 @@ const RiceRow: React.FC<riceRowProps> = ({
   );
 };
 
-export default RiceRow;
+export default BorrowCustomersRow;

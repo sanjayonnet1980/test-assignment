@@ -7,6 +7,9 @@ import wheatReducer from '../features/WheatItems/wheatSlice'
 import riceReducer from '../features/WheatItems/riceSlice'
 import viewReducer from '../features/WheatItems/buyWheatSlice';
 import viewRiceReducer from '../features/WheatItems/buyRiceSlice';
+import borrowCustomersSliceReducer from "../features/BorrowCustomers/borrowCustomers";
+import todoInvPlanSliceReducer from '../features/TODOMonthlyInvPlans/todoSlice';
+
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +20,9 @@ export const store = configureStore({
     buyWheat: wheatReducer,
     buyRice: riceReducer,
     viewWheat: viewReducer,
-    viewRice: viewRiceReducer
+    viewRice: viewRiceReducer,
+    viewAddBorrowCutomer: borrowCustomersSliceReducer,
+    viewAddTodoPlan: todoInvPlanSliceReducer
   },
 });
 

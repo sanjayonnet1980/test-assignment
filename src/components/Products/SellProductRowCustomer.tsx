@@ -17,12 +17,13 @@ const SellProductRowCustomer: React.FC<Props> = ({ entry, onDelete }) => {
         <td>{entry.pricePerKg}</td>
         <td>{total.toFixed(2)}</td>
         <td>{new Date(entry.date).toLocaleDateString()}</td>
-        <td>
+        <td>{entry.modeofpayment}</td>
+        <td className="p-2">
           <button
             className="btn btn-outline-danger"
             onClick={() => onDelete(entry.id)}
           >
-            <Trash size={20} />
+            <Trash size={20}/>
           </button>
         </td>
       </tr>

@@ -9,8 +9,10 @@ import {
   fetchDailyProducts,
 } from "../../features/WheatItems/sellDailyProductLSlice";
 import SellProductRowCustomer from "./SellProductRowCustomer";
-import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { ArrowLeftCircle, Alarm } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import PopupCard from "./PopupCard";
+import AtomButton from "../../atoms/AtomButton";
 
 const SellProductTable: React.FC = () => {
   const [entries, setEntries] = useState<SellEntry[]>([]);
@@ -19,6 +21,7 @@ const SellProductTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [showConfirm, setShowConfirm] = useState(false);
 
   // ✅ Fetch entries on mount
   useEffect(() => {
@@ -26,7 +29,16 @@ const SellProductTable: React.FC = () => {
       setLoading(true);
       try {
         const result = await dispatch(fetchDailyProducts()).unwrap();
-        setEntries(result); // ✅ Set fetched data
+        setEntries(result);
+
+        // ✅ Restore customerEntries from localStorage
+        const stored = localStorage.getItem("customerEntries");
+        if (stored) {
+          const parsed = JSON.parse(stored) as SellEntry[];
+          setCustomerEntries(parsed);
+        } else {
+          setCustomerEntries(result); // fallback to full list
+        }
       } catch (err: any) {
         setError(typeof err === "string" ? err : "Failed to load data");
       } finally {
@@ -63,6 +75,19 @@ const SellProductTable: React.FC = () => {
     return sum + entry.quantityKg * entry.pricePerKg;
   }, 0);
 
+  const handleCancel = () => {
+    setShowConfirm(false);
+  };
+
+  const handleConfirm = () => {
+    setCustomerEntries([]);
+    setShowConfirm(false);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("customerEntries", JSON.stringify(customerEntries));
+  }, [customerEntries]);
+
   return (
     <div
       style={{
@@ -77,25 +102,30 @@ const SellProductTable: React.FC = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          marginBottom: '50px'
         }}
       >
         <h2>Daily Product Sales</h2>
 
-        <button
+        <AtomButton
+          label="Reset Each Selling Customer"
           className="btn btn-outline-success"
-          onClick={() => setCustomerEntries([])}
-        >
-          Find Each Customer
-        </button>
-        <button
+          onClick={() => {
+            setShowConfirm(true);
+          }}
+          icon={<Alarm size={20} />}
+          disabled={false}
+        />
+
+        <AtomButton
+          icon={<ArrowLeftCircle size={24} />}
+          title="Back to Dashboard"
           className="btn btn-outline-secondary"
           onClick={() => navigate("/business")}
-          title="Back to Dashboard"
-        >
-          <ArrowLeftCircle size={24} />
-        </button>
+          label=""
+          disabled={false}
+        />
       </div>
-
       {loading && <p>Loading products...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -113,6 +143,7 @@ const SellProductTable: React.FC = () => {
             <th>Price/Kg (₹)</th>
             <th>Total (₹)</th>
             <th>Date</th>
+            <th>Mode of Payment</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -141,6 +172,7 @@ const SellProductTable: React.FC = () => {
             <th>Total (₹)</th>
             <th>Date</th>
             <th>Time</th>
+            <th>Mode of Payment</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -158,6 +190,9 @@ const SellProductTable: React.FC = () => {
               />
             ))}
         </tbody>
+        {showConfirm && (
+          <PopupCard onCancel={handleCancel} onConfirm={handleConfirm} />
+        )}
       </table>
     </div>
   );

@@ -40,7 +40,8 @@ const BusinessDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/rice"
                 >
-                  <i className="bi bi-bag-fill me-1"></i>Add & View Buying Rice Items
+                  <i className="bi bi-bag-fill me-1"></i>Add & View Buying Rice
+                  Items
                 </Link>
               </button>
             </li>
@@ -50,8 +51,19 @@ const BusinessDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/wheat"
                 >
-                  <i className="bi bi-bag-fill me-1"></i> Add & View Buying Wheats
-                  Items
+                  <i className="bi bi-bag-fill me-1"></i> Add & View Buying
+                  Wheats Items
+                </Link>
+              </button>
+            </li>
+            <li className="nav-item">
+              <button className="btn fancy-border w-50 mt-4 animated-button">
+                <Link
+                  className="nav-link success fw-bold fst-italic me-1"
+                  to="/borrow"
+                >
+                  <i className="bi bi-bag-fill me-1"></i>Add & View Borrow
+                  Customers
                 </Link>
               </button>
             </li>
@@ -61,8 +73,7 @@ const BusinessDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/viewstock"
                 >
-                  <i className="bi bi-bag-fill me-1"></i> View Stock
-                  Items
+                  <i className="bi bi-bag-fill me-1"></i> View Stock Items
                 </Link>
               </button>
             </li>

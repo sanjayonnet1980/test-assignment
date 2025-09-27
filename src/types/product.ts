@@ -1,4 +1,6 @@
-export type ProductType = 'rice' | 'flour';
+export type ProductType = 'Rice' | 'Atta';
+
+export type paymentType = "Cash" | "Online"
 
 export interface SellEntry {
   id: string;
@@ -7,6 +9,7 @@ export interface SellEntry {
   pricePerKg: number;
   date: string;
   time: string;
+  modeofpayment: string;
 }
 
 export const barcodeMap: Record<string, 'rice' | 'flour'> = {

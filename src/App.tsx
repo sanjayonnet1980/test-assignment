@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./atoms/Navbar";
 import "./App.scss";
 import ViewContactPage from "./components/ContactSectionPage/ViewContactPage";
@@ -17,6 +17,8 @@ import Main from "./pages/Dashboard/Main";
 import BuyWheatForm from "./components/WheatItems/BuyWheatForm";
 import BuyRiceForm from "./components/WheatItems/BuyRiceForm";
 import SellProductTable from "./components/Products/SellProductTable";
+import BorrowCustomer from "./components/BorrowCustomers/BorrowCustomerForm";
+import TodoPlansForm from "./components/TodoMonthlyInv/TodoPlansForm";
 
 const App = () => {
   const location = useLocation();
@@ -26,27 +28,137 @@ const App = () => {
 
   return (
     <>
-      {!shouldHideNavbar && <ProtectedRoute><Navbar /></ProtectedRoute>}
+      {!shouldHideNavbar && (
+        <ProtectedRoute>
+          <Navbar />
+        </ProtectedRoute>
+      )}
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/business" element={<ProtectedRoute><BusinessDashboard /></ProtectedRoute>} />
-        <Route path="/personal" element={<ProtectedRoute><PersonalDashboard /></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute><Main /></ProtectedRoute>} />
-        <Route path="/addcontact" element={<ProtectedRoute><AddContactForm /></ProtectedRoute>} />
-        <Route path="/viewcontact" element={<ProtectedRoute><ViewContactPage /></ProtectedRoute>} />
-        <Route path="/viewcsvcontact" element={<ProtectedRoute><ExcelUploader /></ProtectedRoute>} />
-        <Route path="/addcreditcard" element={<ProtectedRoute><AddCreditCardForm /></ProtectedRoute>} />
-        <Route path="/viewcreditcard" element={<ProtectedRoute><ViewCreditCardPage /></ProtectedRoute>} />
-        <Route path="/addmnthinv" element={<ProtectedRoute><AddMonthlyInv /></ProtectedRoute>} />
-        <Route path="/viewmnthinv" element={<ProtectedRoute><ViewMonthlyInv /></ProtectedRoute>} />
-        <Route path="/wheat" element={<ProtectedRoute><BuyWheatForm /></ProtectedRoute>} />
-        <Route path="/rice" element={<ProtectedRoute><BuyRiceForm /></ProtectedRoute>} />
-        <Route path="/dailysellitems" element={<ProtectedRoute><SellProductTable /></ProtectedRoute>} />
+        <Route
+          path="/business"
+          element={
+            <ProtectedRoute>
+              <BusinessDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/personal"
+          element={
+            <ProtectedRoute>
+              <PersonalDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Main />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addcontact"
+          element={
+            <ProtectedRoute>
+              <AddContactForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewcontact"
+          element={
+            <ProtectedRoute>
+              <ViewContactPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewcsvcontact"
+          element={
+            <ProtectedRoute>
+              <ExcelUploader />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addcreditcard"
+          element={
+            <ProtectedRoute>
+              <AddCreditCardForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewcreditcard"
+          element={
+            <ProtectedRoute>
+              <ViewCreditCardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addmnthinv"
+          element={
+            <ProtectedRoute>
+              <AddMonthlyInv />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewmnthinv"
+          element={
+            <ProtectedRoute>
+              <ViewMonthlyInv />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wheat"
+          element={
+            <ProtectedRoute>
+              <BuyWheatForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rice"
+          element={
+            <ProtectedRoute>
+              <BuyRiceForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dailysellitems"
+          element={
+            <ProtectedRoute>
+              <SellProductTable />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/borrow"
+          element={
+            <ProtectedRoute>
+              <BorrowCustomer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/todoinv"
+          element={
+            <ProtectedRoute>
+              <TodoPlansForm />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<LoginPage />} />
       </Routes>
     </>
   );
 };
-
 
 export default App;

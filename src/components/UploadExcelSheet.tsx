@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import SlidingHeaderText from "../atoms/SlidingText";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import AtomButton from "../atoms/AtomButton";
 
 interface ExcelRow {
   [key: string]: string | number;
@@ -66,19 +67,18 @@ const ExcelUploader: React.FC = () => {
             onChange={handleFileUpload}
             style={{ display: "none" }}
           />
-          <button
+          <AtomButton
+            icon={<ArrowLeftCircle size={24} />}
+            label=""
+            onClick={() => navigate("/dashboard")}
+            title="Back to Dashboard"
+            className="btn btn-outline-secondary"
             style={{
               position: "absolute",
               top: "1.5rem",
               right: "1.5rem",
-
             }}
-            className="btn btn-outline-secondary"
-            onClick={() => navigate("/dashboard")}
-            title="Back to Dashboard"
-          >
-            <ArrowLeftCircle size={24} />
-          </button>
+          />
         </div>
 
         {data.length > 0 && (

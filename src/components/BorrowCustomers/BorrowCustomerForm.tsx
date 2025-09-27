@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { resetStatus } from "../../features/WheatItems/wheatSlice";
+import React, { useEffect, useState } from "react";
 import SlidingHeaderText from "../../atoms/SlidingText";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { addRicePurchase } from "../../features/WheatItems/riceSlice";
-import RiceRow from "./RiceRow";
-import { BuyRiceTable } from "./ViewBuyRice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  borrowCustomersPost,
+  resetStatus,
+} from "../../features/BorrowCustomers/borrowCustomers";
+import BorrowCustomersRow from "./BorrowCustomersRow";
+import ViewBorrowCustomersTable from "./ViewBorrowCustomersTable";
 
-const BuyRiceForm: React.FC = () => {
+const BorrowCustomer = () => {
   const dispatch = useAppDispatch();
-  const { loading, error, success } = useAppSelector((state) => state.buyRice);
+  const { loading, error, success } = useAppSelector(
+    (state) => state.viewAddBorrowCutomer
+  );
   const [refreshTable, setRefreshTable] = useState(false);
-
-  const navigate = useNavigate();
   const [rows, setRows] = useState([
-    { buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" },
+    {
+      customeName: "",
+      quantityKg: "",
+      pricePerKg: "",
+      purchaseDate: "",
+      customerAddress: "",
+      mobileNumber: "",
+    },
   ]);
 
+  const navigate = useNavigate();
   const handleRowChange = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
@@ -30,7 +40,14 @@ const BuyRiceForm: React.FC = () => {
   const addRow = () => {
     setRows([
       ...rows,
-      { buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" },
+      {
+        customeName: "",
+        quantityKg: "",
+        pricePerKg: "",
+        purchaseDate: "",
+        customerAddress: "",
+        mobileNumber: "",
+      },
     ]);
   };
 
@@ -40,23 +57,30 @@ const BuyRiceForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const promises = rows.map((row) =>
       dispatch(
-        addRicePurchase({
-          buyerName: row.buyerName,
+        borrowCustomersPost({
+          customeName: row.customeName,
           quantityKg: Number(row.quantityKg),
           pricePerKg: Number(row.pricePerKg),
           purchaseDate: row.purchaseDate,
+          customerAddress: row.customerAddress,
+          mobileNumber: row.mobileNumber,
         })
       )
     );
-
     await Promise.all(promises); // ✅ Wait for all submissions
 
     setRefreshTable((prev) => !prev);
     setRows([
-      { buyerName: "", quantityKg: "", pricePerKg: "", purchaseDate: "" },
+      {
+        customeName: "",
+        quantityKg: "",
+        pricePerKg: "",
+        purchaseDate: "",
+        customerAddress: "",
+        mobileNumber: "",
+      },
     ]);
   };
 
@@ -71,7 +95,7 @@ const BuyRiceForm: React.FC = () => {
     <div className="page-container">
       <div className="card border border border-warning">
         <div className="card-header">
-          <SlidingHeaderText text="🚀 Welcome to the Monthly Investment Dashboard — Real-time updates ahead!" />
+          <SlidingHeaderText text="🚀 Welcome to the Borrow Customers Dashboard — Real-time updates ahead!" />
         </div>
         <div className="card-body">
           <div
@@ -82,7 +106,9 @@ const BuyRiceForm: React.FC = () => {
               paddingTop: "0.5rem",
             }}
           >
-            <h2 style={{ margin: 0 }}>📇 Add Rice Purchase Products</h2>
+            <h2 style={{ margin: 0 }}>
+              📇 Add and View Borrow Customer Details
+            </h2>
             <button
               style={{
                 position: "absolute",
@@ -98,7 +124,7 @@ const BuyRiceForm: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit} className="contact-form p-4">
             {rows.map((row, index) => (
-              <RiceRow
+              <BorrowCustomersRow
                 key={index}
                 index={index}
                 data={row}
@@ -114,7 +140,7 @@ const BuyRiceForm: React.FC = () => {
               className="form-button w-100"
               disabled={loading}
             >
-              {loading ? "Submitting..." : "Submit All Purchases"}
+              {loading ? "Submitting..." : "Submit Borrow Details"}
             </button>
 
             {loading && (
@@ -125,10 +151,10 @@ const BuyRiceForm: React.FC = () => {
             {error && <div className="alert alert-danger mt-3">{error}</div>}
           </form>
         </div>
-        <BuyRiceTable refreshTrigger={refreshTable} />
+        <ViewBorrowCustomersTable refreshTrigger={refreshTable} />
       </div>
     </div>
   );
 };
 
-export default BuyRiceForm;
+export default BorrowCustomer;

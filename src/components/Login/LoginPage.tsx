@@ -7,10 +7,10 @@ import {
   Facebook,
   Twitter,
 } from "react-bootstrap-icons";
-import Button from "../../atoms/Button";
 import "./LoginPage.css"; // Custom styles
 import { loginUser } from "../../features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import AtomButton from "../../atoms/AtomButton";
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -176,8 +176,7 @@ const LoginPage: React.FC = () => {
           </div>
 
           {error && <div className="text-danger mb-3">{error}</div>}
-
-          <Button
+          <AtomButton
             type="submit"
             label="Login"
             className="form-button w-100"

@@ -1,20 +1,24 @@
 {
+  "todoInvPlans": [
+    {
+      "id": "6586",
+      "bankName": "HDFC",
+      "amount": "2000",
+      "month": "February",
+      "toInvestment": "ffdsfsd",
+      "reason": "er",
+      "status": "completed"
+    }
+  ],
+  "borrowCustomers": [],
   "dailySellProducts": [
     {
-      "id": "7db3652d-718a-49ef-8dbf-1dedbe60f2e4",
-      "product": "flour",
-      "quantityKg": 12,
-      "pricePerKg": 11,
-      "date": "2025-09-18",
-      "time": "10:57"
-    },
-    {
-      "id": "88b4d312-be44-4166-9253-729d22744ad2",
-      "product": "rice",
-      "quantityKg": 42,
-      "pricePerKg": 24,
-      "date": "2025-09-18",
-      "time": "10:57"
+      "id": "c97f981e-3410-47dd-84c6-95e9d7a127ef",
+      "product": "Rice",
+      "quantityKg": 22,
+      "pricePerKg": 2,
+      "date": "2025-09-23",
+      "time": "19:52"
     }
   ],
   "buywheat": [
@@ -103,6 +107,30 @@
       "amount": "54.78",
       "date": "2025-09-19",
       "comments": "GST",
+      "mode": "investment"
+    },
+    {
+      "id": "934b",
+      "cardNumber": "5549",
+      "amount": "1450",
+      "date": "2025-09-23",
+      "comments": "Buy Rice",
+      "mode": "investment"
+    },
+    {
+      "id": "2be5",
+      "cardNumber": "4188",
+      "amount": "1325",
+      "date": "2025-09-26",
+      "comments": "Flipkar - General Item buy",
+      "mode": "investment"
+    },
+    {
+      "id": "14f8",
+      "cardNumber": "5549",
+      "amount": "394.99",
+      "date": "2025-09-27",
+      "comments": "Jio Mart - General Items",
       "mode": "investment"
     }
   ],
