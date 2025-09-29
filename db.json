@@ -1,26 +1,71 @@
 {
   "todoInvPlans": [
     {
-      "id": "6586",
-      "bankName": "HDFC",
-      "amount": "2000",
-      "month": "February",
-      "toInvestment": "ffdsfsd",
-      "reason": "er",
-      "status": "completed"
+      "id": "0b79",
+      "bankName": "Axis",
+      "amount": "31000",
+      "month": "October",
+      "toInvestment": "Sunaina Devi",
+      "reason": "General purpose",
+      "status": ""
+    },
+    {
+      "id": "7cbd",
+      "bankName": "Axis",
+      "amount": "10000",
+      "month": "October",
+      "toInvestment": "SIP ",
+      "reason": "monthly SIP",
+      "status": ""
+    },
+    {
+      "id": "9482",
+      "bankName": "Axis",
+      "amount": "1500",
+      "month": "October",
+      "toInvestment": "Milk Purchase",
+      "reason": "Milk",
+      "status": ""
+    },
+    {
+      "id": "6958",
+      "bankName": "Axis",
+      "amount": "10705",
+      "month": "October",
+      "toInvestment": "Maintance charge",
+      "reason": "Flat 116",
+      "status": ""
+    },
+    {
+      "id": "6369",
+      "bankName": "Axis",
+      "amount": "35278.67",
+      "month": "September",
+      "toInvestment": "Credit Card Bill - 5549",
+      "reason": "Bill",
+      "status": ""
+    },
+    {
+      "id": "a1d3",
+      "bankName": "Axis",
+      "amount": "679.82",
+      "month": "September",
+      "toInvestment": "Jio Postpaid bill",
+      "reason": "JIO postpaid",
+      "status": ""
+    },
+    {
+      "id": "7ac4",
+      "bankName": "Axis",
+      "amount": "10000",
+      "month": "September",
+      "toInvestment": "Bhumi School",
+      "reason": "Fee payment",
+      "status": ""
     }
   ],
   "borrowCustomers": [],
-  "dailySellProducts": [
-    {
-      "id": "c97f981e-3410-47dd-84c6-95e9d7a127ef",
-      "product": "Rice",
-      "quantityKg": 22,
-      "pricePerKg": 2,
-      "date": "2025-09-23",
-      "time": "19:52"
-    }
-  ],
+  "dailySellProducts": [],
   "buywheat": [
     {
       "id": "7958",
@@ -132,6 +177,14 @@
       "date": "2025-09-27",
       "comments": "Jio Mart - General Items",
       "mode": "investment"
+    },
+    {
+      "id": "9bf0",
+      "cardNumber": "5549",
+      "amount": "44",
+      "date": "2025-09-27",
+      "comments": "flipkart sooji packet",
+      "mode": "cashback"
     }
   ],
   "mutualFund": [],

@@ -9,6 +9,8 @@ import { TodoEntry } from "../../types/todo";
 import TodoHeaders from "./TodoHeaders";
 import PaginationControls from "../../atoms/PaginationControls";
 import ReadOnlyTodo from "./ReadOnlyTodo";
+import { formatToINRCurrency } from "../../utils/amountFormat";
+import { calculateTotal } from "../../utils/calculateTotal";
 
 interface Props {
   refreshTrigger: boolean;
@@ -18,7 +20,7 @@ const ViewTodoInvTable: React.FC<Props> = ({ refreshTrigger }) => {
   const dispatch = useAppDispatch();
   const { todoInvDetails } = useAppSelector((state) => state.viewAddTodoPlan);
   const [page, setPage] = useState(1);
-  const pageSize = 5;
+  const pageSize = 10;
 
   useEffect(() => {
     dispatch(fetchTodoLists());
@@ -39,11 +41,20 @@ const ViewTodoInvTable: React.FC<Props> = ({ refreshTrigger }) => {
 
   const totalPages = Math.ceil(todoInvDetails.length / pageSize);
 
+  const totalAmount = calculateTotal(todoInvDetails, "amount");
+
+
   return (
     <div style={{ width: "1060px", marginLeft: "50px" }}>
-      <div className="fw-bold mb-3 text-warning text-uppercase">
-        View Todo Monthly Plans..
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <div className="fw-bold text-warning text-uppercase">
+          View Todo Monthly Plans..
+        </div>
+        <div className="fw-bold text-success">
+          Total Amount - {formatToINRCurrency(totalAmount)}
+        </div>
       </div>
+
       <table className="border w-100">
         <TodoHeaders />
         <tbody>

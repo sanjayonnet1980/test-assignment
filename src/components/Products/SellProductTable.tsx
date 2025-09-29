@@ -13,6 +13,7 @@ import { ArrowLeftCircle, Alarm } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import PopupCard from "./PopupCard";
 import AtomButton from "../../atoms/AtomButton";
+import { findTotal } from "../../utils/findTotal";
 
 const SellProductTable: React.FC = () => {
   const [entries, setEntries] = useState<SellEntry[]>([]);
@@ -21,6 +22,8 @@ const SellProductTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   const [showConfirm, setShowConfirm] = useState(false);
 
   // ✅ Fetch entries on mount
@@ -67,13 +70,9 @@ const SellProductTable: React.FC = () => {
     setCustomerEntries((prev) => prev.filter((e) => e.id !== id));
   };
 
-  const totalCost = entries.reduce((sum, entry) => {
-    return sum + entry.quantityKg * entry.pricePerKg;
-  }, 0);
+  const totalCost = findTotal(entries, (entry) => entry.quantityKg * entry.pricePerKg);
 
-  const totalCostToday = customerEntries.reduce((sum, entry) => {
-    return sum + entry.quantityKg * entry.pricePerKg;
-  }, 0);
+  const totalCostToday = findTotal(customerEntries, (entry) => entry.quantityKg * entry.pricePerKg);
 
   const handleCancel = () => {
     setShowConfirm(false);
@@ -102,7 +101,7 @@ const SellProductTable: React.FC = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: '50px'
+          marginBottom: "50px",
         }}
       >
         <h2>Daily Product Sales</h2>
@@ -132,7 +131,7 @@ const SellProductTable: React.FC = () => {
       <SellProductForm onAdd={handleAdd} />
 
       <h5 className="text-success fw-bold">Customer Selling reports</h5>
-      <div className="d-flex justify-content-end fw-bold fs-5 text-danger">
+      <div className="d-flex justify-content-end fw-bold fs-5 text-success">
         Total ₹ {totalCostToday.toFixed(2)}
       </div>
       <table className="w-100 border">
@@ -159,10 +158,23 @@ const SellProductTable: React.FC = () => {
       </table>
       <br />
       <br />
-      <h5 className="text-success fw-bold">Today Actual Selling reports</h5>
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-between align-items-center">
+        <h5 className="text-success fw-bold mb-0">
+          Today Actual Selling reports
+        </h5>
+        <input
+          type="text"
+          placeholder="Search by product name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="form-control"
+          style={{ maxWidth: "300px", marginLeft: "1rem" }}
+        />
+      </div>
+      <div className="d-flex justify-content-end mt-2 fw-bold text-success">
         Total ₹ {totalCost.toFixed(2)}
       </div>
+
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>
@@ -180,7 +192,10 @@ const SellProductTable: React.FC = () => {
           {[...entries]
             .filter((entry) => {
               const today = new Date().toISOString().slice(0, 10);
-              return entry.date === today;
+              return (
+                entry.date === today &&
+                entry.product.toLowerCase().includes(searchTerm.toLowerCase())
+              );
             })
             .map((entry) => (
               <SellProductRow
