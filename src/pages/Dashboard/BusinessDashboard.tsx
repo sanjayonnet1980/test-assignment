@@ -73,7 +73,7 @@ const BusinessDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/viewstock"
                 >
-                  <i className="bi bi-bag-fill me-1"></i> View Stock Items
+                  <i className="bi bi-bag-fill me-1"></i>Add & View Stock Details
                 </Link>
               </button>
             </li>

@@ -166,8 +166,6 @@ const ViewCreditCardPage: React.FC = () => {
   };
 
   const cardTotals = calculateCreditCardTotalsByCard(creditCard);
-let t = Object.entries(cardTotals)
-  console.log(t)
   return (
     <div className="page-container">
       <div className="card border border border-warning">

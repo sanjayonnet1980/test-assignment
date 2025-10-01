@@ -2,6 +2,7 @@ import React from "react";
 import { PencilSquare, Trash, Check2, X } from "react-bootstrap-icons";
 import { formatToINRCurrency } from "../../utils/amountFormat";
 import { formatDateWithUnicodeOrdinal } from "../../utils/formatDateToIndianStyle";
+import { useSuggestionMode } from "../../utils/suggestionMode";
 
 interface Props {
   investment: any;
@@ -32,6 +33,7 @@ const CreditCardRow: React.FC<Props> = ({
   onSelectRow,
   onSelectAll,
 }) => {
+  const { suggestions, suggestionsMode } = useSuggestionMode();
   return (
     <tr
       className={`${blink === investment.id ? "blink-row" : ""} ${
@@ -47,7 +49,14 @@ const CreditCardRow: React.FC<Props> = ({
               value={editForm.cardNumber}
               onChange={onEditChange}
               className="form-control"
+              autoComplete="off"
+              list="cardno"
             />
+            <datalist id="cardno">
+              {suggestions.map((item, idx) => (
+                <option key={idx} value={item} />
+              ))}
+            </datalist>
           </td>
           <td>
             <div className="input-with-icon">
@@ -56,6 +65,7 @@ const CreditCardRow: React.FC<Props> = ({
                 name="amount"
                 value={editForm.amount}
                 onChange={onEditChange}
+                autoComplete="off"
                 onBlur={() =>
                   onEditChange({
                     target: {
@@ -74,6 +84,7 @@ const CreditCardRow: React.FC<Props> = ({
               value={editForm.date}
               onChange={onEditChange}
               className="form-control"
+              autoComplete="off"
             />
           </td>
           <td>
@@ -82,6 +93,7 @@ const CreditCardRow: React.FC<Props> = ({
               value={editForm.comments}
               onChange={onEditChange}
               className="form-control"
+              autoComplete="off"
             />
           </td>
           <td>
@@ -90,7 +102,14 @@ const CreditCardRow: React.FC<Props> = ({
               value={editForm.mode}
               onChange={onEditChange}
               className="form-control"
+              autoComplete="off"
+              list="editmode"
             />
+            <datalist id="editmode">
+              {suggestionsMode.map((item, idx) => (
+                <option key={idx} value={item} />
+              ))}
+            </datalist>
           </td>
           <td style={{ display: "flex", gap: "0.5rem" }}>
             <button className="btn btn-sm btn-success" onClick={onEditSave}>

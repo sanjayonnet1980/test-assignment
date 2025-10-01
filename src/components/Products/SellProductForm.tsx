@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { paymentType, ProductType, SellEntry } from "../../types/product";
+import {
+  paymentType,
+  productDropDownTypes,
+  ProductType,
+  SellEntry,
+} from "../../types/product";
 import { PlusCircle } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
@@ -21,11 +26,11 @@ const SellProductForm: React.FC<Props> = ({ onAdd }) => {
   }>({});
 
   const [formData, setFormData] = useState({
-    product: "Rice" as ProductType,
+    product: "Atta" as ProductType,
     quantityKg: 0,
     pricePerKg: 0,
     date: new Date().toISOString().slice(0, 10),
-    modeofpayment: "Cash" as paymentType
+    modeofpayment: "Cash" as paymentType,
   });
 
   const dispatch = useDispatch<AppDispatch>();
@@ -56,7 +61,7 @@ const SellProductForm: React.FC<Props> = ({ onAdd }) => {
       product,
       quantityKg,
       pricePerKg,
-      date,      
+      date,
       modeofpayment,
       time: new Date().getHours() + ":" + new Date().getMinutes(),
     };
@@ -65,11 +70,11 @@ const SellProductForm: React.FC<Props> = ({ onAdd }) => {
     try {
       await dispatch(addSellProduct(entry)).unwrap(); // ✅ API call
       setFormData({
-        product: "Rice",
+        product: "Atta",
         pricePerKg: 0,
         quantityKg: 0,
         date: new Date().toISOString().slice(0, 10),
-        modeofpayment: "Cash"
+        modeofpayment: "Cash",
       });
       setErrors({});
     } catch (error) {
@@ -91,8 +96,13 @@ const SellProductForm: React.FC<Props> = ({ onAdd }) => {
           }
           className="form-input"
         >
-          <option value="Rice">Rice</option>
-          <option value="Atta">Atta</option>
+          {[...productDropDownTypes]
+            .sort((a, b) => a.localeCompare(b))
+            .map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
         </select>
         <label htmlFor="product" className="text-muted fw-bold">
           Product
@@ -166,7 +176,7 @@ const SellProductForm: React.FC<Props> = ({ onAdd }) => {
           label="Add Customer Data"
           icon={<PlusCircle className="me-1" />}
           onClick={() => console.log("Clicked!")}
-          style={{height: '42px'}}
+          style={{ height: "42px" }}
           className="btn btn-outline-success"
           disabled={false}
         />

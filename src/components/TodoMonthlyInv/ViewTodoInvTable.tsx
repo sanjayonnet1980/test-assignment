@@ -10,7 +10,7 @@ import TodoHeaders from "./TodoHeaders";
 import PaginationControls from "../../atoms/PaginationControls";
 import ReadOnlyTodo from "./ReadOnlyTodo";
 import { formatToINRCurrency } from "../../utils/amountFormat";
-import { calculateTotal } from "../../utils/calculateTotal";
+import { calculateTotals } from "../../utils/calculateTotal";
 
 interface Props {
   refreshTrigger: boolean;
@@ -20,7 +20,8 @@ const ViewTodoInvTable: React.FC<Props> = ({ refreshTrigger }) => {
   const dispatch = useAppDispatch();
   const { todoInvDetails } = useAppSelector((state) => state.viewAddTodoPlan);
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 20;
+  const [searchMonth, setSearchMonth] = useState("");
 
   useEffect(() => {
     dispatch(fetchTodoLists());
@@ -34,36 +35,57 @@ const ViewTodoInvTable: React.FC<Props> = ({ refreshTrigger }) => {
     dispatch(updateTodoInv(updated));
   };
 
-  const paginatedData = todoInvDetails.slice(
+  const filteredData = todoInvDetails.filter((todo) =>
+    todo.month?.toLowerCase().includes(searchMonth.toLowerCase())
+  ).sort((a, b) => a.status.localeCompare(b.status));
+
+  const paginatedData = filteredData.slice(
     (page - 1) * pageSize,
     page * pageSize
   );
 
-  const totalPages = Math.ceil(todoInvDetails.length / pageSize);
+  const totalPages = Math.ceil(filteredData.length / pageSize);
 
-  const totalAmount = calculateTotal(todoInvDetails, "amount");
-
+  const totalAmount = calculateTotals(filteredData, "amount");
 
   return (
     <div style={{ width: "1060px", marginLeft: "50px" }}>
+      <div className="w-100">
+        <h5 className="card-title text-muted text-uppercase fw-bold mb-1 fs-4">
+          View Todo List Plans
+        </h5>
+      </div>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="fw-bold text-warning text-uppercase">
-          View Todo Monthly Plans..
+        <input
+          type="text"
+          placeholder="Search by month"
+          className="form-control"
+          style={{ width: "200px" }}
+          value={searchMonth}
+          onChange={(e) => {
+            setSearchMonth(e.target.value);
+            setPage(1); // Reset to first page on search
+          }}
+        />
+
+        <div className="fw-bold text-success">
+          Total Completed Amount - {formatToINRCurrency(totalAmount.completed)}
         </div>
         <div className="fw-bold text-success">
-          Total Amount - {formatToINRCurrency(totalAmount)}
+          Total TODO Amount - {formatToINRCurrency(totalAmount.notCompleted)}
         </div>
       </div>
 
       <table className="border w-100">
         <TodoHeaders />
         <tbody>
-          {paginatedData.map((todo: TodoEntry) => (
+          {paginatedData.map((todo: TodoEntry, index: number) => (
             <ReadOnlyTodo
               key={todo.id}
               entry={todo}
               onDelete={() => handleDelete(todo?.id ?? "")}
               onSave={handleSave}
+              index = {index+1}
             />
           ))}
         </tbody>

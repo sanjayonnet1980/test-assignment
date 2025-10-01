@@ -9,6 +9,7 @@ import viewReducer from '../features/WheatItems/buyWheatSlice';
 import viewRiceReducer from '../features/WheatItems/buyRiceSlice';
 import borrowCustomersSliceReducer from "../features/BorrowCustomers/borrowCustomers";
 import todoInvPlanSliceReducer from '../features/TODOMonthlyInvPlans/todoSlice';
+import stocksSliceReducer from '../features/Stocks/stockSlice';
 
 
 export const store = configureStore({
@@ -22,7 +23,8 @@ export const store = configureStore({
     viewWheat: viewReducer,
     viewRice: viewRiceReducer,
     viewAddBorrowCutomer: borrowCustomersSliceReducer,
-    viewAddTodoPlan: todoInvPlanSliceReducer
+    viewAddTodoPlan: todoInvPlanSliceReducer,
+    viewAddStock: stocksSliceReducer
   },
 });
 

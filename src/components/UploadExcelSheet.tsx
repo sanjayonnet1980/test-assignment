@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import SlidingHeaderText from "../atoms/SlidingText";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import AtomButton from "../atoms/AtomButton";

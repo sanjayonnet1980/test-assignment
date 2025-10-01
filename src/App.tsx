@@ -19,6 +19,7 @@ import BuyRiceForm from "./components/WheatItems/BuyRiceForm";
 import SellProductTable from "./components/Products/SellProductTable";
 import BorrowCustomer from "./components/BorrowCustomers/BorrowCustomerForm";
 import TodoPlansForm from "./components/TodoMonthlyInv/TodoPlansForm";
+import StockDetailsForm from "./components/Stocks/StockDetailsForm";
 
 const App = () => {
   const location = useLocation();
@@ -152,6 +153,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <TodoPlansForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewstock"
+          element={
+            <ProtectedRoute>
+              <StockDetailsForm />
             </ProtectedRoute>
           }
         />

@@ -1,5 +1,7 @@
 import React from "react";
 import MonthlyInvRow from "./MonthlyInvRow";
+import { calculateTotals } from "../../utils/calculateTotal";
+import { formatToINRCurrency } from "../../utils/amountFormat";
 
 interface Props {
   data: any[];
