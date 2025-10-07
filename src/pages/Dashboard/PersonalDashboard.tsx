@@ -66,18 +66,7 @@ const PersonalDashboard = () => {
                   className="nav-link success fw-bold fst-italic me-1"
                   to="/addcreditcard"
                 >
-                  <i className="bi bi-credit-card-2-front-fill me-1"></i> Add
-                  Credit Card Information
-                </Link>
-              </button>
-            </li>
-            <li className="nav-item">
-              <button className="btn fancy-border w-50 mt-4 animated-button">
-                <Link
-                  className="nav-link success fw-bold fst-italic me-1"
-                  to="/viewcreditcard"
-                >
-                  <i className="bi bi-credit-card-2-front-fill me-1"></i> View
+                  <i className="bi bi-credit-card-2-front-fill me-1"></i> Add & View
                   Credit Card Information
                 </Link>
               </button>

@@ -2,120 +2,57 @@
   "stocks": [],
   "todoInvPlans": [
     {
-      "id": "7cbd",
+      "id": "58d4",
       "bankName": "Axis Bank",
-      "amount": "10000",
-      "month": "September",
-      "toInvestment": "SIP ",
-      "reason": "monthly SIP",
-      "status": "completed"
-    },
-    {
-      "id": "9482",
-      "bankName": "Axis Bank",
-      "amount": "1500",
-      "month": "September",
-      "toInvestment": "Milk Purchase",
-      "reason": "Milk",
+      "amount": "31000",
+      "month": "October",
+      "toInvestment": "Sunaina Devi",
+      "reason": "Monthly Investement",
       "status": ""
     },
     {
-      "id": "6369",
+      "id": "6da8",
       "bankName": "Axis Bank",
-      "amount": "35278.67",
-      "month": "September",
-      "toInvestment": "Credit Card Bill - 5549",
-      "reason": "Bill",
-      "status": "completed"
-    },
-    {
-      "id": "a1d3",
-      "bankName": "Axis Bank",
-      "amount": "679.82",
-      "month": "September",
-      "toInvestment": "Jio Postpaid bill",
-      "reason": "JIO postpaid",
+      "amount": "20000",
+      "month": "October",
+      "toInvestment": "Credit card ",
+      "reason": "Monthly Bills",
       "status": ""
     },
     {
-      "id": "7ac4",
+      "id": "597d",
       "bankName": "Axis Bank",
       "amount": "10000",
-      "month": "September",
+      "month": "October",
       "toInvestment": "Bhumi School",
-      "reason": "Fee payment",
+      "reason": "Fee Payment",
       "status": ""
     },
     {
-      "id": "e6a7",
+      "id": "4e5b",
       "bankName": "Axis Bank",
-      "amount": "25000",
-      "month": "September",
-      "toInvestment": "Sunaina Devi",
-      "reason": "Salary",
-      "status": "completed"
-    },
-    {
-      "id": "36a3",
-      "bankName": "Axis Bank",
-      "amount": "1000",
-      "month": "September",
-      "toInvestment": "IndMoney Stock",
-      "reason": "Stock",
-      "status": "completed"
-    },
-    {
-      "id": "b6cf",
-      "bankName": "Axis Bank",
-      "amount": "10000",
-      "month": "September",
-      "toInvestment": "IndMoney",
+      "amount": "30000",
+      "month": "October",
+      "toInvestment": "Mutual Fund",
       "reason": "SIP",
-      "status": "completed"
-    },
-    {
-      "id": "a195",
-      "bankName": "Axis Bank",
-      "amount": "5000",
-      "month": "September",
-      "toInvestment": "Signifa Association",
-      "reason": "Corpus Fund",
-      "status": "completed"
-    },
-    {
-      "id": "e474",
-      "bankName": "Axis Bank",
-      "amount": "883.82",
-      "month": "September",
-      "toInvestment": "ACT Wifi",
-      "reason": "Wifi connection bill",
-      "status": "completed"
-    },
-    {
-      "id": "51f2",
-      "bankName": "Axis Bank",
-      "amount": "5005",
-      "month": "September",
-      "toInvestment": "Signifa Association ",
-      "reason": "Mentainace amount",
-      "status": "completed"
-    },
-    {
-      "id": "8e77",
-      "bankName": "Axis Bank",
-      "amount": "9000",
-      "month": "September",
-      "toInvestment": "Sunaina Devi",
-      "reason": "General Investment",
       "status": ""
     },
     {
-      "id": "e8c0",
+      "id": "8ce2",
       "bankName": "Axis Bank",
-      "amount": "500",
-      "month": "September",
-      "toInvestment": "BESCOM Bill",
-      "reason": "Monthly Bill",
+      "amount": "883",
+      "month": "October",
+      "toInvestment": "ACT Wifi Bill",
+      "reason": "ACT",
+      "status": ""
+    },
+    {
+      "id": "d15b",
+      "bankName": "Axis Bank",
+      "amount": "1200",
+      "month": "October",
+      "toInvestment": "Milk",
+      "reason": "Milk",
       "status": ""
     }
   ],
@@ -234,19 +171,35 @@
       "mode": "investment"
     },
     {
-      "id": "9bf0",
-      "cardNumber": "5549",
-      "amount": "44",
-      "date": "2025-09-27",
-      "comments": "flipkart sooji packet",
-      "mode": "cashback"
-    },
-    {
       "id": "fa8c",
       "cardNumber": "4188",
       "amount": "326",
       "date": "2025-10-01",
       "comments": "Flipkar Minutes",
+      "mode": "investment"
+    },
+    {
+      "id": "ed2b",
+      "cardNumber": "4188",
+      "amount": "2658",
+      "date": "2025-10-02",
+      "comments": "FlipKart General Shopping",
+      "mode": "investment"
+    },
+    {
+      "id": "783e",
+      "cardNumber": "5549",
+      "amount": "9930",
+      "date": "2025-10-05",
+      "comments": "Kolkata Shop Electricity Bill",
+      "mode": "Other"
+    },
+    {
+      "id": "a1c0",
+      "cardNumber": "5549",
+      "amount": "666",
+      "date": "2025-10-06",
+      "comments": "Petrol",
       "mode": "investment"
     }
   ],
@@ -317,6 +270,46 @@
       "date": "2025-10-01",
       "vendor": "Signifa Association mentainane via NBH",
       "reason": "Oct-2025"
+    },
+    {
+      "id": "ea01",
+      "source": "Axis Bank",
+      "date": "2025-10-01",
+      "amount": "11000",
+      "vendor": "Sunaina - Diwali Gift - ATM",
+      "reason": "Gift cash"
+    },
+    {
+      "id": "16fb",
+      "source": "Axis Bank",
+      "amount": "10500",
+      "date": "2025-10-03",
+      "vendor": "transfer to Central bank ",
+      "reason": "Mutual Fund - SIP"
+    },
+    {
+      "id": "2200",
+      "source": "Axis Bank",
+      "amount": "500",
+      "date": "2025-10-03",
+      "vendor": "Axis Direct SIP",
+      "reason": "SIP Investment"
+    },
+    {
+      "id": "7a09",
+      "source": "State Bank",
+      "amount": "119",
+      "date": "2025-10-05",
+      "vendor": "JioMart",
+      "reason": "Electric board Extension"
+    },
+    {
+      "id": "d584",
+      "source": "Axis Bank",
+      "date": "2025-10-06",
+      "amount": "296",
+      "vendor": "BESCOM",
+      "reason": "Electricity bill"
     }
   ]
 }

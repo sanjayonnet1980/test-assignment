@@ -9,13 +9,15 @@ import { useDateRefTrigger } from "../../utils/datesetRefTrigger";
 import { useSuggestionMode } from "../../utils/suggestionMode";
 import CreditCardRowForm from "./CreditCardRowForm";
 import { validateRow } from "../../utils/validationRow";
+import ViewCreditCardPage from "./ViewCreditCardPage";
 
 const AddCreditCardForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [rows, setRows] = useState([initialRow]);
   const [loading, setLoading] = useState(false);
-
+  const [refreshTable, setRefreshTable] = useState(false);
+  
   const handleChange = (
     index: number,
     field: keyof CreditCardRow,
@@ -44,7 +46,7 @@ const AddCreditCardForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setRefreshTable((prev) => !prev);
     const validationResults = rows.map(validateRow);
     setErrors(validationResults);
 
@@ -138,7 +140,7 @@ const AddCreditCardForm = () => {
             )}
           </form>
         </div>
-        <div className="card-footer text-muted">Updated just now</div>
+        <ViewCreditCardPage refreshTrigger={refreshTable}/>
       </div>
     </div>
   );
